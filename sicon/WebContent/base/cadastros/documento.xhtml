@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+	<ui:composition template="../../resources/template/template-administrador.xhtml">
+		<ui:define name="mensagem">
+			<ui:include src="../../componentes/mensagem.xhtml" />
+		</ui:define>
+		<ui:define name="modal-confirmacao">
+			<ui:include src="../../componentes/dialog-confirmacao.xhtml" />
+		</ui:define>
+	
+	<ui:define name="conteudo">	
+		<!-- TITULO -->
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="page-header">Cadastro de Documentos</h1>
+
+		</div>
+	</div>
+	<!-- FIM TITULO -->
+
+	<!-- BOTAO CADASTRAR -->
+	<div class="row container-fluid">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<h:form id="frmCadastrar">
+					<p:commandButton 
+						value="Cadastrar" update=":frmModalSalvar" actionListener="#{documentoMB.criarNovoObjeto()}"
+						onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
+						title="Cadastrar" />
+				</h:form>
+			</ol>
+		</div>
+	</div>
+	<!-- FIM DO BOTAO CADASTRAR -->
+	<!-- TABELA-->
+	<div class="col-md-12">
+		<h:form id="frmTabela">
+			<p:dataTable id="tabela" value="#{documentoMB.listaDocumento}"
+				resizableColumns="true" reflow="true" var="list" rows="10"
+				paginator="true" paginatorPosition="bottom"
+				emptyMessage="Nenhum Documento cadastrado"
+				rowsPerPageTemplate="5,10,15,30,50,100">
+				
+				<p:column headerText="Documento" filterBy="#{list.nome}"
+					sortBy="#{list.nome}" filterMatchMode="contains">
+					<h:outputText value="#{list.nome}" />
+				</p:column>
+				<p:column headerText="Descrição" filterBy="#{list.descricao}"
+					sortBy="#{list.descricao}" filterMatchMode="contains">
+					<h:outputText value="#{list.descricao}" />
+				</p:column>
+							
+				
+				<p:column headerText="Alterar" style="width:68px">
+					<p:commandButton disabled="false" alt="Alterar" icon="ui-icon-pencil"
+						update=":frmModalSalvar" title="Alterar"
+						styleClass="btn btn-block" oncomplete="PF('dlgCadastrar').show();"
+						actionListener="#{documentoMB.preencherListaDocumento(list)}">
+
+					</p:commandButton>
+				</p:column>
+				<p:column headerText="Excluir" style="width:68px">
+					<p:commandButton disabled="true"
+						actionListener="#{documentoMB.inativarDocumento(list)}"
+						icon="ui-icon-trash" title="Excluir" styleClass="btn btn-block"
+						update=":frmTabela :dlgInformacao" alt="Excluir">
+						<p:confirm header="Confirmação" message="Deseja excluir?" />
+					</p:commandButton>
+				</p:column>
+				
+				
+				
+			</p:dataTable>
+		</h:form>
+
+	</div>
+	<!--FIM DA TABELA-->
+
+	<!-- DIALOG SALVAR -->
+	<p:dialog header="Cadastro Perfil" widgetVar="dlgCadastrar"
+		modal="true" responsive="true" width="40%" id="dlgCadastrar"
+		closable="true" closeOnEscape="true" resizable="false"
+		draggable="false">
+		<h:form id="frmModalSalvar">
+			<div class="ui-fluid">
+				<div class="col-md-12">
+					<label>Documento: *</label>
+					<p:inputText title="Documento" value="#{documentoMB.documento.nome}" />
+				</div>
+				<div class="col-md-12">
+					<label>Descrição: *</label>
+					<p:inputText title="Descricao" value="#{documentoMB.documento.descricao}" />
+				</div>				
+				<small>Campos obrigatórios *</small>
+			</div>
+			<div class="modal-footer">
+				<p:commandButton value="Salvar" actionListener="#{documentoMB.salvar()}" styleClass="ui-priority-primary"
+					 update=":dlgInformacao :frmTabela" />
+
+				<p:commandButton value="Cancelar"
+					onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
+			</div>
+		</h:form>
+	</p:dialog>
+	<!-- FIM DO DIALOG SALVAR -->
+		</ui:define>
+		
+	</ui:composition>
+</h:body>
+</html>
+

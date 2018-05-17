@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<b:beans xmlns="http://www.springframework.org/schema/security"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:b="http://www.springframework.org/schema/beans"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+                            http://www.springframework.org/schema/beans/spring-beans.xsd
+                            http://www.springframework.org/schema/security
+                            http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+    <http auto-config="true" use-expressions="true">
+        <access-denied-handler error-page="/negado.jsf"/>
+        <intercept-url pattern="/base/**" access="hasAnyRole('funcionario','administrador')"/>
+        <intercept-url pattern="/base/protocolo/**" access="hasRole('administrador')"/>
+       <form-login login-page="/login.jsf" authentication-failure-url="/login.jsf?erro=true"/>
+    </http>
+    
+   
+    <authentication-manager>
+        <authentication-provider>
+            <jdbc-user-service data-source-ref="dataSource"               
+               authorities-by-username-query="SELECT u.login as username, p.nivel_acesso as authority FROM usuario u inner join perfil p on u.perfil_id = p.id WHERE login=?"
+               users-by-username-query="SELECT login as username, senha as password, true FROM usuario WHERE login=?"
+            />
+
+        </authentication-provider>
+       
+    </authentication-manager>
+
+    <b:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource" >
+        <b:property name="url" value="jdbc:mysql://localhost:3306/sicon" />
+        <b:property name="driverClassName" value="com.mysql.jdbc.Driver" />
+        <b:property name="username" value="root" />
+        <b:property name="password" value="" />
+    </b:bean>
+   
+
+</b:beans>

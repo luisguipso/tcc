@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+	<ui:composition template="../../resources/template/template-administrador.xhtml">
+		<ui:define name="mensagem">
+			<ui:include src="../../componentes/mensagem.xhtml" />
+		</ui:define>
+		<ui:define name="modal-confirmacao">
+			<ui:include src="../../componentes/dialog-confirmacao.xhtml" />
+		</ui:define>
+	
+	<ui:define name="conteudo">	
+		<!-- TITULO -->
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="page-header">Consulta de Honorários</h1>
+
+		</div>
+	</div>
+	<!-- FIM TITULO -->
+
+	<!-- BOTAO CADASTRAR -->
+	<div class="row container-fluid">
+		<div class="col-md-12">
+			<ol class="breadcrumb">
+				<h:form id="frmCadastrar">
+					<p:commandButton 
+						value="Cadastrar" update=":frmModalSalvar" actionListener="#{usuarioMB.criarNovoObjeto()}"
+						onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
+						title="Cadastrar" />
+				</h:form>
+			</ol>
+		</div>
+	</div>
+	<!-- FIM DO BOTAO CADASTRAR -->
+	<!-- TABELA-->
+	<div class="col-md-12">
+		<h:form id="frmTabela">
+			<p:dataTable id="tabela" value="#{honorarioMB.listaHonorario}"
+				resizableColumns="true" reflow="true" var="list" rows="10"
+				paginator="true" paginatorPosition="bottom"
+				emptyMessage="Nenhum Honorário cadastrado"
+				rowsPerPageTemplate="5,10,15,30,50,100">
+				
+				<p:column headerText="Cliente" filterBy="#{list.cliente}"
+					sortBy="#{list.cliente}" filterMatchMode="contains">
+					<h:outputText value="#{list.honorario.cliente}" />
+				</p:column>
+				
+				<p:column headerText="Competência" filterBy="#{list.competencia}"
+					sortBy="#{list.competencia}" filterMatchMode="contains">
+					<h:outputText value="#{list.competencia}" />
+				</p:column>
+				
+				<p:column headerText="Situação" filterBy="#{list.situacao}"
+					sortBy="#{list.situacao}" filterMatchMode="contains">
+					<h:outputText value="#{list.situacao}" />
+				</p:column>
+				<p:column headerText="Data do Pagamento" filterBy="#{list.data_pagamento}"
+					sortBy="#{list.data_pagamento}" filterMatchMode="contains">
+					<h:outputText value="#{list.data_pagamento}" />
+				</p:column>
+				<p:column headerText="Valor Pago" filterBy="#{list.valor_pago}"
+					sortBy="#{list.valor_pago}" filterMatchMode="contains">
+					<h:outputText value="#{list.valor_pago}" />
+				</p:column>
+				<p:column headerText="Valor Total" filterBy="#{list.valor}"
+					sortBy="#{list.valor}" filterMatchMode="contains">
+					<h:outputText value="#{list.valor}" />
+				</p:column>
+						
+			</p:dataTable>
+		</h:form>
+
+	</div>
+	
+	<!--FIM DA TABELA-->
+	<p:dialog header="Cadastrar Usuário" widgetVar="dlgCadastrar"
+		modal="true" responsive="true" width="40%" id="dlgCadastrar"
+		closable="true" closeOnEscape="true" resizable="false"
+		draggable="false">
+		<h:form id="frmModalSalvar">
+			<div class="ui-fluid">
+				<div class="col-md-12">
+					<label>Nome do Usuário: *</label>
+					<p:inputText title="Usuario" value="#{usuarioMB.usuario.nome}" />
+				</div>
+				<div class="col-md-12">
+					<label>login: *</label>
+					<p:inputText title="Nome" value="#{usuarioMB.usuario.login}" />
+				</div>				
+				<div class="col-md-12">
+					<label>Senha: *</label>					                 
+				    <p:password id="pwd1" value="#{usuarioMB.usuario.senha}" match="pwd2" label="Senha" required="true" feedback="true"/>
+				 	
+				 	<label>Confirmar senha: *</label>	        
+				    <p:password id="pwd2" value="#{usuarioMB.usuario.senha}" label="Confirmar senha" required="true" />
+				    
+				</div>
+				<div class="col-md-12">
+					<label>Perfil: *</label>
+					<p:selectOneMenu converter="#{perfilConverter}" title="Descricao" value="#{usuarioMB.usuario.perfil}">
+						<f:selectItems value="#{perfilMB.listaPerfil}" var="perfil" itemLabel="#{perfil.nivel_acesso}" itemValue="#{perfil}"/>
+					</p:selectOneMenu>
+				</div>						
+				<small>Campos obrigatórios *</small>
+			</div>
+			<div class="modal-footer">
+				<p:commandButton value="Salvar" actionListener="#{usuarioMB.salvar()}" styleClass="ui-priority-primary"
+					 update=":dlgInformacao :frmTabela" />
+
+				<p:commandButton value="Cancelar"
+					onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
+			</div>
+		</h:form>
+	</p:dialog>
+	
+		</ui:define>
+		
+	</ui:composition>
+</h:body>
+</html>
+
