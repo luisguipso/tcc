@@ -48,7 +48,7 @@
 				rowsPerPageTemplate="5,10,15,30,50,100">
 							
 				
-				<p:column headerText="Despesa" filterBy="#{list.nome}"
+				<p:column headerText="Despesa" filterBy="#{list.descricao}"
 					sortBy="#{list.nome}" filterMatchMode="contains">
 					<h:outputText value="#{list.nome}" />
 				</p:column>
@@ -93,11 +93,11 @@
 							
 				<div class="col-md-12">
 					<label>Nome da Despesa: *</label>
-					<p:inputText title="Nome" value="#{despesasAdicionaisMB.despesasAdicionais.nome}" />
+					<p:inputText title="Nome" value="#{despesasAdicionaisMB.despesasAdicionais.descricao}" />
 				</div>
 				<div class="col-md-12">
 					<label>Valor: *</label>
-					<p:inputText title="Nome" value="#{despesasAdicionaisMB.despesasAdicionais.valor}" />
+					<p:inputText title="Nome" value="#{despesasAdicionaisMB.despesasAdicionais.valorTotal}" />
 				</div>			
 				<small>Campos obrigatórios *</small>
 			</div>
