@@ -1,19 +1,26 @@
 package base.controle;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+
+import org.hibernate.engine.spi.Managed;
 
 import base.modelo.Cliente;
 import base.service.ClienteService;
 import dao.GenericDAO;
+import util.ChamarRelatorio;
 import util.ExibirMensagem;
 import util.FecharDialog;
 import util.Mensagem;
+
+import org.hibernate.Session;
 
 @ViewScoped
 @Named("clienteMB")
@@ -27,10 +34,13 @@ public class ClienteMB {
 	private List<Cliente> listaCliente;
 		
 	@Inject
-	private GenericDAO<Cliente> daoTipo; //faz as buscas
+	private GenericDAO<Cliente> daoCliente; //faz as buscas
 	
 	@Inject
 	private ClienteService clienteService; // inserir no banco
+	
+	@Inject
+	private EntityManager manager;
 	
 	
 	@PostConstruct
@@ -39,7 +49,7 @@ public class ClienteMB {
 		cliente = new Cliente();
 	
 		listaCliente = new ArrayList<>();
-		listaCliente = daoTipo.listaComStatus(Cliente.class);
+		listaCliente = daoCliente.listaComStatus(Cliente.class);
 		clienteBusca = new ArrayList<>();
 		
 	}
@@ -86,9 +96,27 @@ public class ClienteMB {
 	}
 
 	public void carregarLista() {
-		listaCliente = daoTipo.listaComStatus(Cliente.class);
+		listaCliente = daoCliente.listaComStatus(Cliente.class);
 	}
-	
+	public void imprimirRelatorioCliente() { 
+		try {
+			List<Cliente> relatorio = daoCliente.listar(Cliente.class, "status = true");
+			if (relatorio.size() > 0) {
+
+				HashMap parametro = new HashMap<>();
+				
+				ChamarRelatorio ch = new ChamarRelatorio("cliente.jasper", parametro, "relatório de clientes");
+				Session sessions = manager.unwrap(Session.class);
+				sessions.doWork(ch);
+
+			} else {
+				ExibirMensagem.exibirMensagem(Mensagem.NADA_ENCONTRADO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			ExibirMensagem.exibirMensagem(Mensagem.ERRO);
+		}
+	}
 	/*Getters & Setters*/
 
 	public Cliente getCliente() {
@@ -116,11 +144,11 @@ public class ClienteMB {
 	}
 
 	public GenericDAO<Cliente> getDaoTipo() {
-		return daoTipo;
+		return daoCliente;
 	}
 
 	public void setDaoTipo(GenericDAO<Cliente> daoTipo) {
-		this.daoTipo = daoTipo;
+		this.daoCliente = daoTipo;
 	}
 
 	public ClienteService getClienteService() {

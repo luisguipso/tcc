@@ -24,7 +24,6 @@ public class TransacionalInterceptor implements Serializable {
 	public Object invoke(InvocationContext context) throws Exception {
 		EntityTransaction trx = manager.getTransaction();
 		boolean criador = false;
-
 		try {
 			if (!trx.isActive()) {
 				// truque para fazer rollback no que já passou
