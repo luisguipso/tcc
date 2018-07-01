@@ -1,7 +1,9 @@
 package util;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -10,10 +12,14 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.hibernate.jdbc.Work; 
+import org.hibernate.jdbc.Work;
+
+import net.sf.jasperreports.engine.JRExporter;
+import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 public class ChamarRelatorio  implements Work {
 	
@@ -28,7 +34,7 @@ public class ChamarRelatorio  implements Work {
 		this.nomeRelatorio = nome;
 		this.param = parametros;
 		
-		System.out.println("no chama");
+		System.out.println("no chamar relatorio");
 	}
 	
 	
@@ -49,6 +55,14 @@ public class ChamarRelatorio  implements Work {
 
 			JasperPrint jasperPrint = JasperFillManager
 					.fillReport(scontext.getRealPath("/relatorios/" + caminhoRelatorio), parametros, connection);
+			OutputStream saida = new FileOutputStream("clientes.pdf") {
+				
+				@Override
+				public void write(int b) throws IOException {
+					// TODO Auto-generated method stub
+					
+				}
+			};
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -75,6 +89,7 @@ public class ChamarRelatorio  implements Work {
 				outputStream.close();
 
 				baos.close();
+				System.out.println("terminou");
 			}
 
 		} catch (Exception e) {
