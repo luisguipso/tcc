@@ -20,13 +20,16 @@ public class DocumentosProtocolos {
 	private Date vencimento;
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date competencia;
-	private int cod_recolhimento;
+	@Temporal(javax.persistence.TemporalType.DATE)
+	private Date dataDevolucao;
+	private int codRecolhimento;
 	private String observacao;
 	@ManyToOne
 	private Documento documento;
 	@ManyToOne
 	private Protocolo protocolo;
-	
+	@ManyToOne
+	private Usuario responsavelDevolucao;
 	
 	public Long getId() {
 		return id;
@@ -54,10 +57,10 @@ public class DocumentosProtocolos {
 		this.competencia = competencia;
 	}
 	public int getCod_recolhimento() {
-		return cod_recolhimento;
+		return codRecolhimento;
 	}
-	public void setCod_recolhimento(int cod_recolhimento) {
-		this.cod_recolhimento = cod_recolhimento;
+	public void setCod_recolhimento(int codRecolhimento) {
+		this.codRecolhimento = codRecolhimento;
 	}
 	public Documento getDocumento() {
 		return documento;
@@ -72,6 +75,24 @@ public class DocumentosProtocolos {
 		this.protocolo = protocolo;
 	}
 	
+	public Date getDataDevolucao() {
+		return dataDevolucao;
+	}
+	public void setDataDevolucao(Date dataDevolucao) {
+		this.dataDevolucao = dataDevolucao;
+	}
+	public int getCodRecolhimento() {
+		return codRecolhimento;
+	}
+	public void setCodRecolhimento(int codRecolhimento) {
+		this.codRecolhimento = codRecolhimento;
+	}
+	public Usuario getResponsavelDevolucao() {
+		return responsavelDevolucao;
+	}
+	public void setResponsavelDevolucao(Usuario responsavelDevolucao) {
+		this.responsavelDevolucao = responsavelDevolucao;
+	}
 	public String getObservacao() {
 		return observacao;
 	}
@@ -82,7 +103,7 @@ public class DocumentosProtocolos {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + cod_recolhimento;
+		result = prime * result + codRecolhimento;
 		result = prime * result + ((competencia == null) ? 0 : competencia.hashCode());
 		result = prime * result + ((documento == null) ? 0 : documento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -103,7 +124,7 @@ public class DocumentosProtocolos {
 		if (getClass() != obj.getClass())
 			return false;
 		DocumentosProtocolos other = (DocumentosProtocolos) obj;
-		if (cod_recolhimento != other.cod_recolhimento)
+		if (codRecolhimento != other.codRecolhimento)
 			return false;
 		if (competencia == null) {
 			if (other.competencia != null)

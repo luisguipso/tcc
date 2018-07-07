@@ -39,7 +39,6 @@ public class UsuarioMB {
 	
 		usuario = new Usuario();
 	
-		listaUsuario = new ArrayList<>();
 		listaUsuario = daoUsuario.listaComStatus(Usuario.class);
 		usuarioBusca = new ArrayList<>();
 		
