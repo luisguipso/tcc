@@ -1,18 +1,26 @@
 package base.controle;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+
+import org.hibernate.Session;
 
 import base.modelo.Cliente;
 import base.modelo.DespesasAdicionais;
+import base.modelo.DocumentosProtocolos;
 import base.modelo.Honorario;
+import base.modelo.Protocolo;
 import base.service.DespesasAdicionaisService;
 import base.service.HonorarioService;
 import dao.GenericDAO;
+import util.ChamarRelatorio;
 import util.ExibirMensagem;
 import util.FecharDialog;
 import util.Mensagem;
@@ -29,22 +37,26 @@ public class HonorarioMB {
 		private List<Honorario> honorarioBusca;
 		private List<Honorario> listaHonorario;
 		private List<Cliente> listaClientes;
-		private List<DespesasAdicionais> listaDespesas;
+		private List<DespesasAdicionais> listaDespesasAdicionais;
 			
 		@Inject
-		private GenericDAO<Honorario> dao_honorario; //faz as buscas
+		private GenericDAO<Honorario> daoHonorario; //faz as buscas
 		
 		@Inject
-		private GenericDAO<Cliente> dao_cliente; //faz as buscas
+		private GenericDAO<Cliente> daoCliente; //faz as buscas
 		
 		@Inject
-		private GenericDAO<DespesasAdicionais> dao_despesasAdicionais; //faz as buscas
+		private GenericDAO<DespesasAdicionais> daoDespesasAdicionais; //faz as buscas
 		
 		@Inject
 		private HonorarioService honorarioService; // inserir no banco
 		
 		@Inject
 		private DespesasAdicionaisService despesasAdicionaisService; // inserir no banco
+		
+		@Inject
+		private EntityManager manager;
+		
 		
 		@PostConstruct
 		public void inicializar() {
@@ -53,17 +65,17 @@ public class HonorarioMB {
 			cliente = new Cliente();
 			despesa = new DespesasAdicionais();
 			
-			listaHonorario = new ArrayList<>();
+			listaHonorario = daoHonorario.lista(Honorario.class);
 			listaClientes = new ArrayList<>();
-			listaDespesas = new ArrayList<>();
+			listaDespesasAdicionais = new ArrayList<>();
 			
-			listaClientes = dao_cliente.listaComStatus(Cliente.class);
-			listaDespesas = dao_despesasAdicionais.listaComStatus(DespesasAdicionais.class);
+			listaClientes = daoCliente.listaComStatus(Cliente.class);
+			listaDespesasAdicionais = daoDespesasAdicionais.lista(DespesasAdicionais.class);
 			honorarioBusca = new ArrayList<>();
 			
 		}
 
-		public void preencherLista(Honorario t) {
+		public void preencherHonorario(Honorario t) {
 			this.honorario = t;
 
 		}
@@ -81,24 +93,11 @@ public class HonorarioMB {
 						honorario.setStatus(true);
 						for(Cliente cli : listaClientes) {
 							honorario.setCliente(cli);//determina a qual cliente o honorario pertence
-							double valor = cli.getHonorario_padrao(); //salva o valor padrao do honorario pra cada cliente
-							//honorarioService.inserirAlterar(honorario); 
-							for(DespesasAdicionais desp : listaDespesas) {
-								if(desp.getCliente()==honorario.getCliente() && desp.getCompetencia() == honorario.getCompetencia()) {
-									//verifica se a despesa é do mesmo cliente e de mesma competencia que o honorario
-									desp.setHonorario(honorario);
-									despesasAdicionaisService.inserirAlterar(desp);
-									honorario.setValor(valor += desp.getValorTotal());//calcula valor total do honorario									
-								}
-								
-							}
-							honorarioService.inserirAlterar(honorario);//salva ou altera honorario
-							criarNovoObjeto();
-						}	
-						
-						//quartz scheduler - lib pra programar o cadastro
-					//fazer tudo isso ou gerar o honorario sempre que gerar a despesa?
-
+							honorario.setValor(cli.getHonorario_padrao()); //insere o valor do honorário do cliente
+							Date data = new Date();
+							System.out.println(String.valueOf(data.getTime()));
+							
+						}
 					criarNovoObjeto();
 					ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
 					FecharDialog.fecharDialogCadastro();
@@ -116,17 +115,59 @@ public class HonorarioMB {
 		}
 
 		public void carregarLista() {
-			listaHonorario = dao_honorario.listaComStatus(Honorario.class);
+			listaHonorario = daoHonorario.listaComStatus(Honorario.class);
+		}
+
+		public void mostrarHonorario(Honorario t) {
+			this.honorario = t;
+			String condicao = "honorario_id =" + honorario.getId().toString();
+			this.listaDespesasAdicionais = daoDespesasAdicionais.listar(DespesasAdicionais.class, condicao);
+		}
+		
+		
+		public void imprimirRelatorioHonorario() { 
+			try {
+				List<Honorario> relatorio = daoHonorario.listar(Honorario.class, "status = true");
+				if (relatorio.size() > 0) {
+
+					HashMap parametro = new HashMap<>();
+					
+					ChamarRelatorio ch = new ChamarRelatorio("honorario.jasper", parametro, "protocolo_de_entrega");
+					Session sessions = manager.unwrap(Session.class);
+					sessions.doWork(ch);
+
+				} else {
+					ExibirMensagem.exibirMensagem(Mensagem.NADA_ENCONTRADO);
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+				ExibirMensagem.exibirMensagem(Mensagem.ERRO);
+			}
 		}
 
 		/*Getters & Setters*/
-		
 		public Honorario getHonorario() {
 			return honorario;
 		}
 
 		public void setHonorario(Honorario honorario) {
 			this.honorario = honorario;
+		}
+
+		public Cliente getCliente() {
+			return cliente;
+		}
+
+		public void setCliente(Cliente cliente) {
+			this.cliente = cliente;
+		}
+
+		public DespesasAdicionais getDespesa() {
+			return despesa;
+		}
+
+		public void setDespesa(DespesasAdicionais despesa) {
+			this.despesa = despesa;
 		}
 
 		public List<Honorario> getHonorarioBusca() {
@@ -137,20 +178,52 @@ public class HonorarioMB {
 			this.honorarioBusca = honorarioBusca;
 		}
 
-		public List<Honorario> getLista_honorario() {
+		public List<Honorario> getListaHonorario() {
 			return listaHonorario;
 		}
 
-		public void setLista_honorario(List<Honorario> lista_honorario) {
-			this.listaHonorario = lista_honorario;
+		public void setListaHonorario(List<Honorario> listaHonorario) {
+			this.listaHonorario = listaHonorario;
 		}
 
-		public GenericDAO<Honorario> getDao_honorario() {
-			return dao_honorario;
+		public List<Cliente> getListaClientes() {
+			return listaClientes;
 		}
 
-		public void setDao_honorario(GenericDAO<Honorario> dao_honorario) {
-			this.dao_honorario = dao_honorario;
+		public void setListaClientes(List<Cliente> listaClientes) {
+			this.listaClientes = listaClientes;
+		}
+
+		public List<DespesasAdicionais> getListaDespesasAdicionais() {
+			return listaDespesasAdicionais;
+		}
+
+		public void setListaDespesasAdicionais(List<DespesasAdicionais> listaDespesasAdicionais) {
+			this.listaDespesasAdicionais = listaDespesasAdicionais;
+		}
+
+		public GenericDAO<Honorario> getDaoHonorario() {
+			return daoHonorario;
+		}
+
+		public void setDaoHonorario(GenericDAO<Honorario> daoHonorario) {
+			this.daoHonorario = daoHonorario;
+		}
+
+		public GenericDAO<Cliente> getDaoCliente() {
+			return daoCliente;
+		}
+
+		public void setDaoCliente(GenericDAO<Cliente> daoCliente) {
+			this.daoCliente = daoCliente;
+		}
+
+		public GenericDAO<DespesasAdicionais> getDaoDespesasAdicionais() {
+			return daoDespesasAdicionais;
+		}
+
+		public void setDaoDespesasAdicionais(GenericDAO<DespesasAdicionais> daoDespesasAdicionais) {
+			this.daoDespesasAdicionais = daoDespesasAdicionais;
 		}
 
 		public HonorarioService getHonorarioService() {
@@ -161,6 +234,22 @@ public class HonorarioMB {
 			this.honorarioService = honorarioService;
 		}
 
+		public DespesasAdicionaisService getDespesasAdicionaisService() {
+			return despesasAdicionaisService;
+		}
+
+		public void setDespesasAdicionaisService(DespesasAdicionaisService despesasAdicionaisService) {
+			this.despesasAdicionaisService = despesasAdicionaisService;
+		}
+
+		public EntityManager getManager() {
+			return manager;
+		}
+
+		public void setManager(EntityManager manager) {
+			this.manager = manager;
+		}
+
 		public static long getSerialversionuid() {
 			return serialVersionUID;
 		}
@@ -168,7 +257,4 @@ public class HonorarioMB {
 		
 
 		
-		
-	
-
 }

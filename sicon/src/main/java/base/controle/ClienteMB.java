@@ -105,7 +105,7 @@ public class ClienteMB {
 
 				HashMap parametro = new HashMap<>();
 				
-				ChamarRelatorio ch = new ChamarRelatorio("clientes.jasper", parametro, "relatório de clientes");
+				ChamarRelatorio ch = new ChamarRelatorio("clientes.jasper", parametro, "relatorio_clientes");
 				Session sessions = manager.unwrap(Session.class);
 				sessions.doWork(ch);
 

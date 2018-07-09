@@ -23,4 +23,9 @@ public class DespesasAdicionaisService {
 	public void update(String valor){
 		daoDespesasAdicionais.update(valor);
 	}
+	
+	@Transacional
+	public void delete(DespesasAdicionais objeto){
+		daoDespesasAdicionais.remover(objeto);;
+	}
 }

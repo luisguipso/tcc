@@ -20,16 +20,19 @@ public class DocumentosProtocolos {
 	private Date vencimento;
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date competencia;
+	private boolean devolvido;
 	@Temporal(javax.persistence.TemporalType.DATE)
 	private Date dataDevolucao;
+	@ManyToOne
+	private Usuario responsavelDevolucao;
 	private int codRecolhimento;
 	private String observacao;
 	@ManyToOne
 	private Documento documento;
 	@ManyToOne
 	private Protocolo protocolo;
-	@ManyToOne
-	private Usuario responsavelDevolucao;
+	
+	/**************************	GETTERS & SETTERS**************************/
 	
 	public Long getId() {
 		return id;
@@ -99,6 +102,14 @@ public class DocumentosProtocolos {
 	public void setObservacao(String observacao) {
 		this.observacao = observacao;
 	}
+	public boolean isDevolvido() {
+		return devolvido;
+	}
+	public void setDevolvido(boolean devolvido) {
+		this.devolvido = devolvido;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;

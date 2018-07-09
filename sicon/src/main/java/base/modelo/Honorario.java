@@ -1,7 +1,6 @@
 package base.modelo;
 
 import java.util.Date;
-import java.util.Calendar;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -23,12 +22,10 @@ public class Honorario {
 	@ManyToOne
 	private Cliente cliente;
 	private double desconto;	
-	private Date data_pagamento;
-	private double valor_pago;
+	private Date dataPagamento;
+	private double valorPago;
 	private String situacao;
 	private boolean status;
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -41,26 +38,6 @@ public class Honorario {
 	public void setValor(double valor) {
 		this.valor = valor;
 	}
-	
-	public boolean isStatus() {
-		return status;
-	}
-	public void setStatus(boolean status) {
-		this.status = status;
-	}
-	public double getDesconto() {
-		return desconto;
-	}
-	public void setDesconto(double desconto) {
-		this.desconto = desconto;
-	}
-	public Cliente getCliente() {
-		return cliente;
-	}
-	public void setCliente(Cliente cliente) {
-		this.cliente = cliente;
-	}
-	
 	public Date getVencimento() {
 		return vencimento;
 	}
@@ -73,17 +50,29 @@ public class Honorario {
 	public void setCompetencia(Date competencia) {
 		this.competencia = competencia;
 	}
+	public Cliente getCliente() {
+		return cliente;
+	}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	public double getDesconto() {
+		return desconto;
+	}
+	public void setDesconto(double desconto) {
+		this.desconto = desconto;
+	}
 	public Date getData_pagamento() {
-		return data_pagamento;
+		return dataPagamento;
 	}
 	public void setData_pagamento(Date data_pagamento) {
-		this.data_pagamento = data_pagamento;
+		this.dataPagamento = data_pagamento;
 	}
 	public double getValor_pago() {
-		return valor_pago;
+		return valorPago;
 	}
 	public void setValor_pago(double valor_pago) {
-		this.valor_pago = valor_pago;
+		this.valorPago = valor_pago;
 	}
 	public String getSituacao() {
 		return situacao;
@@ -91,24 +80,28 @@ public class Honorario {
 	public void setSituacao(String situacao) {
 		this.situacao = situacao;
 	}
-	
-	
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result + ((competencia == null) ? 0 : competencia.hashCode());
-		result = prime * result + ((data_pagamento == null) ? 0 : data_pagamento.hashCode());
+		result = prime * result + ((dataPagamento == null) ? 0 : dataPagamento.hashCode());
 		long temp;
 		temp = Double.doubleToLongBits(desconto);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
 		temp = Double.doubleToLongBits(valor);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(valor_pago);
+		temp = Double.doubleToLongBits(valorPago);
 		result = prime * result + (int) (temp ^ (temp >>> 32));
 		result = prime * result + ((vencimento == null) ? 0 : vencimento.hashCode());
 		return result;
@@ -122,11 +115,6 @@ public class Honorario {
 		if (getClass() != obj.getClass())
 			return false;
 		Honorario other = (Honorario) obj;
-		if (situacao == null) {
-			if (other.situacao != null)
-				return false;
-		} else if (!situacao.equals(other.situacao))
-			return false;
 		if (cliente == null) {
 			if (other.cliente != null)
 				return false;
@@ -137,10 +125,10 @@ public class Honorario {
 				return false;
 		} else if (!competencia.equals(other.competencia))
 			return false;
-		if (data_pagamento == null) {
-			if (other.data_pagamento != null)
+		if (dataPagamento == null) {
+			if (other.dataPagamento != null)
 				return false;
-		} else if (!data_pagamento.equals(other.data_pagamento))
+		} else if (!dataPagamento.equals(other.dataPagamento))
 			return false;
 		if (Double.doubleToLongBits(desconto) != Double.doubleToLongBits(other.desconto))
 			return false;
@@ -149,11 +137,16 @@ public class Honorario {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
+		if (situacao == null) {
+			if (other.situacao != null)
+				return false;
+		} else if (!situacao.equals(other.situacao))
+			return false;
 		if (status != other.status)
 			return false;
 		if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
 			return false;
-		if (Double.doubleToLongBits(valor_pago) != Double.doubleToLongBits(other.valor_pago))
+		if (Double.doubleToLongBits(valorPago) != Double.doubleToLongBits(other.valorPago))
 			return false;
 		if (vencimento == null) {
 			if (other.vencimento != null)
@@ -162,5 +155,6 @@ public class Honorario {
 			return false;
 		return true;
 	}
+	
 	
 }

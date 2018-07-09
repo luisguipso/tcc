@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+	<ui:composition
+		template="../../resources/template/template-administrador.xhtml">
+		<ui:define name="mensagem">
+			<ui:include src="../../componentes/mensagem.xhtml" />
+		</ui:define>
+		<ui:define name="modal-confirmacao">
+			<ui:include src="../../componentes/dialog-confirmacao.xhtml" />
+		</ui:define>
+
+		<ui:define name="conteudo">
+			<!-- TITULO -->
+			<div class="row">
+				<div class="col-md-12">
+					<h1 class="page-header">Despesas Adicionais</h1>
+
+				</div>
+			</div>
+			<!-- FIM TITULO -->
+
+			<!-- BOTAO CADASTRAR -->
+			<div class="row container-fluid">
+				<div class="col-md-12">
+					<ol class="breadcrumb">
+						<h:form id="frmCadastrar">
+							<p:commandButton value="Cadastrar" update=":frmModalSalvar"
+								actionListener="#{despesasAdicionaisMB.criarNovoObjeto()}"
+								onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
+								title="Cadastrar" />
+						</h:form>
+					</ol>
+				</div>
+			</div>
+			<!-- FIM DO BOTAO CADASTRAR -->
+			<!-- TABELA-->
+			<div class="col-md-12">
+				<h:form id="frmTabela">
+					<p:dataTable id="tabela"
+						value="#{despesasAdicionaisMB.listaDespesasAdicionais}"
+						resizableColumns="true" reflow="true" var="list" rows="30"
+						paginator="true" paginatorPosition="bottom"
+						emptyMessage="Nenhum Despesa Adicional cadastrada"
+						rowsPerPageTemplate="5,10,15,30,50,100">
+
+
+						<p:column headerText="Despesa" filterBy="#{list.despesa.nome}"
+							sortBy="#{list.despesa.nome}" filterMatchMode="contains">
+							<h:outputText value="#{list.despesa.nome}" />
+						</p:column>
+						<p:column headerText="Cliente" filterBy="#{list.cliente}"
+							sortBy="#{list.cliente}" filterMatchMode="contains">
+							<h:outputText value="#{list.cliente.nome}" />
+						</p:column>
+						<p:column headerText="Competencia" filterBy="#{list.competencia}"
+							sortBy="#{list.competencia}" filterMatchMode="contains">
+							<h:outputText value="#{list.competencia}"
+								rendered="#{list.competencia != null}">
+								<f:convertDateTime pattern="MM/yyyy" type="date"
+									dateStyle="short" />
+							</h:outputText>
+						</p:column>
+						<p:column headerText="Quantidade" filterBy="#{list.quantidade}"
+							sortBy="#{list.quantidade}" filterMatchMode="contains">
+							<h:outputText value="#{list.quantidade}" />
+						</p:column>
+
+						<p:column headerText="Valor" filterBy="#{list.valorTotal}"
+							sortBy="#{list.valorTotal}" filterMatchMode="contains">
+							<h:outputText value="#{list.valorTotal}" />
+						</p:column>
+
+
+						<!-- <p:column headerText="Detalhes" style="width:100px">
+							<p:commandButton disabled="false" alt="Detalhes"
+								icon="fa fa-eye" title="Detalhes" styleClass="btn btn-block"
+								style="width:58px; margin:0 0 0 11px"
+								oncomplete="PF('dlgMostrar').show();" update="listarItens"
+								actionListener="#{despesasAdicionaisMB.mostrarDespesaAdicional(list)}">
+
+							</p:commandButton>
+ 						</p:column>
+ -->						<p:column headerText="Excluir" style="width:68px">
+							<p:commandButton disabled="false"
+								actionListener="#{despesasAdicionaisMB.excluir(list)}"
+								icon="ui-icon-trash" title="Excluir" styleClass="btn btn-block"
+								update=":frmTabela :dlgInformacao" alt="Excluir">
+								<p:confirm header="Confirmação" message="Deseja excluir?" />
+							</p:commandButton>
+						</p:column>
+
+
+
+					</p:dataTable>
+				</h:form>
+
+			</div>
+			<!--FIM DA TABELA-->
+
+			<!-- DIALOG SALVAR -->
+			<p:dialog header="Cadastro de Despesas Adicionais"
+				widgetVar="dlgCadastrar" modal="true" responsive="true" width="40%"
+				id="dlgCadastrar" closable="true" closeOnEscape="true"
+				resizable="false" draggable="false">
+				<h:form id="frmModalSalvar">
+					<div class="ui-fluid">
+						<div class="col-md-12">
+							<label>Cliente: *</label>
+							<p:selectOneMenu converter="#{clienteConverter}"
+								title="Documento"
+								value="#{despesasAdicionaisMB.despesasAdicinais.cliente}">
+								<f:selectItems value="#{clienteMB.listCliente}"
+									var="cliente" itemLabel="#{cliente.nome}"
+									itemValue="#{cliente}" />
+							</p:selectOneMenu>
+						</div>
+						<div class="col-md-12">
+							<label>Despesa: *</label>
+							<p:selectOneMenu converter="#{despesaConverter}"
+								title="Despesa	"
+								value="#{despesasAdicionaisMB.despesasAdicinais.despesa}">
+								<f:selectItems value="#{despesaMB.listaDespesas}"
+									var="despesa" itemLabel="#{despesa.nome}"
+									itemValue="#{despesa}" />
+							</p:selectOneMenu>
+						</div>
+						
+						<div class="col-md-12">
+							<label>Competência: *</label>
+							<p:calendar title="Competencia"
+								value="#{despesasAdicionaisMB.despesasAdicinais.competencia}"
+								pattern="MM-yyyy" mask="true" />
+						</div>
+						
+						<div class="col-md-12">
+							<label>Quantidade: *</label>
+							<p:inputText title="Nome" value="#{despesasAdicionaisMB.despesasAdicinais.quantidade}" />
+						</div>
+						<small>Campos obrigatórios *</small>
+					</div>
+					<div class="modal-footer">
+						<p:commandButton value="Salvar"
+							actionListener="#{despesasAdicionaisMB.salvar()}"
+							styleClass="ui-priority-primary"
+							update=":dlgInformacao :frmTabela" />
+
+						<p:commandButton value="Cancelar"
+							onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
+					</div>
+				</h:form>
+			</p:dialog>
+			<!-- FIM DO DIALOG SALVAR -->
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
+

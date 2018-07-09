@@ -9,7 +9,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import base.modelo.Despesas;
+import base.modelo.Despesa;
+import base.modelo.DespesasAdicionais;
+import base.service.DespesasAdicionaisService;
 import base.service.DespesasService;
 import dao.GenericDAO;
 import util.ExibirMensagem;
@@ -17,18 +19,18 @@ import util.FecharDialog;
 import util.Mensagem;
 
 @ViewScoped
-@Named("despesasMB")
-public class DespesasMB {
+@Named("despesaMB")
+public class DespesaMB {
 	
 	private static final long serialVersionUID = 1L;
 
 
-	private Despesas despesas;
-	private List<Despesas> despesasBusca;
-	private List<Despesas> listaDespesas;
-		
+	private Despesa despesa;
+	
+	private List<Despesa> listaDespesas;
+	
 	@Inject
-	private GenericDAO<Despesas> daoDespesas; //faz as buscas
+	private GenericDAO<Despesa> daoDespesas; //faz as buscas
 	
 	@Inject
 	private DespesasService despesasService; // inserir no banco
@@ -37,21 +39,18 @@ public class DespesasMB {
 	@PostConstruct
 	public void inicializar() {
 	
-		despesas = new Despesas();
-	
+		despesa = new Despesa();
 		listaDespesas = new ArrayList<>();
-		listaDespesas = daoDespesas.listaComStatus(Despesas.class);
-		despesasBusca = new ArrayList<>();
-		
+		listaDespesas = daoDespesas.listaComStatus(Despesa.class);
+				
 	}
 
-	public void preencherLista(Despesas t) {
-		this.despesas = t;
-
+	public void preencherLista(Despesa t) {
+		this.despesa = t;
 	}
 
-	public void inativar(Despesas t) {
-		despesasService.update(" Tipo set status = false where id = " + t.getId());
+	public void inativar(Despesa t) {
+		despesasService.update(" Despesa set status = false where id = " + t.getId());
 		criarNovoObjeto();
 		ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
 		carregarLista();
@@ -61,13 +60,13 @@ public class DespesasMB {
 
 		try {			
 
-				if (despesas.getId() == null) {
-					despesas.setStatus(true);
-					despesasService.inserirAlterar(despesas);
+				if (despesa.getId() == null) {
+					despesa.setStatus(true);
+					despesasService.inserirAlterar(despesa);
 
 				} else {
-					despesas.setStatus(true);
-					despesasService.inserirAlterar(despesas);
+					despesa.setStatus(true);
+					despesasService.inserirAlterar(despesa);
 				}
 
 				criarNovoObjeto();
@@ -83,44 +82,37 @@ public class DespesasMB {
 	}
 
 	public void criarNovoObjeto() {
-		despesas = new Despesas();
+		despesa = new Despesa();
 	}
 
 	public void carregarLista() {
-		listaDespesas = daoDespesas.listaComStatus(Despesas.class);
+		listaDespesas = daoDespesas.listaComStatus(Despesa.class);
 	}
 
+	
 	/*Getters & Setters*/
 	
-	public Despesas getDespesas() {
-		return despesas;
+	public Despesa getDespesa() {
+		return despesa;
 	}
 
-	public void setDespesas(Despesas despesas) {
-		this.despesas = despesas;
+	public void setDespesa(Despesa despesa) {
+		this.despesa = despesa;
 	}
 
-	public List<Despesas> getDespesasBusca() {
-		return despesasBusca;
-	}
-
-	public void setDespesasBusca(List<Despesas> despesasBusca) {
-		this.despesasBusca = despesasBusca;
-	}
-
-	public List<Despesas> getListaDespesas() {
+	public List<Despesa> getListaDespesas() {
 		return listaDespesas;
 	}
 
-	public void setListaDespesas(List<Despesas> listaDespesas) {
+	public void setListaDespesas(List<Despesa> listaDespesas) {
 		this.listaDespesas = listaDespesas;
 	}
 
-	public GenericDAO<Despesas> getDaoDespesas() {
+	public GenericDAO<Despesa> getDaoDespesas() {
 		return daoDespesas;
 	}
 
-	public void setDaoDespesas(GenericDAO<Despesas> daoDespesas) {
+	public void setDaoDespesas(GenericDAO<Despesa> daoDespesas) {
 		this.daoDespesas = daoDespesas;
 	}
 
@@ -135,4 +127,8 @@ public class DespesasMB {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+
+	
+	
+	
 }

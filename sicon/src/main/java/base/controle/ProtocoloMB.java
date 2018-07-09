@@ -1,21 +1,27 @@
 package base.controle;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
 
+import org.hibernate.Session;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import base.modelo.Cliente;
 import base.modelo.DocumentosProtocolos;
 import base.modelo.Protocolo;
 import base.modelo.Usuario;
 import base.service.ItensProtocoloService;
 import base.service.ProtocoloService;
 import dao.GenericDAO;
+import util.ChamarRelatorio;
 import util.ExibirMensagem;
 import util.Mensagem;
 
@@ -42,6 +48,10 @@ public class ProtocoloMB {
 	@Inject
 	private ProtocoloService protocoloService;
 	
+	@Inject
+	private EntityManager manager;
+	
+	
 	@PostConstruct
 	public void inicializar() {
 		protocolo = new Protocolo();
@@ -54,8 +64,12 @@ public class ProtocoloMB {
 	}
 
 	
-	public void preencherListaItensProtocolo(DocumentosProtocolos t) {
+	public void preencherItensProtocolo(DocumentosProtocolos t) {
 		this.itensProtocolo = t;
+	}
+	
+	public void preencherProtocolo(Protocolo t) {
+		this.protocolo = t;
 	}
 	
 
@@ -66,13 +80,16 @@ public class ProtocoloMB {
 		carregarLista();
 	}
 
-	public void salvar() {
+	public void salvarProtocolo() {
 		try {
 			if (protocolo.getId() == null) {
 				protocolo.setStatus(true);
+				Date data = new Date();
+				protocolo.setSaida(data);
 				protocoloService.inserirAlterar(protocolo);
 				for (DocumentosProtocolos docProtocolo : listaItensProtocolo) {
-					docProtocolo.setProtocolo(protocolo);					
+					docProtocolo.setProtocolo(protocolo);
+					docProtocolo.setDevolvido(false);
 					itensProtocoloService.inserirAlterar(docProtocolo);
 				}
 				ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
@@ -89,6 +106,25 @@ public class ProtocoloMB {
 
 	}
 
+	public void devolverItem(DocumentosProtocolos i) {
+		System.out.println(String.valueOf(i.getValor()));
+		if(i.isDevolvido()==true) {
+			System.out.println("no if");
+			ExibirMensagem.exibirMensagem(Mensagem.ITEM_JA_DEVOLVIDO);
+			
+		}else {
+			System.out.println("no else");
+			i.setDevolvido(true);
+			
+			Date data = new Date();
+			i.setDataDevolucao(data);
+			
+			itensProtocoloService.inserirAlterar(i);
+			ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
+			
+		}
+	}
+	
 	public void salvarItem() {
 		listaItensProtocolo.add(itensProtocolo);
 		criarNovoObjetoItem();
@@ -97,6 +133,7 @@ public class ProtocoloMB {
 	public void excluirItem(DocumentosProtocolos item) {
 		listaItensProtocolo.remove(item);
 	}
+	
 
 	public void criarNovoObjetoProtocolo() {
 		protocolo = new Protocolo();
@@ -109,12 +146,33 @@ public class ProtocoloMB {
 	public void carregarLista() {
 		listaProtocolo = daoProtocolo.listaComStatus(Protocolo.class);
 	}
+	
+	
 	public void mostrarProtocolo(Protocolo t) {
 		this.protocolo = t;
-		String condicao="protocolo_id ="+protocolo.getId().toString();
+		String condicao = "protocolo_id =" + protocolo.getId().toString();
 		this.listaItensProtocolo = daoItens.listar(DocumentosProtocolos.class, condicao);
 	}
-	
+
+	public void imprimirRelatorioProtocolo() { 
+		try {
+			List<Protocolo> relatorio = daoProtocolo.listar(Protocolo.class, "status = true");
+			if (relatorio.size() > 0) {
+
+				HashMap parametro = new HashMap<>();
+				
+				ChamarRelatorio ch = new ChamarRelatorio("protocolo.jasper", parametro, "protocolo_de_entrega");
+				Session sessions = manager.unwrap(Session.class);
+				sessions.doWork(ch);
+
+			} else {
+				ExibirMensagem.exibirMensagem(Mensagem.NADA_ENCONTRADO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			ExibirMensagem.exibirMensagem(Mensagem.ERRO);
+		}
+	}
 	
 	
 	

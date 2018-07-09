@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "despesas")
-public class Despesas {
+@Table(name = "despesa")
+public class Despesa {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
@@ -60,7 +60,7 @@ public class Despesas {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Despesas other = (Despesas) obj;
+		Despesa other = (Despesa) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;

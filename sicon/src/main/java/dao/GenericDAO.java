@@ -40,6 +40,11 @@ public class GenericDAO<T> implements Serializable{
 		return manager.createQuery("from "+classeEntidade.getSimpleName()+" where status is true order by id").getResultList();
 	}
 	
+	public List<T> lista(Class classeEntidade) {
+		return manager.createQuery("from "+classeEntidade.getSimpleName()).getResultList();
+	}
+	
+	
 	public List<T> listar(Class classeEntidade, String condicao) {
 		Query query = null;
 		try {

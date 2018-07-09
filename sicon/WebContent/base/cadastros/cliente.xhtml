@@ -28,27 +28,24 @@
 	<div class="row container-fluid">
 		<div class="col-md-12">
 			<ol class="breadcrumb">
-				<h:form id="frmCadastrar">
+			<!-- target bank no formulario e ajax false no botão pra mostrar relatorio em nova aba -->>
+				<h:form id="frmCadastrar" target="_blank">
 					<p:commandButton 
 						value="Cadastrar" update=":frmModalSalvar" actionListener="#{clienteMB.criarNovoObjeto()}"
 						onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
-						title="Cadastrar" />
-				</h:form>
-			</ol>
-		</div>
-	</div>
-	<div class="row container-fluid">
-		<div class="col-md-12">
-			<ol class="breadcrumb">
-				<h:form id="frmRelatorio">
+						title="Cadastrar" 
+						/>
+						
 					<p:commandButton 
 						value="Relatorio" actionListener="#{clienteMB.imprimirRelatorioCliente()}"
 						ajax="false"
-						title="Cadastrar" />
+						title="Cadastrar"  
+						/>
 				</h:form>
 			</ol>
 		</div>
 	</div>
+	
 	<!-- FIM DO BOTAO CADASTRAR -->
 	<!-- TABELA-->
 	<div class="col-md-12">

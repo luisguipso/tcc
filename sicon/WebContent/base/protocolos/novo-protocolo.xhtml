@@ -59,11 +59,15 @@
 							actionListener="#{protocoloMB.criarNovoObjetoItem()}"
 							onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
 							title="Inserir" />
-
-						<p:commandButton value="Salvar" actionListener="#{protocoloMB.salvar()}" 
-							title="Salvar"
-							 />
-							
+<!-- salvar protocolo -->
+						<p:commandButton value="Salvar" 
+							actionListener="#{protocoloMB.salvarProtocolo()}" 
+							title="Salvar"	
+							styleClass="ui-priority-primary" 
+							update=":frmTabela"
+							action="protocolo.jsf"
+							onclick="protocolo.jsf"/>
+				
 						<p:commandButton value="Cancelar" action="protocolo.jsf"
 							onclick="protocolo.jsf" />
 
@@ -117,7 +121,7 @@
 								icon="ui-icon-pencil" update="tabela" title="Alterar"
 								styleClass="btn btn-block"
 								oncomplete="PF('dlgCadastrar').show();"
-								actionListener="#{protocoloMB.preencherListaItensProtocolo(list)}">
+								actionListener="#{protocoloMB.preencherItensProtocolo(list)}">
 
 							</p:commandButton>
 						</p:column>
@@ -139,8 +143,9 @@
 				<!-- BOTOES DE INSERCAO -->
 			<h:form id="frmBotoes">
 				
-				<!-- Fim do Form de Inserção -->
+				
 			</h:form>
+			<!-- Fim do Form de Inserção -->
 
 			<!-- DIALOG SALVAR ITEM -->
 			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true"
@@ -162,7 +167,7 @@
 							<label>Competência: *</label>
 							<p:calendar title="Competencia"
 								value="#{protocoloMB.itensProtocolo.competencia}"
-								pattern="dd-MM-yyyy" mask="true" />
+								pattern="MM-yyyy" mask="true" />
 						</div>
 						<div class="col-md-12">
 							<label>Cod. Recolhimento: *</label>

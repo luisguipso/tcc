@@ -2,17 +2,17 @@ package base.service;
 
 import javax.inject.Inject;
 
-import base.modelo.Despesas;
+import base.modelo.Despesa;
 import dao.GenericDAO;
 import util.Transacional;
 
 public class DespesasService {
 	private static final long serialVersionUID = 1L;
 	@Inject
-	private GenericDAO<Despesas> daoDespesas;
+	private GenericDAO<Despesa> daoDespesas;
 	
 	@Transacional
-	public void inserirAlterar(Despesas despesas){
+	public void inserirAlterar(Despesa despesas){
 		if(despesas.getId()==null){
 			daoDespesas.inserir(despesas);
 		}else{

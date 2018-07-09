@@ -3,6 +3,7 @@ package util;
 import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -19,6 +20,7 @@ import net.sf.jasperreports.engine.JRExporterParameter;
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperRunManager;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 
 public class ChamarRelatorio  implements Work {
@@ -55,14 +57,19 @@ public class ChamarRelatorio  implements Work {
 
 			JasperPrint jasperPrint = JasperFillManager
 					.fillReport(scontext.getRealPath("/relatorios/" + caminhoRelatorio), parametros, connection);
-			OutputStream saida = new FileOutputStream("clientes.pdf") {
+		
+			System.out.println("antes do output");
+			
+			/*OutputStream saida = new FileOutputStream("clientes.pdf") {
 				
 				@Override
 				public void write(int b) throws IOException {
 					// TODO Auto-generated method stub
 					
 				}
-			};
+			};*/
+			
+			System.out.println("depois do output");
 
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 
@@ -75,13 +82,13 @@ public class ChamarRelatorio  implements Work {
 				HttpServletResponse response = (HttpServletResponse) facesContext.getExternalContext().getResponse();
 
 				response.setContentType("application/pdf");
-
-				response.setHeader("Content-disposition", "attachment; filename=\"" + nomeRelatorio + ".pdf\"");
+// para baixar o relatório trocar inline por attachment
+				response.setHeader("Content-disposition", "inline; filename=\"" + nomeRelatorio + ".pdf\"");
 
 				response.setContentLength(bytes.length);
 
 				ServletOutputStream outputStream = response.getOutputStream();
-
+				
 				outputStream.write(bytes, 0, bytes.length);
 
 				outputStream.flush();
@@ -94,7 +101,7 @@ public class ChamarRelatorio  implements Work {
 
 		} catch (Exception e) {
 
-			throw new SQLException("Erro ao executar relatÃ³rio " + this.caminhoRelatorio, e);
+			throw new SQLException("Erro ao executar relatório " + this.caminhoRelatorio, e);
 
 		}
 

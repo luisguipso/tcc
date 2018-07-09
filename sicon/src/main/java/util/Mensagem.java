@@ -1,16 +1,17 @@
 package util;
 
 public class Mensagem {
-	public static final String SUCESSO = "Opera√ß√£o realizada com sucesso";  
-	public static final String ERROENVIAEMAIL = "N√£o foi possivel enviar o email para : "; 
+	public static final String SUCESSO = "OperaÁ„o realizada com sucesso";  
+	public static final String ERROENVIAEMAIL = "N„o foi possivel enviar o email para : "; 
 	public static final String SELECIONAALUNO = "Selecione um aluno";
 	public static final String ERROEMAIL = "Erro ao enviar o email";
 	public static final String GRAFICO = "Nada encontrado";
 	public static final String QUESTIONARIO = "QUESTIONARIO RESPONDIDO COM SUCESSO";
 	public static final String ERROCONVERTER = "Erro ao converter";
 	public static final String ADVERTENCIA = "Verifique os campos digitados";
-	public static final String ERRO = "Erro ao realizar opera√ß√£o";
-	public static final String USUARIO = "E-mail j√° cadastrado";
+	public static final String ERRO = "Erro ao realizar operaÁ„o";
+	public static final String USUARIO = "E-mail j·° cadastrado";
 	public static final String ERRO_CONVERTER = "Erro no converter";
 	public static final String NADA_ENCONTRADO = "Ops, nada encontrado";
+	public static final String ITEM_JA_DEVOLVIDO = "Este Item j· foi Devolvido";
 }

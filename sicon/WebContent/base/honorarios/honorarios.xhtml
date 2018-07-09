@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+	<ui:composition template="../../resources/template/template-administrador.xhtml">
+		<ui:define name="mensagem">
+			<ui:include src="../../componentes/mensagem.xhtml" />
+		</ui:define>
+		<ui:define name="modal-confirmacao">
+			<ui:include src="../../componentes/dialog-confirmacao.xhtml" />
+		</ui:define>
+	
+	<ui:define name="conteudo">	
+		<!-- TITULO -->
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="page-header">Gerar Honorários</h1>
+
+		</div>
+	</div>
+	<!-- FIM TITULO -->
+
+
+	<!-- TABELA-->
+	<div class="col-md-12">
+		<h:form id="frmTabela">
+			<p:dataTable id="tabela" value="#{honorarioMB.listaHonorario}"
+				resizableColumns="true" reflow="true" var="list" rows="30"
+				paginator="true" paginatorPosition="bottom"
+				emptyMessage="Nenhum Honorário cadastrado"
+				rowsPerPageTemplate="5,10,15,30,50,100">
+				
+				<p:column headerText="Cliente" filterBy="#{list.cliente}"
+					sortBy="#{list.cliente}" filterMatchMode="contains">
+					<h:outputText value="#{list.cliente.nome}" />
+				</p:column>
+				<p:column headerText="Competência" filterBy="#{list.competencia}"
+					sortBy="#{list.competencia}" filterMatchMode="contains">
+					<h:outputText value="#{list.competencia}" >
+						<f:convertDateTime pattern="MM/yyyy" />
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Valor" filterBy="#{list.valor}"
+					sortBy="#{list.valor}" filterMatchMode="contains">
+					<h:outputText value="#{list.valor}" />
+				</p:column>
+				
+				<!-- <p:column headerText="Data de Pagamento" filterBy="#{list.dataPagamento}"
+					sortBy="#{list.dataPagamento}" filterMatchMode="contains">
+					<h:outputText value="#{list.dataPagamento}"
+								rendered="#{list.dataPagamento != null}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+									dateStyle="short" />
+							</h:outputText>
+				</p:column>
+				 -->
+				<p:column headerText="Visualizar" style="width:100px">
+					<p:commandButton disabled="false" alt="Visualizar" icon="fa fa-eye"
+						 title="Visualizar"
+						styleClass="btn btn-block" style="width:58px; margin:0 0 0 11px" oncomplete="PF('dlgMostrar').show();" 
+						update="listarItens"
+						actionListener="#{honorarioMB.mostrarHonorario(list)}">
+					
+					</p:commandButton>
+				</p:column>
+				<p:column headerText="Imprimir" style="width:100px">
+					<p:commandButton disabled="false" alt="Imprimir" icon="fa fa-print"
+						 title="Imprimir"
+						styleClass="btn btn-block" style="width:58px; margin:0 0 0 11px"
+						actionListener="#{honorarioMB.imprimirRelatorioHonorario()}">
+					</p:commandButton>
+					
+				</p:column>
+			</p:dataTable>
+			
+			
+		</h:form>
+	
+		<!--FIM DA TABELA-->
+		
+		<!-- Dialog visualizar itens Honorario -->
+		
+		<p:dialog header="Documentos" widgetVar="dlgMostrar" modal="true"
+				responsive="true" width="60%" id="dlgMostrar" closable="true"
+				closeOnEscape="true" resizable="false" draggable="false">
+				<h:form id="listarItens">
+				<div class="col-md-12">
+					<p:dataTable id="tabela" value="#{honorarioMB.listaDespesasAdicionais}"
+						resizableColumns="true" reflow="true" var="list" rows="10"
+						paginator="true" paginatorPosition="bottom"
+						emptyMessage="Nenhum item adicionado!"
+						rowsPerPageTemplate="5,10,15,30,50,100" >
+
+						<p:column headerText="Despesa" filterBy="#{list.despesa.nome}"
+							sortBy="#{list.despesa.nome}" filterMatchMode="contains">
+							<h:outputText value="#{list.despesa.nome}" />
+						</p:column>
+						
+						<p:column headerText="Quantidade" filterBy="#{list.quantidade}"
+							sortBy="#{list.quantidade}" filterMatchMode="contains">
+							<h:outputText value="#{list.quantidade}" />
+						</p:column>
+						<p:column headerText="Valor Total" filterBy="#{list.valorTotal}"
+							sortBy="#{list.valorTotal}" filterMatchMode="contains">
+							<h:outputText value="#{list.valorTotal}" />
+						</p:column>
+						
+						<p:column headerText="Alterar" style="width:68px">
+							<p:commandButton disabled="false" alt="Alterar"
+								icon="ui-icon-pencil" update="tabela" title="Alterar"
+								styleClass="btn btn-block" updata="tabela"
+								actionListener="#{despesaAdicionalMB.excluir(list)}">
+
+							</p:commandButton>
+						</p:column>
+						<p:column headerText="Excluir" style="width:68px">
+							<p:commandButton disabled="false" alt="Excluir"
+								icon="ui-icon-trash" update="@form" title="Excluir"
+								styleClass="btn btn-block"
+								actionListener="#{despesasAdicionaisMB.excluir(list)}">
+
+							</p:commandButton>
+						</p:column>
+						
+
+					</p:dataTable>
+
+				</div>
+				</h:form>
+			</p:dialog>
+<!-- fim do Dialog Mostrar Honorario -->	
+
+<!-- DIALOG DEVOLVER 
+			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true"
+				responsive="true" width="40%" id="dlgCadastrar" closable="true"
+				closeOnEscape="true" resizable="false" draggable="false">
+				<h:form id="frmModalSalvar">
+					<div class="ui-fluid">
+						<div class="col-md-12">
+							<label>Documento: *</label>
+							<p:selectOneMenu converter="#{documentoConverter}"
+								title="Documento"
+								value="#{protocoloMB.itensProtocolo.documento}">
+								<f:selectItems value="#{documentoMB.listaDocumento}"
+									var="documento" itemLabel="#{documento.nome}"
+									itemValue="#{documento}" />
+							</p:selectOneMenu>
+						</div>
+						<div class="col-md-12">
+							<label>Competência: *</label>
+							<p:calendar title="Competencia"
+								value="#{protocoloMB.itensProtocolo.competencia}"
+								pattern="dd-MM-yyyy" mask="true" />
+						</div>
+						<div class="col-md-12">
+							<label>Cod. Recolhimento: *</label>
+							<p:inputText title="codRecolhimento"
+								value="#{protocoloMB.itensProtocolo.codRecolhimento}" />
+						</div>
+						<div class="col-md-12">
+							<label>Vencimento: *</label>
+							<p:calendar title="Vencimento"
+								value="#{protocoloMB.itensProtocolo.vencimento}"
+								pattern="dd-MM-yyyy" mask="true" />
+
+						</div>
+						<div class="col-md-12">
+							<label>Valor: *</label>
+							<p:inputText title="Valor"
+								value="#{protocoloMB.itensProtocolo.valor}" />
+						</div>
+						<div class="col-md-12">
+							<label>Observação: *</label>
+							<p:inputText title="Valor"
+								value="#{protocoloMB.itensProtocolo.observacao}" />
+						</div>
+
+						<small>Campos obrigatórios *</small>
+					</div>
+					<div class="modal-footer">
+						<p:commandButton value="Salvar"
+							actionListener="#{protocoloMB.salvarItem()}"
+							styleClass="ui-priority-primary"
+							onclick="PF('dlgCadastrar').hide();"
+							update=":frmTabela"/>
+
+						<p:commandButton value="Cancelar"
+							onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
+					</div>
+				</h:form>
+			</p:dialog>	-->
+	
+	</div>
+
+	
+		</ui:define>
+		
+	</ui:composition>
+</h:body>
+</html>
+
