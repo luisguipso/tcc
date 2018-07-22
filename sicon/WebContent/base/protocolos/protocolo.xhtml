@@ -28,7 +28,7 @@
 
 			<!-- TABELA-->
 			<div class="col-md-12">
-				<h:form id="frmTabela">
+				<h:form id="frmTabela" target="_blank">
 					<p:dataTable id="tabela" value="#{protocoloMB.listaProtocolo}"
 						resizableColumns="true" reflow="true" var="list" rows="30"
 						paginator="true" paginatorPosition="bottom"
@@ -67,8 +67,8 @@
 						<p:column headerText="Imprimir" style="width:100px">
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="imprimir" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px"
-								actionListener="#{protocoloMB.imprimirRelatorioProtocolo()}">
+								style="width:58px; margin:0 0 0 11px" ajax="false" 
+								actionListener="#{protocoloMB.imprimirRelatorioProtocolo(list)}">
 
 							</p:commandButton>
 						</p:column>

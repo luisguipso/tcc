@@ -125,13 +125,13 @@ public class HonorarioMB {
 		}
 		
 		
-		public void imprimirRelatorioHonorario() { 
+		public void imprimirRelatorioHonorario(Honorario h) { 
 			try {
 				List<Honorario> relatorio = daoHonorario.listar(Honorario.class, "status = true");
 				if (relatorio.size() > 0) {
 
 					HashMap parametro = new HashMap<>();
-					
+					parametro.put("idHonorario", "h.getId()");
 					ChamarRelatorio ch = new ChamarRelatorio("honorario.jasper", parametro, "protocolo_de_entrega");
 					Session sessions = manager.unwrap(Session.class);
 					sessions.doWork(ch);

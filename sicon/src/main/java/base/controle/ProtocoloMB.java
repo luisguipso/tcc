@@ -154,14 +154,14 @@ public class ProtocoloMB {
 		this.listaItensProtocolo = daoItens.listar(DocumentosProtocolos.class, condicao);
 	}
 
-	public void imprimirRelatorioProtocolo() { 
+	public void imprimirRelatorioProtocolo(Protocolo p) { 
 		try {
 			List<Protocolo> relatorio = daoProtocolo.listar(Protocolo.class, "status = true");
 			if (relatorio.size() > 0) {
 
 				HashMap parametro = new HashMap<>();
-				
-				ChamarRelatorio ch = new ChamarRelatorio("protocolo.jasper", parametro, "protocolo_de_entrega");
+				parametro.put("idProtocolo", p.getId());
+				ChamarRelatorio ch = new ChamarRelatorio("relprotocolo.jasper", parametro, "protocolo_de_entrega");
 				Session sessions = manager.unwrap(Session.class);
 				sessions.doWork(ch);
 
