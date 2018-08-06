@@ -24,8 +24,24 @@
 				</div>
 			</div>
 			<!-- FIM TITULO -->
-
-
+			<!-- BOTOES -->
+			<!--  target bank no relatorio e target null no "link" -->
+			<div class="row container-fluid">
+				<div class="col-md-12">
+					<ol class="breadcrumb">
+					
+						
+						<h:form id="frmRelatorio" >
+							<p:commandButton  ajax="false" action="novo-protocolo.jsf" value="Novo Protocolo " onclick="this.form.target=''"></p:commandButton>
+						
+							<p:commandButton value="Relatorio"
+								actionListener="#{clienteMB.imprimirRelatorioCliente()}"
+								ajax="false" title="Cadastrar" onclick="this.form.target='_blank'" />
+						</h:form>
+					</ol>
+				</div>
+			</div>
+			<!-- FIM DOS BOTOES -->
 			<!-- TABELA-->
 			<div class="col-md-12">
 				<h:form id="frmTabela" target="_blank">
@@ -67,7 +83,7 @@
 						<p:column headerText="Imprimir" style="width:100px">
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="imprimir" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px" ajax="false" 
+								style="width:58px; margin:0 0 0 11px" ajax="false"
 								actionListener="#{protocoloMB.imprimirRelatorioProtocolo(list)}">
 
 							</p:commandButton>
@@ -129,7 +145,7 @@
 										icon="ui-icon-arrowreturnthick-1-s" update="tabela"
 										title="Devolver" styleClass="btn btn-block" updata="tabela"
 										actionListener="#{protocoloMB.devolverItem(list)}">
-
+										<p:confirm header="Confirmação" message="Deseja Devolver?" />
 									</p:commandButton>
 								</p:column>
 

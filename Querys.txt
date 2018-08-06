@@ -20,6 +20,15 @@ select  p.id as "Protocolo: ", c.nome as "Cliente: ", d.nome as "Documento: ", d
 
 
 --documentos devolvidos
+
+---relatorio pai
+select  c.id, c.nome
+	from cliente as c inner join protocolo as p on p.cliente_id = c.id 
+ 	inner join documentosprotocolos as dp on p.id = dp.protocolo_id
+    		where dp.devolvido = 1
+    			order by c.nome;
+
+---subrelatorio
 select  p.id as "Protocolo: ", c.nome as "Cliente: ", d.nome as "Documento: ", dp.competencia as "Competência: " 
 	from documento as d inner join documentosprotocolos as dp on d.id = dp.documento_id
 	inner join protocolo as p on p.id = dp.protocolo_id
