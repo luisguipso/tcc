@@ -1,5 +1,7 @@
 package base.modelo;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,9 +15,8 @@ public class Despesa {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
-	private double valor;
+	private BigDecimal valor;
 	private boolean status;
-	
 	public Long getId() {
 		return id;
 	}
@@ -28,10 +29,10 @@ public class Despesa {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 	public boolean isStatus() {
@@ -47,9 +48,7 @@ public class Despesa {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
-		long temp;
-		temp = Double.doubleToLongBits(valor);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		return result;
 	}
 	@Override
@@ -73,13 +72,13 @@ public class Despesa {
 			return false;
 		if (status != other.status)
 			return false;
-		if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
 			return false;
 		return true;
 	}
-	
-	
-	
 	
 	
 }

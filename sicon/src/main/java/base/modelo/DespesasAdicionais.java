@@ -1,5 +1,6 @@
 package base.modelo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class DespesasAdicionais {
 	private Date competencia;
 	private String descricao;
 	private int quantidade;
-	private double valorTotal;
+	private BigDecimal valorTotal;
 	@ManyToOne
 	private Usuario usuario;
 	@ManyToOne
@@ -30,11 +31,6 @@ public class DespesasAdicionais {
 	private Despesa despesa;
 	@ManyToOne
 	private Honorario honorario;
-	
-	
-	
-	
-	
 	public Long getId() {
 		return id;
 	}
@@ -59,10 +55,10 @@ public class DespesasAdicionais {
 	public void setQuantidade(int quantidade) {
 		this.quantidade = quantidade;
 	}
-	public double getValorTotal() {
+	public BigDecimal getValorTotal() {
 		return valorTotal;
 	}
-	public void setValorTotal(double valorTotal) {
+	public void setValorTotal(BigDecimal valorTotal) {
 		this.valorTotal = valorTotal;
 	}
 	public Usuario getUsuario() {
@@ -101,9 +97,7 @@ public class DespesasAdicionais {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + quantidade;
 		result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(valorTotal);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
 		return result;
 	}
 	@Override
@@ -152,10 +146,16 @@ public class DespesasAdicionais {
 				return false;
 		} else if (!usuario.equals(other.usuario))
 			return false;
-		if (Double.doubleToLongBits(valorTotal) != Double.doubleToLongBits(other.valorTotal))
+		if (valorTotal == null) {
+			if (other.valorTotal != null)
+				return false;
+		} else if (!valorTotal.equals(other.valorTotal))
 			return false;
 		return true;
 	}
+	
+	
+	
 	
 	
 }

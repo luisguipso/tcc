@@ -1,5 +1,6 @@
 package base.modelo;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -16,14 +17,14 @@ public class Honorario {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private double valor;
+	private BigDecimal valor;
 	private Date vencimento;
 	private Date competencia;
 	@ManyToOne
 	private Cliente cliente;
-	private double desconto;	
+	private BigDecimal desconto;	
 	private Date dataPagamento;
-	private double valorPago;
+	private BigDecimal valorPago;
 	private String situacao;
 	private boolean status;
 	public Long getId() {
@@ -32,10 +33,10 @@ public class Honorario {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public double getValor() {
+	public BigDecimal getValor() {
 		return valor;
 	}
-	public void setValor(double valor) {
+	public void setValor(BigDecimal valor) {
 		this.valor = valor;
 	}
 	public Date getVencimento() {
@@ -56,23 +57,23 @@ public class Honorario {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	public double getDesconto() {
+	public BigDecimal getDesconto() {
 		return desconto;
 	}
-	public void setDesconto(double desconto) {
+	public void setDesconto(BigDecimal desconto) {
 		this.desconto = desconto;
 	}
-	public Date getData_pagamento() {
+	public Date getDataPagamento() {
 		return dataPagamento;
 	}
-	public void setData_pagamento(Date data_pagamento) {
-		this.dataPagamento = data_pagamento;
+	public void setDataPagamento(Date dataPagamento) {
+		this.dataPagamento = dataPagamento;
 	}
-	public double getValor_pago() {
+	public BigDecimal getValorPago() {
 		return valorPago;
 	}
-	public void setValor_pago(double valor_pago) {
-		this.valorPago = valor_pago;
+	public void setValorPago(BigDecimal valorPago) {
+		this.valorPago = valorPago;
 	}
 	public String getSituacao() {
 		return situacao;
@@ -93,16 +94,12 @@ public class Honorario {
 		result = prime * result + ((cliente == null) ? 0 : cliente.hashCode());
 		result = prime * result + ((competencia == null) ? 0 : competencia.hashCode());
 		result = prime * result + ((dataPagamento == null) ? 0 : dataPagamento.hashCode());
-		long temp;
-		temp = Double.doubleToLongBits(desconto);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((desconto == null) ? 0 : desconto.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
 		result = prime * result + (status ? 1231 : 1237);
-		temp = Double.doubleToLongBits(valor);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(valorPago);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
 		result = prime * result + ((vencimento == null) ? 0 : vencimento.hashCode());
 		return result;
 	}
@@ -130,7 +127,10 @@ public class Honorario {
 				return false;
 		} else if (!dataPagamento.equals(other.dataPagamento))
 			return false;
-		if (Double.doubleToLongBits(desconto) != Double.doubleToLongBits(other.desconto))
+		if (desconto == null) {
+			if (other.desconto != null)
+				return false;
+		} else if (!desconto.equals(other.desconto))
 			return false;
 		if (id == null) {
 			if (other.id != null)
@@ -144,9 +144,15 @@ public class Honorario {
 			return false;
 		if (status != other.status)
 			return false;
-		if (Double.doubleToLongBits(valor) != Double.doubleToLongBits(other.valor))
+		if (valor == null) {
+			if (other.valor != null)
+				return false;
+		} else if (!valor.equals(other.valor))
 			return false;
-		if (Double.doubleToLongBits(valorPago) != Double.doubleToLongBits(other.valorPago))
+		if (valorPago == null) {
+			if (other.valorPago != null)
+				return false;
+		} else if (!valorPago.equals(other.valorPago))
 			return false;
 		if (vencimento == null) {
 			if (other.vencimento != null)

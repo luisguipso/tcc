@@ -1,5 +1,6 @@
 package base.controle;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -34,6 +35,7 @@ public class DespesasAdicionaisMB {
 	private Despesa despesa;
 	private Honorario honorario;
 	private DespesasAdicionais despesasAdicinais;
+	private BigDecimal quantidade, valor;
 
 	private List<Despesa> listaDespesas;
 	private List<Honorario> listaHonorario;
@@ -67,6 +69,7 @@ public class DespesasAdicionaisMB {
 		listaHonorarioBusca = new ArrayList<>();
 		listaDespesasAdicionais = new ArrayList<>();
 		listaDespesasAdicionais = daoDespesasAdicionais.lista(DespesasAdicionais.class);
+		
 
 	}
 
@@ -80,8 +83,12 @@ public class DespesasAdicionaisMB {
 		try {
 
 			if (despesasAdicinais.getId() == null) {
-				despesasAdicinais
-						.setValorTotal(despesasAdicinais.getQuantidade() * despesasAdicinais.getDespesa().getValor());
+				quantidade = new BigDecimal(despesasAdicinais.getQuantidade());
+				valor = new BigDecimal(despesasAdicinais.getDespesa().getValor().toString());
+				//multiplica o valor pela qunatidade
+				System.out.println("Valor multiplicando:"+quantidade.multiply(valor));
+				despesasAdicinais.setValorTotal(quantidade.multiply(valor));
+				
 
 				// preenche com todos os honorarios para o cliente
 				listaHonorario = preencheListaHonorario();
@@ -100,14 +107,17 @@ public class DespesasAdicionaisMB {
 				System.out.println(String.valueOf("Tamanho da lista apos criar: " + listaHonorario.size()));
 
 				compararCompetencias();
-				// se existir honorario nesse ponto ele estará
+				// se existir honorario nesse ponto ele estarï¿½
 				// preenchido para o cliente e competencia
 				if (existeHonorario == false) {
 					criarHonorario();
 				}
 
 				despesasAdicinais.setHonorario(honorario);
-				honorario.setValor(honorario.getValor() + despesasAdicinais.getValorTotal());
+				
+				//soma os valores do honorÃ¡rio com o valor da despesa
+				System.out.println("valor somando: "+honorario.getValor().add(despesasAdicinais.getValorTotal()));
+				honorario.setValor(honorario.getValor().add(despesasAdicinais.getValorTotal()));
 				honorarioService.inserirAlterar(honorario);
 				despesasAdicionaisService.inserirAlterar(despesasAdicinais);
 
@@ -169,7 +179,8 @@ public class DespesasAdicionaisMB {
 				"cliente_id = " + despAdicional.getCliente().getId().toString());
 		for (Honorario honorario : listaHonorario) {
 			if (honorario.getId() == despAdicional.getHonorario().getId()) {
-				honorario.setValor(honorario.getValor() - despAdicional.getValorTotal());
+				System.out.println("valor subtraindo: "+honorario.getValor().subtract(despAdicional.getValorTotal()));
+				honorario.setValor(honorario.getValor().subtract(despAdicional.getValorTotal()));
 				honorarioService.inserirAlterar(honorario);
 				despesasAdicionaisService.delete(despAdicional);
 				criarNovoObjeto();
@@ -181,7 +192,7 @@ public class DespesasAdicionaisMB {
 
 	}
 
-	// cria honorário com valor padrao
+	// cria honorï¿½rio com valor padrao
 	public void criarHonorario() {
 		honorario = new Honorario();
 		honorario.setValor(despesasAdicinais.getCliente().getHonorario_padrao());

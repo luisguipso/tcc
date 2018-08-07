@@ -54,7 +54,9 @@
 				</p:column>
 				<p:column headerText="Valor" filterBy="#{list.valor}"
 					sortBy="#{list.valor}" filterMatchMode="contains">
-					<h:outputText value="#{list.valor}" />
+					<h:outputText value="#{list.valor}">
+						<f:convertNumber pattern="#0.00" />
+					</h:outputText>
 				</p:column>
 				
 				
@@ -97,7 +99,9 @@
 				</div>
 				<div class="col-md-12">
 					<label>Valor: *</label>
-					<p:inputText title="Nome" value="#{despesaMB.despesa.valor}" />
+					<p:inputNumber  value="#{despesaMB.despesa.valor}">  
+                </p:inputNumber>
+					
 				</div>			
 				<small>Campos obrigatórios *</small>
 			</div>
