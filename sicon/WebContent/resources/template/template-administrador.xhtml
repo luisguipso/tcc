@@ -25,6 +25,8 @@
 		href="#{request.contextPath}/resources/dist/css/AdminLTE.min.css" />
 
 	<link rel="stylesheet" type="text/css"
+		href="#{request.contextPath}/resources/plugins/pace/pace.min.css" />
+	<link rel="stylesheet" type="text/css"
 		href="#{request.contextPath}/resources/dist/css/skins/skin-blue.min.css" />
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" />
@@ -33,6 +35,7 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
+
 	<style>
 .ui-dialog-content {
 	max-height: 500px !important;
@@ -64,7 +67,7 @@
 								class="hidden-xs"><i class="fa fa-user"
 									aria-hidden="true"></i> <h:outputText
 										value="#{usuarioSessaoMB.pessoa.usuario}" /> </span>
-										 
+
 						</a></li>
 						<li><a href="../../j_spring_security_logout"> <i
 								class="fa fa-power-off" aria-hidden="true"></i> Sair
@@ -76,33 +79,44 @@
 		</header>
 		<aside class="main-sidebar">
 
-			<section class="sidebar">
+			<section class="sidebar" style="height: auto; min-height: 100%">
 
-				<ul class="sidebar-menu" >
+				<ul class="sidebar-menu" data-widget="tree">
 
-					
-					<li><a href="../cadastros/cliente.jsf"><i
-							class="fa fa-user-secret" aria-hidden="true"></i> <span>clientes</span></a></li>
-					<li><a href="../cadastros/perfil.jsf"><i
-							class="fa fa-user-secret" aria-hidden="true"></i> <span>Perfil</span></a></li>
-					<li><a href="../cadastros/usuario.jsf"><i
-							class="fa fa-user-secret" aria-hidden="true"></i> <span>Usuário</span></a></li>
-					<li><a href="../cadastros/documento.jsf"><i
-							class="fa fa-user-secret" aria-hidden="true"></i> <span>Documento</span></a></li>
-					<li><a href="../cadastros/despesas.jsf"><i
-							class="fa fa-user-secret" aria-hidden="true"></i> <span>Despesas</span></a></li>
-							<li><a href="../honorarios/honorarios.jsf"><i
+
+					<li class="treeview menu-open"><a href="#"><i class="fa fa-link"></i>
+							<span>Cadastros</span> <span class="pull-right-container">
+								<i class="fa fa-angle-left pull-right"></i>
+						</span> </a>
+						<ul class="treeview-menu">
+							<li><a href="../cadastros/cliente.jsf">Cliente</a></li>
+							<li><a href="../cadastros/perfil.jsf"><i
+									class="fa fa-user-secret" aria-hidden="true"></i> <span>Perfil</span></a></li>
+							<li><a href="../cadastros/usuario.jsf"><i
+									class="fa fa-user-secret" aria-hidden="true"></i> <span>Usuário</span></a></li>
+							<li><a href="../cadastros/documento.jsf"><i
+									class="fa fa-user-secret" aria-hidden="true"></i> <span>Documento</span></a></li>
+							<li><a href="../cadastros/despesas.jsf"><i
+									class="fa fa-user-secret" aria-hidden="true"></i> <span>Despesas</span></a></li>
+						</ul></li>
+
+
+
+
+					<li><a href="../honorarios/honorarios.jsf"><i
 							class="fa fa-plus" aria-hidden="true"></i> <span>Honorários</span></a></li>
 					<li><a href="../protocolos/protocolo.jsf"><i
-							class="fa fa-envelope-o" aria-hidden="true"></i> <span>Protocolo</span></a></li>	
+							class="fa fa-envelope-o" aria-hidden="true"></i> <span>Protocolo</span></a></li>
 					<li><a href="../protocolos/novo-protocolo.jsf"><i
-							class="fa fa-plus" aria-hidden="true"></i> <span>Novo Protocolo</span></a></li>
+							class="fa fa-plus" aria-hidden="true"></i> <span>Novo
+								Protocolo</span></a></li>
 					<li><a href="../despesas/nova-despesa.jsf"><i
-							class="fa fa-user-secret" aria-hidden="true"></i> <span>Nova Despesa</span></a></li>
-						
+							class="fa fa-user-secret" aria-hidden="true"></i> <span>Nova
+								Despesa</span></a></li>
+
 				</ul>
-				
-   
+
+
 			</section>
 		</aside>
 
@@ -136,7 +150,9 @@
 
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/app.min.js"></script>
-
+	
+	<script type="text/javascript"
+		src="#{request.contextPath}/resources/dist/js/adminlte.min.js"></script>
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/demo.js"></script>
 </h:body>
