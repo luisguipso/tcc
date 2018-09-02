@@ -80,22 +80,23 @@
 
 	<!-- DIALOG SALVAR -->
 	<p:dialog header="Cadastro Perfil" widgetVar="dlgCadastrar"
-		modal="true" responsive="true" width="40%" id="dlgCadastrar"
+		modal="true" responsive="true"  id="dlgCadastrar"
 		closable="true" closeOnEscape="true" resizable="false"
-		draggable="false">
+		draggable="true">
 		<h:form id="frmModalSalvar">
 			<div class="ui-fluid">
 							
 				<div class="col-md-12">
 					<label>Nivel de Acesso: *</label>
+					
+				</div>
+				<div class="col-md-12">
 					<p:selectOneMenu id="console" value="#{perfilMB.perfil.nivel_acesso}" style="width:125px">
 			            <f:selectItem itemLabel="Selecione.." itemValue="" />
 			            <f:selectItem itemLabel="Funcionario" itemValue="funcionario" />
 			            <f:selectItem itemLabel="Administrador" itemValue="administrador" />			            
 			        </p:selectOneMenu>
 				</div>
-					
-				
 			
 				<small>Campos obrigatórios *</small>
 			</div>

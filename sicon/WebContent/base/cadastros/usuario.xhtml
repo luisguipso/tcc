@@ -90,28 +90,25 @@
 
 	<!-- DIALOG SALVAR -->
 	<p:dialog header="Cadastrar Usuário" widgetVar="dlgCadastrar"
-		modal="true" responsive="true" width="40%" id="dlgCadastrar"
-		closable="true" closeOnEscape="true" resizable="false"
-		draggable="false">
+		modal="true" responsive="true"  id="dlgCadastrar"
+		closable="true" closeOnEscape="true" resizable="true"
+		draggable="true">
 		<h:form id="frmModalSalvar">
 			<div class="ui-fluid">
 				<div class="col-md-12">
 					<label>Nome do Usuário: *</label>
 					<p:inputText title="Usuario" value="#{usuarioMB.usuario.nome}" />
-				</div>
-				<div class="col-md-12">
+				
 					<label>login: *</label>
 					<p:inputText title="Nome" value="#{usuarioMB.usuario.login}" />
-				</div>				
-				<div class="col-md-12">
+				
 					<label>Senha: *</label>					                 
 				    <p:password id="pwd1" value="#{usuarioMB.usuario.senha}" match="pwd2" label="Senha" required="true" feedback="true"/>
 				 	
 				 	<label>Confirmar senha: *</label>	        
 				    <p:password id="pwd2" value="#{usuarioMB.usuario.senha}" label="Confirmar senha" required="true" />
 				    
-				</div>
-				<div class="col-md-12">
+				
 					<label>Perfil: *</label>
 					<p:selectOneMenu converter="#{perfilConverter}" title="Descricao" value="#{usuarioMB.usuario.perfil}">
 						<f:selectItems value="#{perfilMB.listaPerfil}" var="perfil" itemLabel="#{perfil.nivel_acesso}" itemValue="#{perfil}"/>

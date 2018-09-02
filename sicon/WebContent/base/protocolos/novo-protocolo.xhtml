@@ -30,21 +30,17 @@
 
 				<!-- CAMPOS DE CADASTRO -->
 				<div class="ui-fluid">
-					<div class="col-md-12">
+					<div class="col-md-6">
 						<label>Competência: *</label>
 						<p:calendar title="Competencia"
 							value="#{protocoloMB.protocolo.competencia}" pattern="MM-yyyy"
 							mask="true" />
-					</div>
-					<div class="col-md-12">
-						<label>Usuário: *</label>
+							<label>Usuário: *</label>
 						<p:selectOneMenu converter="#{usuarioConverter}" title="Usuario"
 							value="#{protocoloMB.protocolo.usuario}">
 							<f:selectItems value="#{usuarioMB.listaUsuario}" var="usuario"
 								itemLabel="#{usuario.nome}" itemValue="#{usuario}" />
 						</p:selectOneMenu>
-					</div>
-					<div class="col-md-12">
 						<label>Cliente: *</label>
 						<p:selectOneMenu converter="#{clienteConverter}" title="Cliente"
 							value="#{protocoloMB.protocolo.cliente}">
@@ -52,6 +48,7 @@
 								itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
 						</p:selectOneMenu>
 					</div>
+					
 				</div>
 				<div class="col-md-12">
 					<ol class="breadcrumb">
@@ -148,9 +145,9 @@
 			<!-- Fim do Form de Inserção -->
 
 			<!-- DIALOG SALVAR ITEM -->
-			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true"
-				responsive="true" width="40%" id="dlgCadastrar" closable="true"
-				closeOnEscape="true" resizable="false" draggable="false">
+			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true" responsive="true"  id="dlgCadastrar"
+		closable="true" closeOnEscape="true" resizable="false"
+		draggable="true">				
 				<h:form id="frmModalSalvar">
 					<div class="ui-fluid">
 						<div class="col-md-12">
