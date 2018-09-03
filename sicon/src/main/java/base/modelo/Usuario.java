@@ -17,8 +17,7 @@ public class Usuario {
 	private String nome;
 	private String login;
 	private String senha;
-	@OneToOne
-	private Perfil perfil;
+	private String perfil;
 	private boolean status;	
 	
 	
@@ -50,10 +49,10 @@ public class Usuario {
 		this.nome = nome;
 	}
 	
-	public Perfil getPerfil() {
+	public String getPerfil() {
 		return perfil;
 	}
-	public void setPerfil(Perfil perfil) {
+	public void setPerfil(String perfil) {
 		this.perfil = perfil;
 	}
 	public boolean isStatus() {
