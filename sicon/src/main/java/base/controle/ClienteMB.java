@@ -59,6 +59,30 @@ public class ClienteMB {
 
 	}
 
+	public List<Cliente> getListaCliente() {
+		return listaCliente;
+	}
+
+	public void setListaCliente(List<Cliente> listaCliente) {
+		this.listaCliente = listaCliente;
+	}
+
+	public GenericDAO<Cliente> getDaoCliente() {
+		return daoCliente;
+	}
+
+	public void setDaoCliente(GenericDAO<Cliente> daoCliente) {
+		this.daoCliente = daoCliente;
+	}
+
+	public EntityManager getManager() {
+		return manager;
+	}
+
+	public void setManager(EntityManager manager) {
+		this.manager = manager;
+	}
+
 	public void inativarCliente(Cliente t) {
 		clienteService.update(" Tipo set status = false where id = " + t.getId());
 		criarNovoObjeto();

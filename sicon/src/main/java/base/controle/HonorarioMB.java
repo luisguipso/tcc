@@ -93,7 +93,7 @@ public class HonorarioMB {
 						honorario.setStatus(true);
 						for(Cliente cli : listaClientes) {
 							honorario.setCliente(cli);//determina a qual cliente o honorario pertence
-							honorario.setValor(cli.getHonorario_padrao()); //insere o valor do honorário do cliente
+							honorario.setValor(cli.getHonorario_padrao()); //insere o valor do honorï¿½rio do cliente
 							Date data = new Date();
 							System.out.println(String.valueOf(data.getTime()));
 							
@@ -143,6 +143,9 @@ public class HonorarioMB {
 				e.printStackTrace();
 				ExibirMensagem.exibirMensagem(Mensagem.ERRO);
 			}
+		}
+		public void honorariosPorCliente() {
+			honorarioBusca = daoHonorario.listarCodicaoLivre(Honorario.class, "cliente_id = "+honorario.getCliente().getId().toString());
 		}
 
 		/*Getters & Setters*/

@@ -51,8 +51,8 @@
 						emptyMessage="Nenhum Protocolo cadastrado"
 						rowsPerPageTemplate="5,10,15,30,50,100">
 
-						<p:column headerText="Cliente" filterBy="#{list.cliente}"
-							sortBy="#{list.cliente}" filterMatchMode="contains">
+						<p:column headerText="Cliente" filterBy="#{list.cliente.nome}"
+							sortBy="#{list.cliente.nome}" filterMatchMode="contains">
 							<h:outputText value="#{list.cliente.nome}" />
 						</p:column>
 						<p:column headerText="Competência" filterBy="#{list.competencia}"

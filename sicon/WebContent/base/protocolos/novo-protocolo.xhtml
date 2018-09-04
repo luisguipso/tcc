@@ -35,7 +35,7 @@
 						<p:calendar title="Competencia"
 							value="#{protocoloMB.protocolo.competencia}" pattern="MM-yyyy"
 							mask="true" />
-							<label>Usuário: *</label>
+						<label>Usuário: *</label>
 						<p:selectOneMenu converter="#{usuarioConverter}" title="Usuario"
 							value="#{protocoloMB.protocolo.usuario}">
 							<f:selectItems value="#{usuarioMB.listaUsuario}" var="usuario"
@@ -48,7 +48,7 @@
 								itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
 						</p:selectOneMenu>
 					</div>
-					
+
 				</div>
 				<div class="col-md-12">
 					<ol class="breadcrumb">
@@ -56,15 +56,12 @@
 							actionListener="#{protocoloMB.criarNovoObjetoItem()}"
 							onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
 							title="Inserir" />
-<!-- salvar protocolo -->
-						<p:commandButton value="Salvar" 
-							actionListener="#{protocoloMB.salvarProtocolo()}" 
-							title="Salvar"	
-							styleClass="ui-priority-primary" 
-							update=":frmTabela"
-							action="protocolo.jsf"
-							onclick="protocolo.jsf"/>
-				
+						<!-- salvar protocolo -->
+						<p:commandButton value="Salvar"
+							actionListener="#{protocoloMB.salvarProtocolo()}" title="Salvar"
+							styleClass="ui-priority-primary" update=":frmTabela"
+							action="protocolo.jsf" onclick="protocolo.jsf" />
+
 						<p:commandButton value="Cancelar" action="protocolo.jsf"
 							onclick="protocolo.jsf" />
 
@@ -72,16 +69,16 @@
 					</ol>
 				</div>
 			</h:form>
-				<!-- FIM DOS CAMPOS DE PROTOCOLO -->
-			
-				<!-- TABELA-->
+			<!-- FIM DOS CAMPOS DE PROTOCOLO -->
+
+			<!-- TABELA-->
 			<h:form id="frmTabela">
 				<div class="col-md-12">
 					<p:dataTable id="tabela" value="#{protocoloMB.listaItensProtocolo}"
 						resizableColumns="true" reflow="true" var="list" rows="10"
 						paginator="true" paginatorPosition="bottom"
 						emptyMessage="Nenhum item adicionado!"
-						rowsPerPageTemplate="5,10,15,30,50,100" >
+						rowsPerPageTemplate="5,10,15,30,50,100">
 
 						<p:column headerText="Documento" filterBy="#{list.documento.nome}"
 							sortBy="#{list.documento.nome}" filterMatchMode="contains">
@@ -135,19 +132,19 @@
 
 				</div>
 			</h:form>
-				<!--FIM DA TABELA-->
+			<!--FIM DA TABELA-->
 
-				<!-- BOTOES DE INSERCAO -->
+			<!-- BOTOES DE INSERCAO -->
 			<h:form id="frmBotoes">
-				
-				
+
+
 			</h:form>
 			<!-- Fim do Form de Inserção -->
 
 			<!-- DIALOG SALVAR ITEM -->
-			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true" responsive="true"  id="dlgCadastrar"
-		closable="true" closeOnEscape="true" resizable="false"
-		draggable="true">				
+			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true"
+				responsive="true" id="dlgCadastrar" closable="true"
+				closeOnEscape="true" resizable="false" draggable="true">
 				<h:form id="frmModalSalvar">
 					<div class="ui-fluid">
 						<div class="col-md-12">
@@ -195,8 +192,7 @@
 						<p:commandButton value="Salvar"
 							actionListener="#{protocoloMB.salvarItem()}"
 							styleClass="ui-priority-primary"
-							onclick="PF('dlgCadastrar').hide();"
-							update=":frmTabela"/>
+							onclick="PF('dlgCadastrar').hide();" update=":frmTabela" />
 
 						<p:commandButton value="Cancelar"
 							onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
