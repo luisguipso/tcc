@@ -5,6 +5,10 @@ import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.Application;
+import javax.faces.application.ViewHandler;
+import javax.faces.component.UIViewRoot;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -56,6 +60,9 @@ public class HonorarioMB {
 		
 		@Inject
 		private EntityManager manager;
+		
+		@Inject
+		private DespesasAdicionaisMB despesaAdicionalMB;
 		
 		
 		@PostConstruct
@@ -146,6 +153,20 @@ public class HonorarioMB {
 		}
 		public void honorariosPorCliente() {
 			honorarioBusca = daoHonorario.listarCodicaoLivre(Honorario.class, "cliente_id = "+honorario.getCliente().getId().toString());
+		}
+		public void excluirDespesaAdicional(DespesasAdicionais despAdicional) {
+			despesaAdicionalMB.excluir(despAdicional);
+			carregarLista();
+			refresh();
+		}
+		
+		public void refresh() {
+			FacesContext context = FacesContext.getCurrentInstance();
+			Application application = context.getApplication();
+			ViewHandler viewHandler = application.getViewHandler();
+			UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+			context.setViewRoot(viewRoot);
+			context.renderResponse();
 		}
 
 		/*Getters & Setters*/

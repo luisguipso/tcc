@@ -120,9 +120,9 @@
 						</p:column>
 						<p:column headerText="Excluir" style="width:68px">
 							<p:commandButton disabled="false" alt="Excluir"
-								icon="ui-icon-trash" update=":frmTabela :dlgMostrar" title="Excluir"
+								icon="ui-icon-trash" update=":frmTabela" oncomplete="PF('dlgMostrar').hide()" title="Excluir"
 								styleClass="btn btn-block"
-								actionListener="#{despesasAdicionaisMB.excluir(list)}">
+								actionListener="#{honorarioMB.excluirDespesaAdicional(list)}">
 
 							</p:commandButton>
 						</p:column>
