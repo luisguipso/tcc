@@ -25,7 +25,7 @@ public class Honorario {
 	private BigDecimal desconto;	
 	private Date dataPagamento;
 	private BigDecimal valorPago;
-	private String situacao;
+	private boolean pago;
 	private boolean status;
 	public Long getId() {
 		return id;
@@ -75,17 +75,23 @@ public class Honorario {
 	public void setValorPago(BigDecimal valorPago) {
 		this.valorPago = valorPago;
 	}
-	public String getSituacao() {
-		return situacao;
+	public boolean getSituacao() {
+		return pago;
 	}
-	public void setSituacao(String situacao) {
-		this.situacao = situacao;
+	public void setSituacao(boolean pago) {
+		this.pago = pago;
 	}
 	public boolean isStatus() {
 		return status;
 	}
 	public void setStatus(boolean status) {
 		this.status = status;
+	}
+	public boolean isPago() {
+		return pago;
+	}
+	public void setPago(boolean pago) {
+		this.pago = pago;
 	}
 	@Override
 	public int hashCode() {
@@ -96,7 +102,7 @@ public class Honorario {
 		result = prime * result + ((dataPagamento == null) ? 0 : dataPagamento.hashCode());
 		result = prime * result + ((desconto == null) ? 0 : desconto.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((situacao == null) ? 0 : situacao.hashCode());
+		result = prime * result + (pago ? 1231 : 1237);
 		result = prime * result + (status ? 1231 : 1237);
 		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
 		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
@@ -137,10 +143,7 @@ public class Honorario {
 				return false;
 		} else if (!id.equals(other.id))
 			return false;
-		if (situacao == null) {
-			if (other.situacao != null)
-				return false;
-		} else if (!situacao.equals(other.situacao))
+		if (pago != other.pago)
 			return false;
 		if (status != other.status)
 			return false;
@@ -161,6 +164,5 @@ public class Honorario {
 			return false;
 		return true;
 	}
-	
 	
 }

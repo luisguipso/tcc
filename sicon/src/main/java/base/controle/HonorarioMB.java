@@ -1,4 +1,5 @@
 package base.controle;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -31,254 +32,256 @@ import util.Mensagem;
 
 @ViewScoped
 @Named("honorarioMB")
-public class HonorarioMB {		
-		private static final long serialVersionUID = 1L;
+public class HonorarioMB {
+	private static final long serialVersionUID = 1L;
 
+	private Honorario honorario;
+	private Cliente cliente;
+	private DespesasAdicionais despesa;
+	private List<Honorario> honorarioBusca;
+	private List<Honorario> listaHonorario;
+	private List<Cliente> listaClientes;
+	private List<DespesasAdicionais> listaDespesasAdicionais;
 
-		private Honorario honorario;
-		private Cliente cliente;
-		private DespesasAdicionais despesa;
-		private List<Honorario> honorarioBusca;
-		private List<Honorario> listaHonorario;
-		private List<Cliente> listaClientes;
-		private List<DespesasAdicionais> listaDespesasAdicionais;
-			
-		@Inject
-		private GenericDAO<Honorario> daoHonorario; //faz as buscas
-		
-		@Inject
-		private GenericDAO<Cliente> daoCliente; //faz as buscas
-		
-		@Inject
-		private GenericDAO<DespesasAdicionais> daoDespesasAdicionais; //faz as buscas
-		
-		@Inject
-		private HonorarioService honorarioService; // inserir no banco
-		
-		@Inject
-		private DespesasAdicionaisService despesasAdicionaisService; // inserir no banco
-		
-		@Inject
-		private EntityManager manager;
-		
-		@Inject
-		private DespesasAdicionaisMB despesaAdicionalMB;
-		
-		
-		@PostConstruct
-		public void inicializar() {
-		
-			honorario = new Honorario();
-			cliente = new Cliente();
-			despesa = new DespesasAdicionais();
-			
-			listaHonorario = daoHonorario.lista(Honorario.class);
-			listaClientes = new ArrayList<>();
-			listaDespesasAdicionais = new ArrayList<>();
-			
-			listaClientes = daoCliente.listaComStatus(Cliente.class);
-			listaDespesasAdicionais = daoDespesasAdicionais.lista(DespesasAdicionais.class);
-			honorarioBusca = new ArrayList<>();
-			
-		}
+	@Inject
+	private GenericDAO<Honorario> daoHonorario; // faz as buscas
 
-		public void preencherHonorario(Honorario t) {
-			this.honorario = t;
+	@Inject
+	private GenericDAO<Cliente> daoCliente; // faz as buscas
 
-		}
+	@Inject
+	private GenericDAO<DespesasAdicionais> daoDespesasAdicionais; // faz as buscas
 
-		public void inativar(Honorario t) {
-			honorarioService.update(" Tipo set status = false where id = " + t.getId());
+	@Inject
+	private HonorarioService honorarioService; // inserir no banco
+
+	@Inject
+	private DespesasAdicionaisService despesasAdicionaisService; // inserir no banco
+
+	@Inject
+	private EntityManager manager;
+
+	@Inject
+	private DespesasAdicionaisMB despesaAdicionalMB;
+
+	@PostConstruct
+	public void inicializar() {
+
+		honorario = new Honorario();
+		cliente = new Cliente();
+		despesa = new DespesasAdicionais();
+
+		listaHonorario = daoHonorario.lista(Honorario.class);
+		listaClientes = new ArrayList<>();
+		listaDespesasAdicionais = new ArrayList<>();
+
+		listaClientes = daoCliente.listaComStatus(Cliente.class);
+		listaDespesasAdicionais = daoDespesasAdicionais.lista(DespesasAdicionais.class);
+		honorarioBusca = new ArrayList<>();
+
+	}
+
+	public void preencherHonorario(Honorario t) {
+		this.honorario = t;
+
+	}
+
+	public void inativar(Honorario t) {
+		honorarioService.update(" Tipo set status = false where id = " + t.getId());
+		criarNovoObjeto();
+		ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
+		carregarLista();
+	}
+
+	public void salvar() {
+
+		try {
+			honorario.setStatus(true);			
+			honorarioService.inserirAlterar(honorario);
 			criarNovoObjeto();
 			ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
+			FecharDialog.fecharDialogCadastro();
 			carregarLista();
+
+		} catch (Exception e) {
+			ExibirMensagem.exibirMensagem(Mensagem.ERRO);
+			e.printStackTrace();
 		}
 
-		public void salvar() {
+	}
+	
+	public void pagar(Honorario h) {
+		honorario = h;
+		if(h.isStatus()) {
+			ExibirMensagem.exibirMensagem(Mensagem.HONORARIO_JA_PAGO);
+			System.out.println("no if");
+		}else {
+		honorario.setPago(true);
+		salvar();
+		}
+	}
 
-			try {
-						honorario.setStatus(true);
-						for(Cliente cli : listaClientes) {
-							honorario.setCliente(cli);//determina a qual cliente o honorario pertence
-							honorario.setValor(cli.getHonorario_padrao()); //insere o valor do honor�rio do cliente
-							Date data = new Date();
-							System.out.println(String.valueOf(data.getTime()));
-							
-						}
-					criarNovoObjeto();
-					ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
-					FecharDialog.fecharDialogCadastro();
-					carregarLista();
-				
-			} catch (Exception e) {
-				ExibirMensagem.exibirMensagem(Mensagem.ERRO);
-				e.printStackTrace();
+	public void imprimirRelatorioHonorario(Honorario h) {
+		try {
+			List<Honorario> relatorio = daoHonorario.listar(Honorario.class, "status = true");
+			if (relatorio.size() > 0) {
+
+				HashMap parametro = new HashMap<>();
+				parametro.put("idHonorario", "h.getId()");
+				ChamarRelatorio ch = new ChamarRelatorio("honorario.jasper", parametro, "protocolo_de_entrega");
+				Session sessions = manager.unwrap(Session.class);
+				sessions.doWork(ch);
+
+			} else {
+				ExibirMensagem.exibirMensagem(Mensagem.NADA_ENCONTRADO);
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			ExibirMensagem.exibirMensagem(Mensagem.ERRO);
+		}
+	}
 
-		}
+	public void honorariosPorCliente() {
+		honorarioBusca = daoHonorario.listarCodicaoLivre(Honorario.class,
+				"cliente_id = " + honorario.getCliente().getId().toString());
+	}
 
-		public void criarNovoObjeto() {
-			honorario = new Honorario();
-		}
+	public void excluirDespesaAdicional(DespesasAdicionais despAdicional) {
+		despesaAdicionalMB.excluir(despAdicional);
+		carregarLista();
+		refresh();
+	}
 
-		public void carregarLista() {
-			listaHonorario = daoHonorario.listaComStatus(Honorario.class);
-		}
+	public void criarNovoObjeto() {
+		honorario = new Honorario();
+	}
 
-		public void mostrarHonorario(Honorario t) {
-			this.honorario = t;
-			String condicao = "honorario_id =" + honorario.getId().toString();
-			this.listaDespesasAdicionais = daoDespesasAdicionais.listar(DespesasAdicionais.class, condicao);
-		}
-		
-		
-		public void imprimirRelatorioHonorario(Honorario h) { 
-			try {
-				List<Honorario> relatorio = daoHonorario.listar(Honorario.class, "status = true");
-				if (relatorio.size() > 0) {
+	public void carregarLista() {
+		listaHonorario = daoHonorario.listaComStatus(Honorario.class);
+	}
 
-					HashMap parametro = new HashMap<>();
-					parametro.put("idHonorario", "h.getId()");
-					ChamarRelatorio ch = new ChamarRelatorio("honorario.jasper", parametro, "protocolo_de_entrega");
-					Session sessions = manager.unwrap(Session.class);
-					sessions.doWork(ch);
+	public void mostrarHonorario(Honorario t) {
+		this.honorario = t;
+		String condicao = "honorario_id =" + honorario.getId().toString();
+		this.listaDespesasAdicionais = daoDespesasAdicionais.listar(DespesasAdicionais.class, condicao);
+	}
 
-				} else {
-					ExibirMensagem.exibirMensagem(Mensagem.NADA_ENCONTRADO);
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				ExibirMensagem.exibirMensagem(Mensagem.ERRO);
-			}
-		}
-		public void honorariosPorCliente() {
-			honorarioBusca = daoHonorario.listarCodicaoLivre(Honorario.class, "cliente_id = "+honorario.getCliente().getId().toString());
-		}
-		public void excluirDespesaAdicional(DespesasAdicionais despAdicional) {
-			despesaAdicionalMB.excluir(despAdicional);
-			carregarLista();
-			refresh();
-		}
-		
-		public void refresh() {
-			FacesContext context = FacesContext.getCurrentInstance();
-			Application application = context.getApplication();
-			ViewHandler viewHandler = application.getViewHandler();
-			UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
-			context.setViewRoot(viewRoot);
-			context.renderResponse();
-		}
+	public void refresh() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Application application = context.getApplication();
+		ViewHandler viewHandler = application.getViewHandler();
+		UIViewRoot viewRoot = viewHandler.createView(context, context.getViewRoot().getViewId());
+		context.setViewRoot(viewRoot);
+		context.renderResponse();
+	}
 
-		/*Getters & Setters*/
-		public Honorario getHonorario() {
-			return honorario;
-		}
+	/* Getters & Setters */
+	public Honorario getHonorario() {
+		return honorario;
+	}
 
-		public void setHonorario(Honorario honorario) {
-			this.honorario = honorario;
-		}
+	public void setHonorario(Honorario honorario) {
+		this.honorario = honorario;
+	}
 
-		public Cliente getCliente() {
-			return cliente;
-		}
+	public Cliente getCliente() {
+		return cliente;
+	}
 
-		public void setCliente(Cliente cliente) {
-			this.cliente = cliente;
-		}
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
 
-		public DespesasAdicionais getDespesa() {
-			return despesa;
-		}
+	public DespesasAdicionais getDespesa() {
+		return despesa;
+	}
 
-		public void setDespesa(DespesasAdicionais despesa) {
-			this.despesa = despesa;
-		}
+	public void setDespesa(DespesasAdicionais despesa) {
+		this.despesa = despesa;
+	}
 
-		public List<Honorario> getHonorarioBusca() {
-			return honorarioBusca;
-		}
+	public List<Honorario> getHonorarioBusca() {
+		return honorarioBusca;
+	}
 
-		public void setHonorarioBusca(List<Honorario> honorarioBusca) {
-			this.honorarioBusca = honorarioBusca;
-		}
+	public void setHonorarioBusca(List<Honorario> honorarioBusca) {
+		this.honorarioBusca = honorarioBusca;
+	}
 
-		public List<Honorario> getListaHonorario() {
-			return listaHonorario;
-		}
+	public List<Honorario> getListaHonorario() {
+		return listaHonorario;
+	}
 
-		public void setListaHonorario(List<Honorario> listaHonorario) {
-			this.listaHonorario = listaHonorario;
-		}
+	public void setListaHonorario(List<Honorario> listaHonorario) {
+		this.listaHonorario = listaHonorario;
+	}
 
-		public List<Cliente> getListaClientes() {
-			return listaClientes;
-		}
+	public List<Cliente> getListaClientes() {
+		return listaClientes;
+	}
 
-		public void setListaClientes(List<Cliente> listaClientes) {
-			this.listaClientes = listaClientes;
-		}
+	public void setListaClientes(List<Cliente> listaClientes) {
+		this.listaClientes = listaClientes;
+	}
 
-		public List<DespesasAdicionais> getListaDespesasAdicionais() {
-			return listaDespesasAdicionais;
-		}
+	public List<DespesasAdicionais> getListaDespesasAdicionais() {
+		return listaDespesasAdicionais;
+	}
 
-		public void setListaDespesasAdicionais(List<DespesasAdicionais> listaDespesasAdicionais) {
-			this.listaDespesasAdicionais = listaDespesasAdicionais;
-		}
+	public void setListaDespesasAdicionais(List<DespesasAdicionais> listaDespesasAdicionais) {
+		this.listaDespesasAdicionais = listaDespesasAdicionais;
+	}
 
-		public GenericDAO<Honorario> getDaoHonorario() {
-			return daoHonorario;
-		}
+	public GenericDAO<Honorario> getDaoHonorario() {
+		return daoHonorario;
+	}
 
-		public void setDaoHonorario(GenericDAO<Honorario> daoHonorario) {
-			this.daoHonorario = daoHonorario;
-		}
+	public void setDaoHonorario(GenericDAO<Honorario> daoHonorario) {
+		this.daoHonorario = daoHonorario;
+	}
 
-		public GenericDAO<Cliente> getDaoCliente() {
-			return daoCliente;
-		}
+	public GenericDAO<Cliente> getDaoCliente() {
+		return daoCliente;
+	}
 
-		public void setDaoCliente(GenericDAO<Cliente> daoCliente) {
-			this.daoCliente = daoCliente;
-		}
+	public void setDaoCliente(GenericDAO<Cliente> daoCliente) {
+		this.daoCliente = daoCliente;
+	}
 
-		public GenericDAO<DespesasAdicionais> getDaoDespesasAdicionais() {
-			return daoDespesasAdicionais;
-		}
+	public GenericDAO<DespesasAdicionais> getDaoDespesasAdicionais() {
+		return daoDespesasAdicionais;
+	}
 
-		public void setDaoDespesasAdicionais(GenericDAO<DespesasAdicionais> daoDespesasAdicionais) {
-			this.daoDespesasAdicionais = daoDespesasAdicionais;
-		}
+	public void setDaoDespesasAdicionais(GenericDAO<DespesasAdicionais> daoDespesasAdicionais) {
+		this.daoDespesasAdicionais = daoDespesasAdicionais;
+	}
 
-		public HonorarioService getHonorarioService() {
-			return honorarioService;
-		}
+	public HonorarioService getHonorarioService() {
+		return honorarioService;
+	}
 
-		public void setHonorarioService(HonorarioService honorarioService) {
-			this.honorarioService = honorarioService;
-		}
+	public void setHonorarioService(HonorarioService honorarioService) {
+		this.honorarioService = honorarioService;
+	}
 
-		public DespesasAdicionaisService getDespesasAdicionaisService() {
-			return despesasAdicionaisService;
-		}
+	public DespesasAdicionaisService getDespesasAdicionaisService() {
+		return despesasAdicionaisService;
+	}
 
-		public void setDespesasAdicionaisService(DespesasAdicionaisService despesasAdicionaisService) {
-			this.despesasAdicionaisService = despesasAdicionaisService;
-		}
+	public void setDespesasAdicionaisService(DespesasAdicionaisService despesasAdicionaisService) {
+		this.despesasAdicionaisService = despesasAdicionaisService;
+	}
 
-		public EntityManager getManager() {
-			return manager;
-		}
+	public EntityManager getManager() {
+		return manager;
+	}
 
-		public void setManager(EntityManager manager) {
-			this.manager = manager;
-		}
+	public void setManager(EntityManager manager) {
+		this.manager = manager;
+	}
 
-		public static long getSerialversionuid() {
-			return serialVersionUID;
-		}
-		
-		
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-		
 }

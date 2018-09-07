@@ -92,7 +92,7 @@ public class DespesasAdicionaisMB {
 				// preenche com todos os honorarios para o cliente
 				listaHonorario = preencheListaHonorario();
 
-				//verifica se existem honorario para o cliente, se nao exitirem um honorario será criado com a mesma competencia da despesa adicional
+				//verifica se existem honorario para o cliente, se nao exitirem um honorario serï¿½ criado com a mesma competencia da despesa adicional
 				if (listaHonorario.isEmpty() || listaHonorario.size() == 0) {
 					System.out.println("nao existem honorarios para o cliente\n criando novo honorario...\n");
 					System.out.println(
@@ -104,7 +104,7 @@ public class DespesasAdicionaisMB {
 				System.out.println(String.valueOf("Tamanho da lista apos verificar existencia de honorarios: " + listaHonorario.size()));
 				
 				//compara a competencia dos honorarios da lista com a despesa adicional, se existir honorario nesse ponto
-				//ele estara preenchido para o cliente e competencia, se nao existir será criado um honorario com valores padrao e dados da despesa para ser 
+				//ele estara preenchido para o cliente e competencia, se nao existir sera criado um honorario com valores padrao e dados da despesa para ser 
 				compararCompetencias();
 				
 				if (existeHonorario == false) {
@@ -177,6 +177,10 @@ public class DespesasAdicionaisMB {
 				"cliente_id = " + despAdicional.getCliente().getId().toString());
 		for (Honorario honorario : listaHonorario) {
 			if (honorario.getId() == despAdicional.getHonorario().getId()) {
+				if(honorario.isPago()){
+					ExibirMensagem.exibirMensagem(Mensagem.HONORARIO_JA_PAGO);
+					break;
+				}else {
 				System.out.println("valor subtraindo: " + honorario.getValor().subtract(despAdicional.getValorTotal()));
 				honorario.setValor(honorario.getValor().subtract(despAdicional.getValorTotal()));
 				honorarioService.inserirAlterar(honorario);
@@ -185,6 +189,7 @@ public class DespesasAdicionaisMB {
 				ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
 				carregarLista();
 				break;
+				}
 			}
 		}
 
