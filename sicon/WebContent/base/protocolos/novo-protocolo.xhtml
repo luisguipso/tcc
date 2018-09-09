@@ -26,7 +26,7 @@
 			<!-- FIM TITULO -->
 
 			<!-- FORMULARIO DE INSERCAO-->
-			<h:form id="frmSalvar">
+			<h:form id="frmSalvarProtocolo">
 
 				<!-- CAMPOS DE CADASTRO -->
 				<div class="ui-fluid">
@@ -52,14 +52,14 @@
 				</div>
 				<div class="col-md-12">
 					<ol class="breadcrumb">
-						<p:commandButton value="Inserir" update=":frmModalSalvar"
+						<p:commandButton value="Inserir" update=":frmSalvarDocumento"
 							actionListener="#{protocoloMB.criarNovoObjetoItem()}"
-							onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
+							onclick="PF('dlgCadastrarDocProtocolo').show(); PF('dlgCadastrarDocProtocolo').content.scrollTop('0')"
 							title="Inserir" />
 						<!-- salvar protocolo -->
 						<p:commandButton value="Salvar"
 							actionListener="#{protocoloMB.salvarProtocolo()}" title="Salvar"
-							styleClass="ui-priority-primary" update=":frmTabela"
+							styleClass="ui-priority-primary" update=":frmTabelaDocProtocolo"
 							action="protocolo.jsf" onclick="protocolo.jsf" />
 
 						<p:commandButton value="Cancelar" action="protocolo.jsf"
@@ -71,13 +71,13 @@
 			</h:form>
 			<!-- FIM DOS CAMPOS DE PROTOCOLO -->
 
-			<!-- TABELA-->
-			<h:form id="frmTabela">
+			<!-- tabelaDocProtocolo-->
+			<h:form id="frmTabelaDocProtocolo">
 				<div class="col-md-12">
-					<p:dataTable id="tabela" value="#{protocoloMB.listaItensProtocolo}"
-						resizableColumns="true" reflow="true" var="list" rows="10"
-						paginator="true" paginatorPosition="bottom"
-						emptyMessage="Nenhum item adicionado!"
+					<p:dataTable id="tabelaDocProtocolo"
+						value="#{protocoloMB.listaItensProtocolo}" resizableColumns="true"
+						reflow="true" var="list" rows="10" paginator="true"
+						paginatorPosition="bottom" emptyMessage="Nenhum item adicionado!"
 						rowsPerPageTemplate="5,10,15,30,50,100">
 
 						<p:column headerText="Documento" filterBy="#{list.documento.nome}"
@@ -112,9 +112,9 @@
 
 						<p:column headerText="Alterar" style="width:68px">
 							<p:commandButton disabled="false" alt="Alterar"
-								icon="ui-icon-pencil" update="tabela" title="Alterar"
-								styleClass="btn btn-block"
-								oncomplete="PF('dlgCadastrar').show();"
+								icon="ui-icon-pencil" update="tabelaDocProtocolo"
+								title="Alterar" styleClass="btn btn-block"
+								oncomplete="PF('dlgCadastrarDocProtocolo').show();"
 								actionListener="#{protocoloMB.preencherItensProtocolo(list)}">
 
 							</p:commandButton>
@@ -123,29 +123,24 @@
 							<p:commandButton disabled="true"
 								actionListener="#{protocoloMB.inativar(list)}"
 								icon="ui-icon-trash" title="Excluir" styleClass="btn btn-block"
-								update="tabela" alt="Excluir">
+								update="tabelaDocProtocolo" alt="Excluir">
 								<p:confirm header="Confirmação" message="Deseja excluir?" />
 							</p:commandButton>
 						</p:column>
 
 					</p:dataTable>
-
+					<!--FIM DA tabelaDocProtocolo-->
 				</div>
 			</h:form>
-			<!--FIM DA TABELA-->
-
-			<!-- BOTOES DE INSERCAO -->
-			<h:form id="frmBotoes">
-
-
-			</h:form>
+			
 			<!-- Fim do Form de Inserção -->
 
-			<!-- DIALOG SALVAR ITEM -->
-			<p:dialog header="Item" widgetVar="dlgCadastrar" modal="true"
-				responsive="true" id="dlgCadastrar" closable="true"
-				closeOnEscape="true" resizable="false" draggable="true">
-				<h:form id="frmModalSalvar">
+			<!-- DIALOG INSERIR DOCUMENTO PROTOCOLO -->
+			<p:dialog header="Inserir Documento"
+				widgetVar="dlgCadastrarDocProtocolo" modal="true" responsive="true"
+				id="dlgCadastrarDocProc" closable="true" style="max-width:500px " closeOnEscape="true"
+				resizable="false" draggable="true">
+				<h:form id="frmSalvarDocumento">
 					<div class="ui-fluid">
 						<div class="col-md-12">
 							<label>Documento: *</label>
@@ -156,31 +151,26 @@
 									var="documento" itemLabel="#{documento.nome}"
 									itemValue="#{documento}" />
 							</p:selectOneMenu>
-						</div>
-						<div class="col-md-12">
+						
 							<label>Competência: *</label>
 							<p:calendar title="Competencia"
 								value="#{protocoloMB.itensProtocolo.competencia}"
 								pattern="MM-yyyy" mask="true" />
-						</div>
-						<div class="col-md-12">
+						
 							<label>Cod. Recolhimento: *</label>
 							<p:inputText title="codRecolhimento"
 								value="#{protocoloMB.itensProtocolo.codRecolhimento}" />
-						</div>
-						<div class="col-md-12">
+						
 							<label>Vencimento: *</label>
 							<p:calendar title="Vencimento"
 								value="#{protocoloMB.itensProtocolo.vencimento}"
 								pattern="dd-MM-yyyy" mask="true" />
 
-						</div>
-						<div class="col-md-12">
+						
 							<label>Valor: *</label>
 							<p:inputText title="Valor"
 								value="#{protocoloMB.itensProtocolo.valor}" />
-						</div>
-						<div class="col-md-12">
+						
 							<label>Observação: *</label>
 							<p:inputText title="Valor"
 								value="#{protocoloMB.itensProtocolo.observacao}" />
@@ -192,14 +182,15 @@
 						<p:commandButton value="Salvar"
 							actionListener="#{protocoloMB.salvarItem()}"
 							styleClass="ui-priority-primary"
-							onclick="PF('dlgCadastrar').hide();" update=":frmTabela" />
+							onclick="PF('dlgCadastrarDocProtocolo').hide();"
+							update=":frmTabelaDocProtocolo" />
 
 						<p:commandButton value="Cancelar"
-							onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
+							onclick="PF('dlgCadastrarDocProtocolo').hide();" alt="Cancelar" />
 					</div>
 				</h:form>
 			</p:dialog>
-			<!-- FIM DO DIALOG SALVAR -->
+			<!-- FIM DO DIALOG INSERIR DOCUMENTO PROTOCOLO -->
 		</ui:define>
 
 	</ui:composition>

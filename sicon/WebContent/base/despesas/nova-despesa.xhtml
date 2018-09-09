@@ -103,8 +103,8 @@
 			</div>
 			<!--FIM DA TABELA-->
 
-			<!-- DIALOG SALVAR -->
-			<p:dialog header="Cadastro de Despesas Adicionais"
+			<!-- DIALOG Nova despesa -->
+			<p:dialog header="Nova Despesa Adicional"
 				widgetVar="dlgCadastrar" modal="true" responsive="true" 
 				id="dlgCadastrar" closable="true" closeOnEscape="true" float="center"
 				resizable="false" draggable="true">
@@ -148,7 +148,7 @@
 						<p:commandButton value="Salvar"
 							actionListener="#{despesasAdicionaisMB.salvar()}"
 							styleClass="ui-priority-primary"
-							update=":dlgInformacao :frmTabela" />
+							update="dlgInformacao, frmTabela, dlgCadastrar" />
 
 						<p:commandButton value="Cancelar"
 							onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />

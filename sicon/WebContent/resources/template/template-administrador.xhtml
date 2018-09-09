@@ -86,7 +86,7 @@
 
 
 					<li class="treeview menu-open"><a href="#"><i class="fas fa-database"></i>
-							<span>Cadastros</span> <span class="pull-right-container">
+							<span>&#160; Cadastros</span> <span class="pull-right-container">
 								<i class="fa fa-angle-left "></i>
 						</span> </a>
 						<ul class="treeview-menu">
@@ -159,5 +159,16 @@
 		src="#{request.contextPath}/resources/dist/js/adminlte.min.js"></script>
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/demo.js"></script>
+		<script type="text/javascript">
+   	 $(document).ready(function(){
+   		 //$("#frmTabela").css('height')
+   		 var altura = $("#frmTabela").css('height').replace('px','');
+   		 altura = parseInt(altura) + 150;
+   		 //alert(altura);
+   		 $('.content-wrapper').css('height', altura + 'px');
+   	 });
+   	 
+    </script>
+		
 </h:body>
 </html>

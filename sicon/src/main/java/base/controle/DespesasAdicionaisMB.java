@@ -150,7 +150,7 @@ public class DespesasAdicionaisMB {
 				System.out.println("entrou no for");
 				System.out.println(hon.getCliente().getNome());
 				LocalDate compHonorario = hon.getCompetencia().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-
+				System.out.println("Formato da competencia: "+compDespesa.toString());
 				if (String.valueOf(compDespesa.getMonth()).equals(String.valueOf(compHonorario.getMonth()))
 						&& String.valueOf(compDespesa.getYear()).equals(String.valueOf(compHonorario.getYear()))) {
 

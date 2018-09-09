@@ -1,5 +1,6 @@
 package base.controle;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -42,6 +43,7 @@ public class HonorarioMB {
 	private List<Honorario> listaHonorario;
 	private List<Cliente> listaClientes;
 	private List<DespesasAdicionais> listaDespesasAdicionais;
+	private boolean temDesconto;
 
 	@Inject
 	private GenericDAO<Honorario> daoHonorario; // faz as buscas
@@ -93,10 +95,65 @@ public class HonorarioMB {
 		carregarLista();
 	}
 
+	public void gerarHonorario() {
+		System.out.println(honorario.getCompetencia().toString());
+		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");    
+		String dataFormatadaParaBanco = fmt.format(honorario.getCompetencia()); 
+		System.out.println(dataFormatadaParaBanco);
+		listaHonorario = daoHonorario.listar(Honorario.class, "competencia ='" + dataFormatadaParaBanco+"'");
+		listaClientes = daoCliente.lista(Cliente.class);
+		boolean clienteTemHonorario = false;
+		// se lista honorarios preenchida
+		if (!listaHonorario.isEmpty()) {
+			if (!listaClientes.isEmpty()) {
+				for (Cliente cli : listaClientes) {
+					clienteTemHonorario = false;
+					for (Honorario hon : listaHonorario) {
+						// verifica se o cliente tem honorario
+						if (cli.getId() == hon.getCliente().getId()) {
+							// 
+							clienteTemHonorario = true;
+						}
+					}
+					// se o cliente estiver em algum dos honorarios sera criado um pra ele
+					if (!clienteTemHonorario) {
+						criarHonorario(cli, honorario.getCompetencia());
+						clienteTemHonorario = false;
+					}
+				}
+			}
+			else {
+				System.out.println("lista de Clientes Vazia");
+			}
+		}
+		// se lista honorarios vazia
+		else {
+			System.out.println("criando honorarios para todos os clientes");
+			for (Cliente cli : listaClientes) {
+				criarHonorario(cli, honorario.getCompetencia());
+			}
+		}
+		
+		criarNovoObjeto();
+		ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
+		carregarLista();
+	}
+
+	public void criarHonorario(Cliente cli, Date comp) {
+		honorario = new Honorario();
+		honorario.setValor(cli.getHonorario_padrao());
+		honorario.setCompetencia(comp);
+		honorario.setVencimento(comp);
+		honorario.setCliente(cli);
+		honorario.setStatus(true);
+		honorarioService.inserirAlterar(honorario);
+		System.out.println("honorario padrao criado, cliente:" + honorario.getCliente().getNome().toString());
+	}
+
 	public void salvar() {
 
 		try {
-			honorario.setStatus(true);			
+			honorario.setStatus(true);
 			honorarioService.inserirAlterar(honorario);
 			criarNovoObjeto();
 			ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
@@ -109,15 +166,23 @@ public class HonorarioMB {
 		}
 
 	}
-	
-	public void pagar(Honorario h) {
-		honorario = h;
-		if(h.isStatus()) {
+
+	public void receberHonorario() {
+
+		if (honorario.isStatus()) {
 			ExibirMensagem.exibirMensagem(Mensagem.HONORARIO_JA_PAGO);
 			System.out.println("no if");
-		}else {
-		honorario.setPago(true);
-		salvar();
+		} else {
+			honorario.setPago(true);
+
+			if (temDesconto) {
+				System.out.println("teve desconto");
+				honorario.setTeveDesconto(temDesconto);
+				honorario.setDesconto(honorario.getValor().subtract(honorario.getValorPago()));
+				System.out.println("Desconto:" + honorario.getDesconto().toString());
+			}
+
+			salvar();
 		}
 	}
 
@@ -282,6 +347,14 @@ public class HonorarioMB {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public boolean isTemDesconto() {
+		return temDesconto;
+	}
+
+	public void setTemDesconto(boolean temDesconto) {
+		this.temDesconto = temDesconto;
 	}
 
 }

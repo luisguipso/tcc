@@ -23,10 +23,15 @@ public class Honorario {
 	@ManyToOne
 	private Cliente cliente;
 	private BigDecimal desconto;	
+	private boolean teveDesconto;
 	private Date dataPagamento;
 	private BigDecimal valorPago;
 	private boolean pago;
 	private boolean status;
+
+
+	
+	
 	public Long getId() {
 		return id;
 	}
@@ -75,10 +80,10 @@ public class Honorario {
 	public void setValorPago(BigDecimal valorPago) {
 		this.valorPago = valorPago;
 	}
-	public boolean getSituacao() {
+	public boolean isPago() {
 		return pago;
 	}
-	public void setSituacao(boolean pago) {
+	public void setPago(boolean pago) {
 		this.pago = pago;
 	}
 	public boolean isStatus() {
@@ -87,11 +92,14 @@ public class Honorario {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-	public boolean isPago() {
-		return pago;
+	
+	
+	
+	public boolean isTeveDesconto() {
+		return teveDesconto;
 	}
-	public void setPago(boolean pago) {
-		this.pago = pago;
+	public void setTeveDesconto(boolean teveDesconto) {
+		this.teveDesconto = teveDesconto;
 	}
 	@Override
 	public int hashCode() {
