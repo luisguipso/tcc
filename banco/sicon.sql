@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 09-Out-2018 às 02:48
+-- Generation Time: 09-Out-2018 às 02:50
 -- Versão do servidor: 10.1.31-MariaDB
 -- PHP Version: 7.2.3
 
@@ -5887,27 +5887,6 @@ INSERT INTO `municipio` (`id`, `Codigo`, `Nome`, `estado_id`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estrutura da tabela `perfil`
---
-
-CREATE TABLE `perfil` (
-  `id` bigint(20) NOT NULL,
-  `nivel_acesso` varchar(255) DEFAULT NULL,
-  `status` bit(1) NOT NULL,
-  `nivelAcesso` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Extraindo dados da tabela `perfil`
---
-
-INSERT INTO `perfil` (`id`, `nivel_acesso`, `status`, `nivelAcesso`) VALUES
-(1, 'administrador', b'1', 'administrador'),
-(2, 'funcionario', b'1', 'funcionario');
-
--- --------------------------------------------------------
-
---
 -- Estrutura da tabela `protocolo`
 --
 
@@ -6034,12 +6013,6 @@ ALTER TABLE `municipio`
   ADD KEY `estado_fk` (`estado_id`);
 
 --
--- Indexes for table `perfil`
---
-ALTER TABLE `perfil`
-  ADD PRIMARY KEY (`id`);
-
---
 -- Indexes for table `protocolo`
 --
 ALTER TABLE `protocolo`
@@ -6104,12 +6077,6 @@ ALTER TABLE `honorario`
 --
 ALTER TABLE `municipio`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5571;
-
---
--- AUTO_INCREMENT for table `perfil`
---
-ALTER TABLE `perfil`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `protocolo`
