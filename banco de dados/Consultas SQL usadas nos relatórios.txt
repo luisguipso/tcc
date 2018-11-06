@@ -1,0 +1,37 @@
+--protocolo de entrega
+select cliente.nome, protocolo.id, protocolo.saida, protocolo.competencia
+ from cliente inner join protocolo on cliente.id = protocolo.cliente_id 
+	where protocolo.id = $P{idProtocolo} order by protocolo.id;
+
+
+--documentosprotocolos
+SELECT d.nome,dp.protocolo_id, dp.valor, dp.vencimento, dp.observacao, dp.datadevolucao 
+ FROM documentosprotocolos AS dp inner join documento AS d  on dp.protocolo_id = $P{idProtocolo};
+
+
+
+--documentos nao devolvidos
+select  p.id as "Protocolo: ", c.nome as "Cliente: ", d.nome as "Documento: ", dp.competencia as "Competência: " 
+	from documento as d inner join documentosprotocolos as dp on d.id = dp.documento_id
+	inner join protocolo as p on p.id = dp.protocolo_id
+    	inner join cliente as c on c.id = p.cliente_id
+    		where dp.devolvido = 0
+    			order by c.nome;
+
+
+--documentos devolvidos
+
+---relatorio pai
+select  c.id, c.nome
+	from cliente as c inner join protocolo as p on p.cliente_id = c.id 
+ 	inner join documentosprotocolos as dp on p.id = dp.protocolo_id
+    		where dp.devolvido = 1
+    			order by c.nome;
+
+---subrelatorio
+select  p.id as "Protocolo: ", c.nome as "Cliente: ", d.nome as "Documento: ", dp.competencia as "Competência: " 
+	from documento as d inner join documentosprotocolos as dp on d.id = dp.documento_id
+	inner join protocolo as p on p.id = dp.protocolo_id
+	inner join cliente as c on c.id = p.cliente_id
+    		where dp.devolvido = 1
+    			order by c.nome;

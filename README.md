@@ -1,2 +1,2 @@
 # tcc
-este repositório irá manter meu projeto de TCC, e seus documentos
+este repositório mantém documentos, diagramas e o codigo fonte do meu trabalho de conclusão de curso.
