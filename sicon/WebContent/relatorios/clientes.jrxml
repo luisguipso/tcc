@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="clientes" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="02a5485b-938c-4883-99fc-88cf3914f5e6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<queryString language="SQL">
+		<![CDATA[select * from cliente]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="honorario_padrao" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="honorario_padrao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="status" class="java.lang.Boolean">
+		<property name="com.jaspersoft.studio.field.label" value="status"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<group name="nome">
+		<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="30" uuid="28a96623-537b-473e-9b5d-2fe65a3d539b"/>
+				<textElement>
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Clientes]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="25" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="50" height="30" uuid="0251deee-6323-42d6-ad6b-392694af28ea">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38808af3-bf18-4d3b-9c45-7c5fca9ab00b"/>
+				</reportElement>
+				<text><![CDATA[id]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="160" height="30" uuid="8c85bff6-6a44-4162-8cc3-f113187cbec1">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6291295b-8b3b-4fe6-ae02-21898de85b21"/>
+				</reportElement>
+				<text><![CDATA[nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="0" width="100" height="30" uuid="229c62ce-b7d4-4236-9966-d98794080425">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="faab4faa-c7d4-42b4-8cb6-f8e7208002ed"/>
+				</reportElement>
+				<text><![CDATA[honorario_padrao]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="33" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="50" height="30" uuid="4895a22d-2434-4f80-b731-6fa651ef69af">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38808af3-bf18-4d3b-9c45-7c5fca9ab00b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="160" height="30" uuid="d7f1b354-a14d-4db5-be93-a5694635200b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6291295b-8b3b-4fe6-ae02-21898de85b21"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="0" width="100" height="30" uuid="ed040df9-1db6-46c2-bab7-3abbd73daf65">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="faab4faa-c7d4-42b4-8cb6-f8e7208002ed"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{honorario_padrao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

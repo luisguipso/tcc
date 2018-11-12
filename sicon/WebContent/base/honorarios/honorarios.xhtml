@@ -17,17 +17,14 @@
 		</ui:define>
 
 		<ui:define name="conteudo">
-			<!-- TITULO -->
-			<div class="row">
-				<div class="col-md-12">
-					<h1 class="page-header">Gerar Honorários</h1>
-
-				</div>
-			</div>
-			<!-- FIM TITULO -->
-			<!-- BOTAO CADASTRAR -->
+			
+			<!-- DIV INICIAL -->
 			<div class="row container-fluid">
 				<div class="col-md-12">
+				
+				<!-- TITULO -->
+				<h1 class="page-header">Honorários</h1>
+				
 					<ol class="breadcrumb">
 						<h:form id="frmCadastrar">
 							<p:commandButton value="Gerar Honorarios" update="frmModalSalvar"
@@ -38,7 +35,7 @@
 					</ol>
 				</div>
 			</div>
-			<!-- FIM DO BOTAO CADASTRAR -->
+			<!-- DIV INICIAL -->
 
 
 			<!-- TABELA-->
@@ -48,6 +45,7 @@
 						value="#{honorarioMB.listaHonorario}" resizableColumns="true"
 						reflow="true" var="list" rows="30" paginator="true"
 						paginatorPosition="bottom"
+						sortBy="#{list.competencia}" sortOrder="descending"
 						emptyMessage="Nenhum Honorário cadastrado"
 						rowsPerPageTemplate="5,10,15,30,50,100">
 
@@ -67,7 +65,7 @@
 							<h:outputText value="#{list.valor}" />
 						</p:column>
 
-						<!-- <p:column headerText="Data de Pagamento" filterBy="#{list.dataPagamento}"
+						 <p:column headerText="Data de Pagamento" filterBy="#{list.dataPagamento}"
 					sortBy="#{list.dataPagamento}" filterMatchMode="contains">
 					<h:outputText value="#{list.dataPagamento}"
 								rendered="#{list.dataPagamento != null}">
@@ -75,26 +73,47 @@
 									dateStyle="short" />
 							</h:outputText>
 				</p:column>
-				 -->
+				 
 						<p:column headerText="Visualizar" style="width:100px">
-							<p:commandButton disabled="false" alt="Visualizar"
+							<p:commandButton  alt="Visualizar"
 								icon="fa fa-eye" title="Visualizar" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px"
+								style="width:58px; margin:0 0 0 11px" disabled="#{list.pago}" 
 								oncomplete="PF('dlgMostrar').show();" update="listarItens"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
 							</p:commandButton>
 						</p:column>
+						
 						<p:column headerText="Receber" style="width:100px">
-							<p:commandButton disabled="false" alt="Pagar" icon="fa fa-dollar"
-								title="Receber Honorario" styleClass="btn btn-block"
-								style="width:58px; margin:0 auto"
+							<p:commandButton alt="Pagar"
+								icon="fa fa-dollar" 
+								title="Receber Honorario" 
+								styleClass="btn btn-block"
+								style="width:58px; 
+								margin:0 0 0 11px" 
+								disabled="#{list.pago}" 
+								oncomplete="PF('dlgReceber').show();" 
+								update=":dlgInformacao :listarHonorariosPagar" 
+								actionListener="#{honorarioMB.mostrarHonorario(list)}">
+
+							</p:commandButton>
+						</p:column>
+						
+						<!-- ESTE NAO DESATIVA POREM FUNCIONA <p:column headerText="Receber" style="width:100px">
+							<p:commandButton disabled="#{list.pago}"  
+							alt="Pagar" 
+							icon="fa fa-dollar"
+								title="Receber Honorario" 
+								styleClass="btn btn-block"
+								style="width:58px; 
+								margin:0 auto"
 								update="listarHonorariosPagar, dlgInformacao"
 								oncomplete="PF('dlgReceber').show();"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
 							</p:commandButton>
-						</p:column>
+						
+						</p:column>-->	
 						<p:column headerText="Imprimir" style="width:100px">
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="Imprimir" styleClass="btn btn-block"
@@ -142,7 +161,7 @@
 
 				<!-- Dialog visualizar itens Honorario -->
 
-				<p:dialog header="Documentos" widgetVar="dlgMostrar" modal="true"
+				<p:dialog header="Itens do Honorário" widgetVar="dlgMostrar" modal="true"
 					responsive="true" width="60%" id="dlgMostrar" closable="true"
 					closeOnEscape="true" resizable="true" draggable="true">
 					<h:form id="listarItens">

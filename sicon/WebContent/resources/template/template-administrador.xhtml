@@ -35,7 +35,8 @@
 		href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
 	<link rel="stylesheet"
 		href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" />
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
+	<link rel="stylesheet"
+		href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" />
 
 	<style>
 .ui-dialog-content {
@@ -43,7 +44,8 @@
 }
 </style>
 </h:head>
-<h:body class="hold-transition skin-blue sidebar-mini">
+<h:body class="hold-transition skin-blue sidebar-mini"
+	style="background:../img/fundo-sistema.jpg">
 
 	<div class="wrapper">
 
@@ -85,38 +87,41 @@
 				<ul class="sidebar-menu" data-widget="tree">
 
 
-					<li class="treeview menu-open"><a href="#"><i class="fas fa-database"></i>
-							<span>&#160; Cadastros</span> <span class="pull-right-container">
-								<i class="fa fa-angle-left "></i>
+					<li class="treeview menu-open"><a href="#"><i
+							class="fas fa-database"></i> <span>&#160; Cadastros</span> <span
+							class="pull-right-container"> <i class="fa fa-angle-left "></i>
 						</span> </a>
 						<ul class="treeview-menu">
-							<li><a href="../cadastros/cliente.jsf"><i class="fa fa-user" aria-hidden="true"></i> <span>Cliente</span></a></li>
-							
-									
+							<li><a href="../cadastros/cliente.jsf"><i
+									class="fa fa-user" aria-hidden="true"></i> <span>Cliente</span></a></li>
+
+
 							<li><a href="../cadastros/documento.jsf"><i
 									class="fa fa-file" aria-hidden="true"></i> <span>Documento</span></a></li>
-									
+
 							<li><a href="../cadastros/despesas.jsf"><i
 									class="fa fa-money" aria-hidden="true"></i> <span>Despesas</span></a></li>
-									
-									
+
+
 							<li><a href="../cadastros/usuario.jsf"><i
 									class="fa fa-user" aria-hidden="true"></i> <span>Usuário</span></a></li>
 						</ul></li>
 
 
 
-				<!-- &#160; é um espaço para alinhar o texto -->
+					<!-- &#160; é um espaço para alinhar o texto -->
 					<li><a href="../honorarios/honorarios.jsf"><i
-							class="fas fa-hand-holding-usd " aria-hidden="true"></i><span>&#160; Honorários</span></a></li>
+							class="fas fa-hand-holding-usd " aria-hidden="true"></i><span>&#160;
+								Honorários</span></a></li>
 					<li><a href="../protocolos/protocolo.jsf"><i
-							class="fas fa-envelope" aria-hidden="true"></i> <span>&#160; Protocolo</span></a></li>
-					<li><a href="../protocolos/novo-protocolo.jsf"><i
-							class="fa fa-plus" aria-hidden="true"></i> <span>Novo
-								Protocolo</span></a></li>
+							class="fas fa-envelope" aria-hidden="true"></i> <span>&#160;
+								Protocolos</span></a></li>
+					<li><a href="../documentos/documentos.jsf"><i
+							class="fas fa-file" aria-hidden="true"></i> <span>&#160;
+								Documentos</span></a></li>
 					<li><a href="../despesas/nova-despesa.jsf"><i
-							class="fa fa-plus" aria-hidden="true"></i> <span>Nova
-								Despesa</span></a></li>
+							class="fa fa-plus" aria-hidden="true"></i> <span>Despesas
+								Adicionais</span></a></li>
 
 				</ul>
 
@@ -125,7 +130,7 @@
 		</aside>
 
 		<div class="content-wrapper" style="height: auto; min-height: 1000">
-			<section class="content" >
+			<section class="content">
 				<div id="mensagem">
 					<ui:insert name="mensagem">
 					</ui:insert>
@@ -154,12 +159,12 @@
 
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/app.min.js"></script>
-	
+
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/adminlte.min.js"></script>
 	<script type="text/javascript"
 		src="#{request.contextPath}/resources/dist/js/demo.js"></script>
-		<script type="text/javascript">
+	<script type="text/javascript">
    	 $(document).ready(function(){
    		 //$("#frmTabela").css('height')
    		 var altura = $("#frmTabela").css('height').replace('px','');
@@ -169,6 +174,6 @@
    	 });
    	 
     </script>
-		
+
 </h:body>
 </html>

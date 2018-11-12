@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:body>
+
+	<ui:composition
+		template="../../resources/template/template-administrador.xhtml">
+		<ui:define name="mensagem">
+			<ui:include src="../../componentes/mensagem.xhtml" />
+		</ui:define>
+		<ui:define name="modal-confirmacao">
+			<ui:include src="../../componentes/dialog-confirmacao.xhtml" />
+		</ui:define>
+
+		<ui:define name="conteudo">
+
+			<!-- DIV INICIAL -->
+			<div class="row container-fluid">
+				<div class="col-md-12">
+
+					<!-- TITULO -->
+					<h1 class="page-header">Documentos</h1>
+					
+					<ol class="breadcrumb">
+						
+						<h4>Relatorios</h4>
+						<h:form id="frmCadastrar">
+							<p:commandButton value="Documentos Devolvidos" update=""
+								actionListener="#{honorarioMB.criarNovoObjeto()}"
+								onclick="PF('dlgSelecaoDevolvido').show(); PF('dlgSelecaoDevolvido').content.scrollTop('0')"
+								title="Cadastrar" />
+														
+							<p:commandButton value="Documentos Não Devolvidos" update=""
+								actionListener="#{honorarioMB.criarNovoObjeto()}"
+								onclick="PF('dlgSelecaoNaoDevolvido').show(); PF('dlgSelecaoNaoDevolvido').content.scrollTop('0')"
+								title="Cadastrar" />
+						</h:form>
+
+					</ol>
+				</div>
+			</div>
+			<!-- DIV INICIAL -->
+
+
+			<!-- TABELA-->
+			<div class="col-md-12">
+				<h:form id="frmTabela">
+					<p:dataTable id="tabela" style="backgorund-color:white"
+						value="#{documentosProtocoloMB.listaItensProtocolo}"
+						resizableColumns="true" reflow="true" var="list" rows="30"
+						paginator="true" paginatorPosition="bottom"
+						sortBy="#{list.competencia}" sortOrder="descending"
+						emptyMessage="Nenhum Documento cadastrado"
+						rowsPerPageTemplate="5,10,15,30,50,100">
+
+
+						<p:column headerText="Cliente"
+							filterBy="#{list.protocolo.cliente.nome}"
+							sortBy="#{list.protocolo.cliente.nome}"
+							filterMatchMode="contains">
+							<h:outputText value="#{list.protocolo.cliente.nome}" />
+						</p:column>
+						<p:column headerText="Documento" filterBy="#{list.documento.nome}"
+							sortBy="#{list.documento.nome}" filterMatchMode="contains">
+							<h:outputText value="#{list.documento.nome}" />
+						</p:column>
+						<p:column headerText="Competência" style="width:130px"
+							filterBy="#{list.competencia}" sortBy="#{list.competencia}"
+							filterMatchMode="contains">
+							<h:outputText value="#{list.competencia}">
+								<f:convertDateTime pattern="MM/yyyy" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Valor" filterBy="#{list.valor}"
+							sortBy="#{list.valor}" filterMatchMode="contains">
+							<h:outputText value="#{list.valor}" />
+						</p:column>
+						<p:column headerText="Vencimento" filterBy="#{list.vencimento}"
+							sortBy="#{list.vencimento}" filterMatchMode="contains">
+							<h:outputText value="#{list.vencimento}"
+								rendered="#{list.vencimento != null}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+									dateStyle="short" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Devolução" filterBy="#{list.dataDevolucao}"
+							sortBy="#{list.dataDevolucao}" filterMatchMode="contains">
+							<h:outputText value="#{list.dataDevolucao}"
+								rendered="#{list.dataDevolucao != null}">
+								<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+									dateStyle="short" />
+							</h:outputText>
+						</p:column>
+
+						<p:column headerText="Visualizar" style="width:100px">
+							<p:commandButton disabled="false" alt="Visualizar"
+								icon="fa fa-eye" title="Visualizar" styleClass="btn btn-block"
+								style="width:58px; margin:0 0 0 11px"
+								oncomplete="PF('dlgMostrar').show();" update="listarItens"
+								actionListener="#{documentosProtocoloMB.mostrarDocumentoProtocolo(list)}">
+
+							</p:commandButton>
+						</p:column>
+
+						<p:column headerText="Devolver" style="width:80px">
+							<p:commandButton disabled="#{list.devolvido}" alt="Devolver"
+								icon="ui-icon-arrowreturnthick-1-s" update="tabela"
+								title="Devolver" styleClass="btn btn-block" updata="tabela"
+								actionListener="#{protocoloMB.devolverItem(list)}">
+								<p:confirm header="Confirmação" message="Deseja Devolver?" />
+							</p:commandButton>
+						</p:column>
+
+					</p:dataTable>
+
+
+				</h:form>
+
+				<!--FIM DA TABELA-->
+
+				<!-- Dialog visualizar itens Protocolo -->
+
+				<p:dialog header="Documentos" widgetVar="dlgMostrar" modal="true"
+					responsive="true" width="60%" id="dlgMostrar" closable="true"
+					closeOnEscape="true" resizable="false" draggable="false">
+					<h:form id="listarItens">
+						<div class="col-md-12">
+							<p:dataTable id="tabela"
+								value="#{documentosProtocoloMB.listaItensProtocoloMostrar}"
+								resizableColumns="true" reflow="true" var="list" rows="10"
+								paginator="true" paginatorPosition="bottom"
+								emptyMessage="Nenhum item adicionado!"
+								rowsPerPageTemplate="5,10,15,30,50,100">
+
+								<p:column headerText="Documento"
+									filterBy="#{list.documento.nome}"
+									sortBy="#{list.documento.nome}" filterMatchMode="contains">
+									<h:outputText value="#{list.documento.nome}" />
+								</p:column>
+
+								<p:column headerText="Vencimento" filterBy="#{list.vencimento}"
+									sortBy="#{list.vencimento}" filterMatchMode="contains">
+									<h:outputText value="#{list.vencimento}"
+										rendered="#{list.vencimento != null}">
+										<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+											dateStyle="short" />
+									</h:outputText>
+								</p:column>
+								<p:column headerText="Valor" filterBy="#{list.valor}"
+									sortBy="#{list.valor}" filterMatchMode="contains">
+									<h:outputText value="#{list.valor}" />
+								</p:column>
+								<p:column headerText="Observação" filterBy="#{list.observacao}"
+									sortBy="#{list.observacao}" filterMatchMode="contains">
+									<h:outputText value="#{list.observacao}" />
+								</p:column>
+								<p:column headerText="Devolução"
+									filterBy="#{list.dataDevolucao}" sortBy="#{list.dataDevolucao}"
+									filterMatchMode="contains">
+									<h:outputText value="#{list.dataDevolucao}"
+										rendered="#{list.dataDevolucao != null}">
+										<f:convertDateTime pattern="dd/MM/yyyy" type="date"
+											dateStyle="short" />
+									</h:outputText>
+								</p:column>
+
+
+
+								<p:column headerText="Devolver" style="width:80px">
+									<p:commandButton disabled="false" alt="Devolver"
+										icon="ui-icon-arrowreturnthick-1-s" update="tabela"
+										title="Devolver" styleClass="btn btn-block" updata="tabela"
+										actionListener="#{protocoloMB.devolverItem(list)}">
+										<p:confirm header="Confirmação" message="Deseja Devolver?" />
+									</p:commandButton>
+								</p:column>
+
+
+							</p:dataTable>
+
+						</div>
+					</h:form>
+				</p:dialog>
+				<!-- fim do Dialog Mostrar Protocolo -->
+
+				<!-- Dialog selecionar relatorio com parametro cliente DEVOLVIDO -->
+
+
+				<p:dialog header="Selecione o Tipo de Relatório"
+					widgetVar="dlgSelecaoDevolvido" modal="true" responsive="true"
+					 id="dlgSelecaoDevolvido" closable="true"
+					closeOnEscape="true" resizable="false" draggable="false">
+
+					<h:form id="frmRelDevolvido" target="_blank">
+						<div class="col-md-12">
+
+							<h4>Deseja filtrar os documentos por cliente?</h4>
+
+							<label>Cliente: *</label>
+							<p:selectOneMenu converter="#{clienteConverter}" title="Cliente"
+								value="#{documentosProtocoloMB.itensProtocolo.protocolo.cliente}">
+								<f:selectItems value="#{clienteMB.listCliente}" var="cliente"
+									itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
+							</p:selectOneMenu>
+							<div class="row">
+								<p:commandButton value="Sim" title="Cadastrar" ajax="false"
+									actionListener="#{documentosProtocoloMB.verificaTipoRelatorio(true,true)}"
+									onclick="PF('dlgInsereClienteRelDevolvido').show(); PF('dlgInsereClienteRelDevolvido').content.scrollTop('0')" />
+								<p:commandButton value="Não"
+									actionListener="#{documentosProtocoloMB.verificaTipoRelatorio(true,false)}"
+									ajax="false" title="Cadastrar"
+									onclick="this.form.target='_blank'" />
+							</div>
+
+						</div>
+					</h:form>
+				</p:dialog>
+
+
+				<!-- Fim Dialog selecionar relatorio com parametro cliente -->
+
+				<!-- Dialog selecionar relatorio com parametro cliente NÂO DEVOLVIDO -->
+
+
+				<p:dialog header="Selecione o Tipo de Relatório"
+					widgetVar="dlgSelecaoNaoDevolvido" modal="true" responsive="true"
+					 id="dlgSelecaoNaoDevolvido" closable="true"
+					closeOnEscape="true" resizable="true" draggable="false">
+					<h:form id="frmRelNaoDevolvido" target="_blank">
+						<div class="col-md-12">
+							<h4>Deseja filtrar os documentos por cliente?</h4>
+
+							<label>Cliente: *</label>
+							<p:selectOneMenu converter="#{clienteConverter}" title="Cliente"
+								value="#{documentosProtocoloMB.itensProtocolo.protocolo.cliente}">
+								<f:selectItems value="#{clienteMB.listCliente}" var="cliente"
+									itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
+							</p:selectOneMenu>
+							<div class="row">
+								<p:commandButton value="Sim" title="Cadastrar"
+									actionListener="#{documentosProtocoloMB.verificaTipoRelatorio(false,true)}"
+									onclick="PF('dlgInsereClienteRelDevolvido').show(); PF('dlgInsereClienteRelDevolvido').content.scrollTop('0')" />
+								<p:commandButton value="Não"
+									actionListener="#{documentosProtocoloMB.verificaTipoRelatorio(false,false)}"
+									ajax="false" title="Cadastrar"
+									onclick="this.form.target='_blank'" />
+							</div>
+						</div>
+					</h:form>
+				</p:dialog>
+
+
+				<!-- Fim Dialog selecionar relatorio com parametro cliente -->
+
+
+			</div>
+
+
+		</ui:define>
+
+	</ui:composition>
+</h:body>
+</html>
+

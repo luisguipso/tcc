@@ -139,8 +139,10 @@ public class ProtocoloMB {
 		protocolo = new Protocolo();
 	}
 
+	//cria o objeto do item de protocolo com a competencia do protocolo
 	public void criarNovoObjetoItem() {
 		itensProtocolo = new DocumentosProtocolos();
+		itensProtocolo.setCompetencia(protocolo.getCompetencia());
 	}
 
 	public void carregarLista() {
@@ -151,7 +153,7 @@ public class ProtocoloMB {
 	public void mostrarProtocolo(Protocolo t) {
 		this.protocolo = t;
 		String condicao = "protocolo_id =" + protocolo.getId().toString();
-		this.listaItensProtocolo = daoItens.listar(DocumentosProtocolos.class, condicao);
+		this.listaItensProtocolo = daoItens.listar(DocumentosProtocolos.class, condicao);//lista os itens especificos do protocolo
 	}
 
 	public void imprimirRelatorioProtocolo(Protocolo p) { 

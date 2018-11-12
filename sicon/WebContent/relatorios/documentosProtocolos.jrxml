@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="documentosProtocolos" pageWidth="500" pageHeight="700" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83a0925d-3e14-44eb-8a21-38ee78a60c9d">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<parameter name="idProtocolo" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[select d.nome, dp.vencimento, dp.valor, dp.observacao, dp.datadevolucao from documento as d inner join documentosprotocolos as dp on dp.documento_id = d.id where dp.protocolo_id = $P{idProtocolo}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="valor" class="java.lang.Double">
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documentosprotocolos"/>
+	</field>
+	<field name="vencimento" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="vencimento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documentosprotocolos"/>
+	</field>
+	<field name="observacao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="observacao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documentosprotocolos"/>
+	</field>
+	<field name="datadevolucao" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="datadevolucao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documentosprotocolos"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="6" width="80" height="17" uuid="9da4151c-511b-4e5b-806d-055dc1818054">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd9cd7a9-b494-4b4b-9bf6-7b5373ca2249"/>
+				</reportElement>
+				<text><![CDATA[Documento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="170" y="6" width="70" height="17" uuid="cf1ca54e-7311-4d2d-8c10-d8509ffd8c9d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5dea2e89-ca66-487b-b970-2c0da78277fb"/>
+				</reportElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="90" y="6" width="80" height="17" uuid="30210f59-8a32-4c22-8c74-5df165ad4b7c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c308b1b8-1628-4073-b589-4a0b489b5b14"/>
+				</reportElement>
+				<text><![CDATA[Vencimento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="240" y="6" width="70" height="17" uuid="83206edd-caf7-48c6-927b-108d86ebf03a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55410e6b-b817-4504-9ee0-8b9360ae0e9b"/>
+				</reportElement>
+				<text><![CDATA[Devolução:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="6" width="135" height="17" uuid="73f04745-0b0e-4b7f-ab7c-7238afb7af18"/>
+				<text><![CDATA[Observação:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="23" splitType="Stretch">
+			<textField>
+				<reportElement x="20" y="1" width="70" height="20" uuid="73b9dc16-493f-45eb-ab57-9dc6879ec6be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd9cd7a9-b494-4b4b-9bf6-7b5373ca2249"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="1" width="60" height="20" uuid="950b1c34-e204-4e04-aeb0-c33d03be70d7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5dea2e89-ca66-487b-b970-2c0da78277fb"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="100" y="1" width="70" height="20" uuid="254368d4-37ad-4b11-a240-a68c47672569">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c308b1b8-1628-4073-b589-4a0b489b5b14"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{vencimento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="250" y="1" width="60" height="20" uuid="3564ecf2-3509-4713-b4a9-ccc1a119cc6b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55410e6b-b817-4504-9ee0-8b9360ae0e9b"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{datadevolucao}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="320" y="1" width="160" height="20" uuid="bb7eedd5-0d69-4517-b1ae-11456a4c141a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78b1608b-0e86-4f7f-b9c6-1fd8d7b38838"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{observacao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

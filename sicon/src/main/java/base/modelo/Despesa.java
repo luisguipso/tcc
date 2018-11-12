@@ -17,6 +17,7 @@ public class Despesa {
 	private String nome;
 	private BigDecimal valor;
 	private boolean status;
+	
 	public Long getId() {
 		return id;
 	}

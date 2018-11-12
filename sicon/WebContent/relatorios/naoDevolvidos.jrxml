@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="naoDevolvidos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="10" rightMargin="0" topMargin="0" bottomMargin="5" whenResourceMissingType="Key" uuid="fb627a34-6f34-4096-a660-658f0f18c7e8">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<parameter name="idCliente" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[select  p.id , c.nome, d.nome as "documento", dp.competencia from documento as d inner join documentosprotocolos as dp on d.id = dp.documento_id inner join protocolo as p on p.id = dp.protocolo_id inner join cliente as c on c.id = p.cliente_id where dp.devolvido = 0 && c.id = $P{idCliente}	order by d.nome]]>
+	</queryString>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="protocolo"/>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="documento" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="documento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documento"/>
+	</field>
+	<field name="competencia" class="java.sql.Date">
+		<property name="com.jaspersoft.studio.field.label" value="competencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="documentosprotocolos"/>
+	</field>
+	<group name="nome">
+		<groupExpression><![CDATA[$F{nome}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="23" splitType="Stretch">
+			<staticText>
+				<reportElement x="180" y="0" width="50" height="20" uuid="1b9c8c55-ce80-404d-8c71-e1191fc3a5f7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abf5a49-12dd-423c-a975-e094cb4809ca"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[Protocolo:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="80" height="20" uuid="d3b8031b-0138-4bef-a6bb-700ace9a38dc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00756067-844a-43e7-9187-50ab18226df6"/>
+				</reportElement>
+				<text><![CDATA[Documento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="80" y="0" width="100" height="20" uuid="fd2a1d87-d09e-4daa-ac9c-56ffb4c9b317">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59d2cb3e-1030-4233-8d09-39f970ed4de3"/>
+				</reportElement>
+				<text><![CDATA[Competência:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="180" y="0" width="50" height="20" uuid="0a579df4-c661-4b48-a2f1-38c943b8915e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5abf5a49-12dd-423c-a975-e094cb4809ca"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="80" height="20" uuid="b0acd46f-a820-44bd-8adb-51752d045b0f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="00756067-844a-43e7-9187-50ab18226df6"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{documento}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/yyyy">
+				<reportElement x="80" y="0" width="60" height="20" uuid="caf540e0-14ec-4ee2-afba-186a3a446a6f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="59d2cb3e-1030-4233-8d09-39f970ed4de3"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{competencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
