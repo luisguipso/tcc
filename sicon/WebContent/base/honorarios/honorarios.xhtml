@@ -40,7 +40,7 @@
 
 			<!-- TABELA-->
 			<div class="col-md-12">
-				<h:form id="frmTabela">
+				<h:form id="frmTabela" target="_blank">
 					<p:dataTable id="tabela" style="backgorund-color:white"
 						value="#{honorarioMB.listaHonorario}" resizableColumns="true"
 						reflow="true" var="list" rows="30" paginator="true"
@@ -77,7 +77,7 @@
 						<p:column headerText="Visualizar" style="width:100px">
 							<p:commandButton alt="Visualizar" icon="fa fa-eye"
 								title="Visualizar" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px" disabled="#{list.pago}"
+								style="width:58px; margin:0 0 0 11px" 
 								oncomplete="PF('dlgMostrar').show();" update="listarItens"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
@@ -101,6 +101,7 @@
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="Imprimir" styleClass="btn btn-block"
 								style="width:58px; margin:0 0 0 11px"
+								ajax="false"
 								actionListener="#{honorarioMB.imprimirRelatorioHonorario(list)}">
 							</p:commandButton>
 

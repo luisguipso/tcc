@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="documentosProtocolos" pageWidth="500" pageHeight="700" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83a0925d-3e14-44eb-8a21-38ee78a60c9d">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="documentosProtocolos" pageWidth="500" pageHeight="700" whenNoDataType="BlankPage" columnWidth="500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="83a0925d-3e14-44eb-8a21-38ee78a60c9d">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
 	<parameter name="idProtocolo" class="java.lang.String"/>
 	<queryString language="SQL">
-		<![CDATA[select d.nome, dp.vencimento, dp.valor, dp.observacao, dp.datadevolucao from documento as d inner join documentosprotocolos as dp on dp.documento_id = d.id where dp.protocolo_id = $P{idProtocolo}]]>
+		<![CDATA[select d.nome, dp.vencimento, dp.valor, dp.observacao, dp.datadevolucao from documento as d inner join documentosprotocolos as dp on dp.documento_id = d.id where dp.protocolo_id = $P{idProtocolo} order by d.nome]]>
 	</queryString>
 	<field name="nome" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nome"/>
@@ -64,31 +64,31 @@
 	</columnHeader>
 	<detail>
 		<band height="23" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="20" y="1" width="70" height="20" uuid="73b9dc16-493f-45eb-ab57-9dc6879ec6be">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd9cd7a9-b494-4b4b-9bf6-7b5373ca2249"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="180" y="1" width="60" height="20" uuid="950b1c34-e204-4e04-aeb0-c33d03be70d7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5dea2e89-ca66-487b-b970-2c0da78277fb"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="100" y="1" width="70" height="20" uuid="254368d4-37ad-4b11-a240-a68c47672569">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c308b1b8-1628-4073-b589-4a0b489b5b14"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{vencimento}]]></textFieldExpression>
 			</textField>
-			<textField pattern="dd/MM/yyyy">
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
 				<reportElement x="250" y="1" width="60" height="20" uuid="3564ecf2-3509-4713-b4a9-ccc1a119cc6b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55410e6b-b817-4504-9ee0-8b9360ae0e9b"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{datadevolucao}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="320" y="1" width="160" height="20" uuid="bb7eedd5-0d69-4517-b1ae-11456a4c141a">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="78b1608b-0e86-4f7f-b9c6-1fd8d7b38838"/>
 				</reportElement>

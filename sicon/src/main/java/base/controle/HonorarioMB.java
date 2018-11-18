@@ -192,8 +192,8 @@ public class HonorarioMB {
 			if (relatorio.size() > 0) {
 
 				HashMap parametro = new HashMap<>();
-				parametro.put("idHonorario", "h.getId()");
-				ChamarRelatorio ch = new ChamarRelatorio("honorario.jasper", parametro, "protocolo_de_entrega");
+				parametro.put("idHonorario", h.getId());
+				ChamarRelatorio ch = new ChamarRelatorio("relhonorario.jasper", parametro, "relatorio_honorario");
 				Session sessions = manager.unwrap(Session.class);
 				sessions.doWork(ch);
 

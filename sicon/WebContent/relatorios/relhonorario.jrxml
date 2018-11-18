@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relhonorario" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="b780546e-e6e8-4fed-ae25-bc079f0a3c1f">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<parameter name="idHonorario" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[select c.nome, h.id, h.competencia, h.valor, h.vencimento from honorario h inner join cliente c on h.cliente_id = c.id where h.id = $P{idHonorario}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="competencia" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="competencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<field name="vencimento" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="vencimento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<field name="id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="41" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="5" width="290" height="30" uuid="e30c67e9-d084-4949-b010-adfe4ff3705c"/>
+				<textElement>
+					<font size="16"/>
+				</textElement>
+				<text><![CDATA[Honorário Contábil]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="490" y="5" width="60" height="15" uuid="bf69d989-f55b-406a-a890-f6bc24aeb205"/>
+				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<detail>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="0" width="60" height="20" uuid="5569a29d-3d31-41d4-a8e6-5d09d23c0095">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c73c258c-905a-4e90-823b-0a6835a31b8f"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Cliente:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="70" y="0" width="310" height="20" uuid="ef4f95cb-bf95-4a55-ba18-dd4b6e47f059">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c73c258c-905a-4e90-823b-0a6835a31b8f"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="-1" width="70" height="20" uuid="763157f7-9316-4725-949a-33b9ebba4939">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="56764085-9d04-4662-9f18-72e4b84d18e7"/>
+				</reportElement>
+				<text><![CDATA[Competência:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="460" y="20" width="90" height="20" uuid="c2fe2fc8-55eb-475d-8ce3-9cd5e6823b2e"/>
+				<textFieldExpression><![CDATA[$F{vencimento}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="390" y="20" width="70" height="20" uuid="0d914ad9-a99f-4fac-ae53-342303f44084"/>
+				<text><![CDATA[vencimento]]></text>
+			</staticText>
+			<textField pattern="MM/yyyy">
+				<reportElement x="460" y="0" width="90" height="21" uuid="020e9082-94fd-4a5c-bb80-5c66fac532a5"/>
+				<textFieldExpression><![CDATA[$F{competencia}]]></textFieldExpression>
+			</textField>
+			<subreport>
+				<reportElement x="10" y="40" width="480" height="20" uuid="f3c23454-58da-42b4-9065-b100cfc98108"/>
+				<subreportParameter name="idHonorario">
+					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["itensHonorario.jasper"]]></subreportExpression>
+			</subreport>
+			<line>
+				<reportElement x="10" y="40" width="510" height="1" uuid="4685809d-1eca-4408-9fbb-739139814928"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="430" y="0" width="80" height="20" uuid="f41a4bba-7600-43fb-81a9-87d953f7f796"/>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="380" y="0" width="50" height="20" uuid="7e3e082e-8fa5-4a16-98d8-a8dfe90870fe"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

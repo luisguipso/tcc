@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relprotocolo" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="d707d2dc-07b7-49d4-93e2-706741af2c44">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relprotocolo" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="d707d2dc-07b7-49d4-93e2-706741af2c44">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
 	<parameter name="idProtocolo" class="java.lang.Long"/>
@@ -48,7 +48,7 @@
 		</band>
 	</title>
 	<detail>
-		<band height="77" splitType="Stretch">
+		<band height="69" splitType="Stretch">
 			<textField>
 				<reportElement x="70" y="10" width="310" height="20" uuid="b2b51725-1d68-4347-9690-7a1221c6fe20">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c73c258c-905a-4e90-823b-0a6835a31b8f"/>
@@ -92,7 +92,7 @@
 				<text><![CDATA[Cliente:]]></text>
 			</staticText>
 			<subreport>
-				<reportElement x="10" y="53" width="499" height="17" uuid="3fbe9d6a-9725-4ea6-96c4-674edcc6410e"/>
+				<reportElement x="10" y="50" width="499" height="17" isRemoveLineWhenBlank="true" uuid="3fbe9d6a-9725-4ea6-96c4-674edcc6410e"/>
 				<subreportParameter name="idProtocolo">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -100,26 +100,26 @@
 				<subreportExpression><![CDATA["documentosProtocolos.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement x="0" y="50" width="540" height="3" uuid="92527e81-b34b-4196-8371-3d38f5830db5"/>
+				<reportElement x="0" y="50" width="540" height="1" uuid="92527e81-b34b-4196-8371-3d38f5830db5"/>
 			</line>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="34" splitType="Stretch">
 			<staticText>
-				<reportElement x="380" y="4" width="164" height="18" uuid="a6cab7dd-f304-4afb-9d85-baa8d4b453d0"/>
+				<reportElement x="380" y="0" width="164" height="18" uuid="a6cab7dd-f304-4afb-9d85-baa8d4b453d0"/>
 				<text><![CDATA[_________________________]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="280" y="4" width="100" height="18" uuid="442ddf07-bea9-4c67-a0f9-7157b2064ee2"/>
+				<reportElement x="280" y="0" width="100" height="18" uuid="442ddf07-bea9-4c67-a0f9-7157b2064ee2"/>
 				<text><![CDATA[Recebido por:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="70" y="4" width="100" height="19" uuid="8584c5c6-b689-4173-9338-532636a84608"/>
+				<reportElement x="70" y="0" width="100" height="19" uuid="8584c5c6-b689-4173-9338-532636a84608"/>
 				<text><![CDATA[Data de Entrega:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="170" y="4" width="100" height="18" uuid="33222677-2100-41b8-99df-05f333ba5751"/>
+				<reportElement x="170" y="0" width="100" height="18" uuid="33222677-2100-41b8-99df-05f333ba5751"/>
 				<text><![CDATA[___/___/_____]]></text>
 			</staticText>
 		</band>

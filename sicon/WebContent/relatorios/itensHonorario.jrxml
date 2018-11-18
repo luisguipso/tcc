@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="itensHonorario" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="84fd626d-c1f7-4a83-8ea0-e4abeeb0e239">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<parameter name="idHonorario" class="java.lang.Long"/>
+	<queryString language="SQL">
+		<![CDATA[select d.nome, d.valor, da.quantidade, da.valorTotal from despesa d inner join despesasadicionais da on d.id = da.despesa_id where da.honorario_id = $P{idHonorario}]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="despesa"/>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="despesa"/>
+	</field>
+	<field name="quantidade" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.label" value="quantidade"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="despesasadicionais"/>
+	</field>
+	<field name="valorTotal" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valorTotal"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="despesasadicionais"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="208" height="20" uuid="fc7aa0f5-e0d0-44e3-a393-93caef88afe3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="575ed123-96e9-4e5e-a558-622bae366318"/>
+				</reportElement>
+				<text><![CDATA[Despesa:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="208" y="0" width="138" height="20" uuid="23be58c6-d36f-42ff-b5a9-0bf94458e62e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5faf6e04-ce94-47f1-a6ff-66888991407e"/>
+				</reportElement>
+				<text><![CDATA[Valor unitário:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="346" y="0" width="71" height="20" uuid="38f51dda-f597-4421-be17-e4a1b25f2b58">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="07087d45-bc4c-4134-991c-80649748f282"/>
+				</reportElement>
+				<text><![CDATA[Quantidade:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="417" y="0" width="138" height="20" uuid="5bc4cd03-7cc0-4290-8e34-7a6b54a4bed8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b650a6c-5305-41bd-bd6e-9c02309e02de"/>
+				</reportElement>
+				<text><![CDATA[Valor total:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="0" width="198" height="20" uuid="b82a4e5d-bbe0-4ca6-b8b9-30f445dcdfa8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="575ed123-96e9-4e5e-a558-622bae366318"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="220" y="0" width="126" height="20" uuid="06814cf6-1e32-43c7-aaff-fea840a1a8d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="5faf6e04-ce94-47f1-a6ff-66888991407e"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="353" y="0" width="64" height="20" uuid="6ca99cee-9d87-4868-af49-5494e8ae97de">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="07087d45-bc4c-4134-991c-80649748f282"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{quantidade}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="430" y="0" width="110" height="20" uuid="2d894b10-126e-4258-a207-d3a2b1abb612">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0b650a6c-5305-41bd-bd6e-9c02309e02de"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{valorTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
