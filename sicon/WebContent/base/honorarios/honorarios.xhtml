@@ -17,14 +17,14 @@
 		</ui:define>
 
 		<ui:define name="conteudo">
-			
+
 			<!-- DIV INICIAL -->
 			<div class="row container-fluid">
 				<div class="col-md-12">
-				
-				<!-- TITULO -->
-				<h1 class="page-header">Honorários</h1>
-				
+
+					<!-- TITULO -->
+					<h1 class="page-header">Honorários</h1>
+
 					<ol class="breadcrumb">
 						<h:form id="frmCadastrar">
 							<p:commandButton value="Gerar Honorarios" update="frmModalSalvar"
@@ -44,9 +44,8 @@
 					<p:dataTable id="tabela" style="backgorund-color:white"
 						value="#{honorarioMB.listaHonorario}" resizableColumns="true"
 						reflow="true" var="list" rows="30" paginator="true"
-						paginatorPosition="bottom"
-						sortBy="#{list.competencia}" sortOrder="descending"
-						emptyMessage="Nenhum Honorário cadastrado"
+						paginatorPosition="bottom" sortBy="#{list.competencia}"
+						sortOrder="descending" emptyMessage="Nenhum Honorário cadastrado"
 						rowsPerPageTemplate="5,10,15,30,50,100">
 
 						<p:column headerText="Cliente" filterBy="#{list.cliente.nome}"
@@ -65,40 +64,38 @@
 							<h:outputText value="#{list.valor}" />
 						</p:column>
 
-						 <p:column headerText="Data de Pagamento" filterBy="#{list.dataPagamento}"
-					sortBy="#{list.dataPagamento}" filterMatchMode="contains">
-					<h:outputText value="#{list.dataPagamento}"
+						<p:column headerText="Data de Pagamento"
+							filterBy="#{list.dataPagamento}" sortBy="#{list.dataPagamento}"
+							filterMatchMode="contains">
+							<h:outputText value="#{list.dataPagamento}"
 								rendered="#{list.dataPagamento != null}">
 								<f:convertDateTime pattern="dd/MM/yyyy" type="date"
 									dateStyle="short" />
 							</h:outputText>
-				</p:column>
-				 
+						</p:column>
+
 						<p:column headerText="Visualizar" style="width:100px">
-							<p:commandButton  alt="Visualizar"
-								icon="fa fa-eye" title="Visualizar" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px" disabled="#{list.pago}" 
+							<p:commandButton alt="Visualizar" icon="fa fa-eye"
+								title="Visualizar" styleClass="btn btn-block"
+								style="width:58px; margin:0 0 0 11px" disabled="#{list.pago}"
 								oncomplete="PF('dlgMostrar').show();" update="listarItens"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
 							</p:commandButton>
 						</p:column>
-						
-						<p:column headerText="Receber" style="width:100px">
-							<p:commandButton alt="Pagar"
-								icon="fa fa-dollar" 
-								title="Receber Honorario" 
-								styleClass="btn btn-block"
+
+						<p:column headerText="Receber" style="max-width:100px">
+							<p:commandButton alt="Pagar" icon="fa fa-dollar"
+								title="Receber Honorario" styleClass="btn btn-block"
 								style="width:58px; 
-								margin:0 0 0 11px" 
-								disabled="#{list.pago}" 
-								oncomplete="PF('dlgReceber').show();" 
-								update=":dlgInformacao :listarHonorariosPagar" 
+								margin:0 0 0 11px"
+								disabled="#{list.pago}" oncomplete="PF('dlgReceber').show();"
+								update=":dlgInformacao :listarHonorariosPagar"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
 							</p:commandButton>
 						</p:column>
-						
+
 						<!-- ESTE NAO DESATIVA POREM FUNCIONA <p:column headerText="Receber" style="width:100px">
 							<p:commandButton disabled="#{list.pago}"  
 							alt="Pagar" 
@@ -113,7 +110,7 @@
 
 							</p:commandButton>
 						
-						</p:column>-->	
+						</p:column>-->
 						<p:column headerText="Imprimir" style="width:100px">
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="Imprimir" styleClass="btn btn-block"
@@ -128,42 +125,43 @@
 				</h:form>
 
 				<!--FIM DA TABELA-->
-				
-				<!-- DIALOG GERAR -->
-			<p:dialog header="Gerar Honorários"
-				widgetVar="dlgCadastrar" modal="true" responsive="true" 
-				id="dlgCadastrar" closable="true" closeOnEscape="true" float="center"
-				resizable="false" draggable="true">
-				<h:form id="frmModalSalvar">
-					<div class="ui-fluid">												
-						<div class="col-md-12">
-							<label>Competência: *</label>
-							<p:calendar title="Competencia"
-								value="#{honorarioMB.honorario.competencia}"
-								pattern="MM-yyyy" mask="true" />
-						</div>
-						
-						<small>Campos obrigatórios *</small>
-					</div>
-					<div class="modal-footer">
-						<p:commandButton value="Salvar"
-							actionListener="#{honorarioMB.gerarHonorario()}"
-							styleClass="ui-priority-primary"
-							update=":dlgInformacao :frmTabela" />
 
-						<p:commandButton value="Cancelar"
-							onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
-					</div>
-				</h:form>
-			</p:dialog>
-			<!-- FIM DO DIALOG SALVAR -->
-				
+				<!-- DIALOG GERAR -->
+				<p:dialog header="Gerar Honorários" widgetVar="dlgCadastrar"
+					modal="true" responsive="true" id="dlgCadastrar" closable="true"
+					closeOnEscape="true" float="center" resizable="false"
+					draggable="true">
+					<h:form id="frmModalSalvar">
+						<div class="ui-fluid">
+							<div class="col-md-12">
+								<label>Competência: *</label>
+								<p:calendar title="Competencia"
+									value="#{honorarioMB.honorario.competencia}" pattern="MM-yyyy"
+									mask="true" />
+							</div>
+
+							<small>Campos obrigatórios *</small>
+						</div>
+						<div class="modal-footer">
+							<p:commandButton value="Salvar"
+								actionListener="#{honorarioMB.gerarHonorario()}"
+								styleClass="ui-priority-primary"
+								update=":dlgInformacao :frmTabela" />
+
+							<p:commandButton value="Cancelar"
+								onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
+						</div>
+					</h:form>
+				</p:dialog>
+				<!-- FIM DO DIALOG SALVAR -->
+
 
 				<!-- Dialog visualizar itens Honorario -->
 
-				<p:dialog header="Itens do Honorário" widgetVar="dlgMostrar" modal="true"
-					responsive="true" width="60%" id="dlgMostrar" closable="true"
-					closeOnEscape="true" resizable="true" draggable="true">
+				<p:dialog header="Itens do Honorário" widgetVar="dlgMostrar"
+					modal="true" responsive="true" width="60%" id="dlgMostrar"
+					closable="true" closeOnEscape="true" resizable="true"
+					draggable="true">
 					<h:form id="listarItens">
 						<div class="col-md-12">
 
@@ -261,14 +259,14 @@
 								</tr>
 								<tr>
 									<td><label>Desconto: </label></td>
-									<td><p:selectBooleanCheckbox value="#{honorarioMB.temDesconto}"/></td>
+									<td><p:selectBooleanCheckbox
+											value="#{honorarioMB.temDesconto}" /></td>
 								</tr>
 							</table>
 							<p:commandButton disabled="false" alt="Receber"
 								title="Receber Honorario" styleClass="btn btn-block"
 								update="dlgInformacao"
-								actionListener="#{honorarioMB.receberHonorario()}"
-								oncomplete="">
+								actionListener="#{honorarioMB.receberHonorario()}" oncomplete="">
 
 							</p:commandButton>
 						</div>

@@ -311,22 +311,16 @@
 											dateStyle="short" />
 									</h:outputText>
 								</p:column>
+								<p:column headerText="Devolver" style="max-width:80px; text-align:center">
 
-
-
-								<p:column headerText="Devolver" style="width:80px">
-							<p:commandButton alt="Pagar"
-								icon="fa fa-dollar" 
-								title="Receber Honorario" 
-								styleClass="btn btn-block"
-								style="width:58px; 
-								margin:0 0 0 11px" 
-								disabled="#{list.devolvido}" 
-								update=":tabela" 
-								actionListener="#{protocoloMB.devolverItem(list)}">
-
-							</p:commandButton>
-						</p:column>
+									<p:commandButton alt="Devolver" style="max-width:58px; margin:0 auto"
+										icon="ui-icon-arrowreturnthick-1-s" title="Devolver"
+										styleClass="btn btn-block" disabled="#{list.devolvido}"
+										update="tabela"
+										actionListener="#{protocoloMB.devolverItem(list)}">
+										<p:confirm header="Confirmação" message="Deseja Devolver?" />
+									</p:commandButton>
+								</p:column>
 
 
 							</p:dataTable>

@@ -54,8 +54,8 @@
 							sortBy="#{list.despesa.nome}" filterMatchMode="contains">
 							<h:outputText value="#{list.despesa.nome}" />
 						</p:column>
-						<p:column headerText="Cliente" filterBy="#{list.cliente}"
-							sortBy="#{list.cliente}" filterMatchMode="contains">
+						<p:column headerText="Cliente" filterBy="#{list.cliente.nome}"
+							sortBy="#{list.cliente.nome}" filterMatchMode="contains">
 							<h:outputText value="#{list.cliente.nome}" />
 						</p:column>
 						<p:column headerText="Competencia" filterBy="#{list.competencia}"
