@@ -84,33 +84,19 @@
 							</p:commandButton>
 						</p:column>
 
-						<p:column headerText="Receber" style="max-width:100px">
+						<p:column headerText="Receber" style="width:100px">
 							<p:commandButton alt="Pagar" icon="fa fa-dollar"
 								title="Receber Honorario" styleClass="btn btn-block"
-								style="width:58px; 
-								margin:0 0 0 11px"
+								style="max-width:58px; margin:0 auto"
 								disabled="#{list.pago}" oncomplete="PF('dlgReceber').show();"
 								update=":dlgInformacao :listarHonorariosPagar"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
 							</p:commandButton>
+							
 						</p:column>
 
-						<!-- ESTE NAO DESATIVA POREM FUNCIONA <p:column headerText="Receber" style="width:100px">
-							<p:commandButton disabled="#{list.pago}"  
-							alt="Pagar" 
-							icon="fa fa-dollar"
-								title="Receber Honorario" 
-								styleClass="btn btn-block"
-								style="width:58px; 
-								margin:0 auto"
-								update="listarHonorariosPagar, dlgInformacao"
-								oncomplete="PF('dlgReceber').show();"
-								actionListener="#{honorarioMB.mostrarHonorario(list)}">
-
-							</p:commandButton>
 						
-						</p:column>-->
 						<p:column headerText="Imprimir" style="width:100px">
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="Imprimir" styleClass="btn btn-block"
@@ -265,9 +251,9 @@
 							</table>
 							<p:commandButton disabled="false" alt="Receber"
 								title="Receber Honorario" styleClass="btn btn-block"
-								update="dlgInformacao"
+								update=":dlgReceber :frmTabela"
 								actionListener="#{honorarioMB.receberHonorario()}" oncomplete="">
-
+								<p:confirm header="Confirmação" message="Deseja realmente receber?" />
 							</p:commandButton>
 						</div>
 					</h:form>

@@ -96,6 +96,7 @@ public class HonorarioMB {
 	}
 
 	public void gerarHonorario() {
+		//formata a data passada como competencia para um valor que possa serr usadop na consulta do banco de dados
 		System.out.println(honorario.getCompetencia().toString());
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");    
 		String dataFormatadaParaBanco = fmt.format(honorario.getCompetencia()); 
@@ -106,16 +107,15 @@ public class HonorarioMB {
 		// se lista honorarios preenchida
 		if (!listaHonorario.isEmpty()) {
 			if (!listaClientes.isEmpty()) {
-				for (Cliente cli : listaClientes) {
+				for (Cliente cli : listaClientes) { //para cada cliente ter honorário será falso
 					clienteTemHonorario = false;
 					for (Honorario hon : listaHonorario) {
 						// verifica se o cliente tem honorario
 						if (cli.getId() == hon.getCliente().getId()) {
-							// 
-							clienteTemHonorario = true;
+							clienteTemHonorario = true;                //para cada cliente cadastrado em honorário, a variavel será true
 						}
 					}
-					// se o cliente estiver em algum dos honorarios sera criado um pra ele
+					// pra cada cliente que nao tiver honorário para a competencia passada na tela, sera criado um honorário com valores padrão
 					if (!clienteTemHonorario) {
 						criarHonorario(cli, honorario.getCompetencia());
 						clienteTemHonorario = false;
@@ -126,9 +126,9 @@ public class HonorarioMB {
 				System.out.println("lista de Clientes Vazia");
 			}
 		}
-		// se lista honorarios vazia
+		// se lista honorarios vazia, ou seja, nao há nenhum honorário para a competencia passada
 		else {
-			System.out.println("criando honorarios para todos os clientes");
+			System.out.println("criando honorarios para todos os clientes"); //para cada cliente um honorário será criado
 			for (Cliente cli : listaClientes) {
 				criarHonorario(cli, honorario.getCompetencia());
 			}
@@ -169,7 +169,7 @@ public class HonorarioMB {
 
 	public void receberHonorario() {
 
-		if (honorario.isStatus()) {
+		if (honorario.isPago()) {
 			ExibirMensagem.exibirMensagem(Mensagem.HONORARIO_JA_PAGO);
 			System.out.println("no if");
 		} else {
