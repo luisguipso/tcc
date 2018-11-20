@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="totalDevido" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" uuid="3fef6ba3-d32f-49e2-be91-5948dd7b3286">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<parameter name="idCliente" class="java.lang.String"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT sum(valor)-sum(valorPago) from honorario where teveDesconto = 0 and cliente_id = $P{idCliente}]]>
+	</queryString>
+	<field name="sum(valor)-sum(valorPago)" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="sum(valor)-sum(valorPago)"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" x="0" y="0" width="100" height="20" uuid="69d6fdb0-e8ed-4506-a61a-cbe1f5612e29">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="55c5878f-7fca-409e-b53a-b80cfe10b900"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{sum(valor)-sum(valorPago)}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -23,12 +23,13 @@
 				<div class="col-md-12">
 
 					<!-- TITULO -->
-					<h1 class="page-header">Documentos</h1>
+					<h1 class="page-header">Documentos Protocolados</h1>
 					
 					<ol class="breadcrumb">
 						
-						<h4>Relatorios</h4>
+						
 						<h:form id="frmCadastrar">
+						<h4>Relatórios</h4>
 							<p:commandButton value="Documentos Devolvidos" update=""
 								actionListener="#{honorarioMB.criarNovoObjeto()}"
 								onclick="PF('dlgSelecaoDevolvido').show(); PF('dlgSelecaoDevolvido').content.scrollTop('0')"
@@ -192,7 +193,7 @@
 				<!-- Dialog selecionar relatorio com parametro cliente DEVOLVIDO -->
 
 
-				<p:dialog header="Selecione o Tipo de Relatório"
+				<p:dialog header="Relatório de documentos devolvidos"
 					widgetVar="dlgSelecaoDevolvido" modal="true" responsive="true"
 					 id="dlgSelecaoDevolvido" closable="true"
 					closeOnEscape="true" resizable="false" draggable="false">
@@ -200,7 +201,6 @@
 					<h:form id="frmRelDevolvido" target="_blank">
 						<div class="col-md-12">
 
-							<h4>Deseja filtrar os documentos por cliente?</h4>
 
 							<label>Cliente: *</label>
 							<p:selectOneMenu converter="#{clienteConverter}" title="Cliente"
@@ -208,6 +208,8 @@
 								<f:selectItems value="#{clienteMB.listCliente}" var="cliente"
 									itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
 							</p:selectOneMenu>
+							
+							<h4>Deseja filtrar os documentos por cliente?</h4>
 							<div class="row">
 								<p:commandButton value="Sim" title="Cadastrar" ajax="false"
 									actionListener="#{documentosProtocoloMB.verificaTipoRelatorio(true,true)}"
@@ -228,20 +230,21 @@
 				<!-- Dialog selecionar relatorio com parametro cliente NÂO DEVOLVIDO -->
 
 
-				<p:dialog header="Selecione o Tipo de Relatório"
+				<p:dialog header="Relatório de documentos não devolvidos"
 					widgetVar="dlgSelecaoNaoDevolvido" modal="true" responsive="true"
 					 id="dlgSelecaoNaoDevolvido" closable="true"
 					closeOnEscape="true" resizable="true" draggable="false">
 					<h:form id="frmRelNaoDevolvido" target="_blank">
 						<div class="col-md-12">
-							<h4>Deseja filtrar os documentos por cliente?</h4>
-
+							
 							<label>Cliente: *</label>
 							<p:selectOneMenu converter="#{clienteConverter}" title="Cliente"
 								value="#{documentosProtocoloMB.itensProtocolo.protocolo.cliente}">
 								<f:selectItems value="#{clienteMB.listCliente}" var="cliente"
 									itemLabel="#{cliente.nome}" itemValue="#{cliente}" />
 							</p:selectOneMenu>
+							 
+							<h4>Deseja filtrar os documentos por cliente?</h4>
 							<div class="row">
 								<p:commandButton value="Sim" title="Cadastrar"
 									actionListener="#{documentosProtocoloMB.verificaTipoRelatorio(false,true)}"

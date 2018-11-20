@@ -32,14 +32,14 @@
 	<title>
 		<band height="35" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="290" height="30" uuid="142163da-e8b5-4df0-9b78-38b9a43e95f0"/>
+				<reportElement x="10" y="0" width="280" height="30" uuid="142163da-e8b5-4df0-9b78-38b9a43e95f0"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Protocolo de Entrega de Documentos]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="460" y="2" width="90" height="20" uuid="c0f608a2-93b6-4821-bfaa-08e8c51e3923">
+				<reportElement x="460" y="2" width="80" height="20" uuid="c0f608a2-93b6-4821-bfaa-08e8c51e3923">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="35f2c33e-62cf-4610-9ef8-83a476c9b89a"/>
 				</reportElement>
 				<textElement textAlignment="Right"/>
@@ -59,15 +59,17 @@
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="460" y="30" width="90" height="20" uuid="1a315a7e-924e-4351-8183-17b8907d8cf7">
+				<reportElement x="460" y="30" width="80" height="20" uuid="1a315a7e-924e-4351-8183-17b8907d8cf7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="9b2761ff-8325-4905-8f83-890a54a2b760"/>
 				</reportElement>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{saida}]]></textFieldExpression>
 			</textField>
 			<textField pattern="MM/yyyy">
-				<reportElement x="460" y="10" width="90" height="20" uuid="8ad25477-a536-4dbd-9385-b3194adbf89b">
+				<reportElement x="460" y="10" width="80" height="20" uuid="8ad25477-a536-4dbd-9385-b3194adbf89b">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="56764085-9d04-4662-9f18-72e4b84d18e7"/>
 				</reportElement>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{competencia}]]></textFieldExpression>
 			</textField>
 			<staticText>
@@ -100,7 +102,7 @@
 				<subreportExpression><![CDATA["documentosProtocolos.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement x="0" y="50" width="540" height="1" uuid="92527e81-b34b-4196-8371-3d38f5830db5"/>
+				<reportElement x="10" y="50" width="530" height="1" uuid="92527e81-b34b-4196-8371-3d38f5830db5"/>
 			</line>
 		</band>
 	</detail>

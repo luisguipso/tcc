@@ -5,7 +5,7 @@
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
 	<parameter name="idHonorario" class="java.lang.Long"/>
 	<queryString language="SQL">
-		<![CDATA[select c.nome, h.id, h.competencia, h.valor, h.vencimento from honorario h inner join cliente c on h.cliente_id = c.id where h.id = $P{idHonorario}]]>
+		<![CDATA[select c.nome, h.id, h.competencia, h.valor, h.vencimento, h.cliente_id from honorario h inner join cliente c on h.cliente_id = c.id where h.id = $P{idHonorario}]]>
 	</queryString>
 	<field name="nome" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="nome"/>
@@ -27,26 +27,31 @@
 		<property name="com.jaspersoft.studio.field.label" value="id"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
 	</field>
+	<field name="cliente_id" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="cliente_id"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
 		<band height="41" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="5" width="290" height="30" uuid="e30c67e9-d084-4949-b010-adfe4ff3705c"/>
+				<reportElement x="10" y="0" width="290" height="30" uuid="e30c67e9-d084-4949-b010-adfe4ff3705c"/>
 				<textElement>
 					<font size="16"/>
 				</textElement>
 				<text><![CDATA[Honorário Contábil]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="490" y="5" width="60" height="15" uuid="bf69d989-f55b-406a-a890-f6bc24aeb205"/>
+				<reportElement x="480" y="5" width="50" height="15" uuid="bf69d989-f55b-406a-a890-f6bc24aeb205"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{id}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
 	<detail>
-		<band height="61" splitType="Stretch">
+		<band height="67" splitType="Stretch">
 			<staticText>
 				<reportElement x="10" y="0" width="60" height="20" uuid="5569a29d-3d31-41d4-a8e6-5d09d23c0095">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c73c258c-905a-4e90-823b-0a6835a31b8f"/>
@@ -72,19 +77,21 @@
 				<text><![CDATA[Competência:]]></text>
 			</staticText>
 			<textField pattern="dd/MM/yyyy">
-				<reportElement x="460" y="20" width="90" height="20" uuid="c2fe2fc8-55eb-475d-8ce3-9cd5e6823b2e"/>
+				<reportElement x="460" y="20" width="70" height="20" uuid="c2fe2fc8-55eb-475d-8ce3-9cd5e6823b2e"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{vencimento}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="390" y="20" width="70" height="20" uuid="0d914ad9-a99f-4fac-ae53-342303f44084"/>
-				<text><![CDATA[vencimento]]></text>
+				<text><![CDATA[Vencimento:]]></text>
 			</staticText>
 			<textField pattern="MM/yyyy">
-				<reportElement x="460" y="0" width="90" height="21" uuid="020e9082-94fd-4a5c-bb80-5c66fac532a5"/>
+				<reportElement x="460" y="0" width="70" height="21" uuid="020e9082-94fd-4a5c-bb80-5c66fac532a5"/>
+				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{competencia}]]></textFieldExpression>
 			</textField>
 			<subreport>
-				<reportElement x="10" y="40" width="480" height="20" uuid="f3c23454-58da-42b4-9065-b100cfc98108"/>
+				<reportElement x="10" y="47" width="480" height="20" uuid="f3c23454-58da-42b4-9065-b100cfc98108"/>
 				<subreportParameter name="idHonorario">
 					<subreportParameterExpression><![CDATA[$F{id}]]></subreportParameterExpression>
 				</subreportParameter>
@@ -92,22 +99,37 @@
 				<subreportExpression><![CDATA["itensHonorario.jasper"]]></subreportExpression>
 			</subreport>
 			<line>
-				<reportElement x="10" y="40" width="510" height="1" uuid="4685809d-1eca-4408-9fbb-739139814928"/>
+				<reportElement x="10" y="47" width="520" height="1" uuid="4685809d-1eca-4408-9fbb-739139814928"/>
 			</line>
+			<staticText>
+				<reportElement x="10" y="21" width="100" height="19" uuid="e51dddc0-d92b-432a-9e7e-18c411145206"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Total Devido:]]></text>
+			</staticText>
+			<subreport>
+				<reportElement x="110" y="21" width="53" height="19" uuid="3e65f792-aec4-41c6-94f8-832a0c5ef93e"/>
+				<subreportParameter name="idCliente">
+					<subreportParameterExpression><![CDATA[$F{cliente_id}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["totalDevido.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="22" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="430" y="0" width="80" height="20" uuid="f41a4bba-7600-43fb-81a9-87d953f7f796"/>
-				<textElement textAlignment="Right">
+				<reportElement x="440" y="0" width="90" height="20" uuid="f41a4bba-7600-43fb-81a9-87d953f7f796"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="SansSerif" size="14"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="380" y="0" width="50" height="20" uuid="7e3e082e-8fa5-4a16-98d8-a8dfe90870fe"/>
-				<textElement>
+				<reportElement x="390" y="0" width="50" height="20" uuid="7e3e082e-8fa5-4a16-98d8-a8dfe90870fe"/>
+				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
 				<text><![CDATA[Valor:]]></text>

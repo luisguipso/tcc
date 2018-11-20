@@ -1,5 +1,6 @@
 package base.controle;
 
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,7 +36,7 @@ import util.Mensagem;
 @Named("honorarioMB")
 public class HonorarioMB {
 	private static final long serialVersionUID = 1L;
-
+	private Honorario honorarioDevido;
 	private Honorario honorario;
 	private Cliente cliente;
 	private DespesasAdicionais despesa;
@@ -68,7 +69,7 @@ public class HonorarioMB {
 
 	@PostConstruct
 	public void inicializar() {
-
+		
 		honorario = new Honorario();
 		cliente = new Cliente();
 		despesa = new DespesasAdicionais();
@@ -107,15 +108,15 @@ public class HonorarioMB {
 		// se lista honorarios preenchida
 		if (!listaHonorario.isEmpty()) {
 			if (!listaClientes.isEmpty()) {
-				for (Cliente cli : listaClientes) { //para cada cliente ter honorário será falso
+				for (Cliente cli : listaClientes) { //para cada cliente ter honorï¿½rio serï¿½ falso
 					clienteTemHonorario = false;
 					for (Honorario hon : listaHonorario) {
 						// verifica se o cliente tem honorario
 						if (cli.getId() == hon.getCliente().getId()) {
-							clienteTemHonorario = true;                //para cada cliente cadastrado em honorário, a variavel será true
+							clienteTemHonorario = true;                //para cada cliente cadastrado em honorï¿½rio, a variavel serï¿½ true
 						}
 					}
-					// pra cada cliente que nao tiver honorário para a competencia passada na tela, sera criado um honorário com valores padrão
+					// pra cada cliente que nao tiver honorï¿½rio para a competencia passada na tela, sera criado um honorï¿½rio com valores padrï¿½o
 					if (!clienteTemHonorario) {
 						criarHonorario(cli, honorario.getCompetencia());
 						clienteTemHonorario = false;
@@ -126,9 +127,9 @@ public class HonorarioMB {
 				System.out.println("lista de Clientes Vazia");
 			}
 		}
-		// se lista honorarios vazia, ou seja, nao há nenhum honorário para a competencia passada
+		// se lista honorarios vazia, ou seja, nao ha nenhum honorario para a competencia passada
 		else {
-			System.out.println("criando honorarios para todos os clientes"); //para cada cliente um honorário será criado
+			System.out.println("criando honorarios para todos os clientes"); //para cada cliente um honorï¿½rio serï¿½ criado
 			for (Cliente cli : listaClientes) {
 				criarHonorario(cli, honorario.getCompetencia());
 			}
@@ -193,7 +194,7 @@ public class HonorarioMB {
 
 				HashMap parametro = new HashMap<>();
 				parametro.put("idHonorario", h.getId());
-				ChamarRelatorio ch = new ChamarRelatorio("relhonorario.jasper", parametro, "relatorio_honorario");
+				ChamarRelatorio ch = new ChamarRelatorio("relhonorario.jasper", parametro, "carta_cobranca_honorario");
 				Session sessions = manager.unwrap(Session.class);
 				sessions.doWork(ch);
 
@@ -205,7 +206,33 @@ public class HonorarioMB {
 			ExibirMensagem.exibirMensagem(Mensagem.ERRO);
 		}
 	}
+	
+	public void imprimirRelatorioTodoshonorarios(boolean pago) {
+		try {
+			List<Honorario> relatorio = daoHonorario.listar(Honorario.class, "status = true");
+			if (relatorio.size() > 0) {
 
+				HashMap parametro = new HashMap<>();
+				if(pago) {
+					parametro.put("descricao","Pagos" );
+					parametro.put("estaPago", "1");
+				}else {
+					parametro.put("descricao","em Aberto" );
+					parametro.put("estaPago", "0");
+				}
+				ChamarRelatorio ch = new ChamarRelatorio("honorariosPagosOuNaoTodosClientes.jasper", parametro, "relatorio_honorarios");
+				Session sessions = manager.unwrap(Session.class);
+				sessions.doWork(ch);
+
+			} else {
+				ExibirMensagem.exibirMensagem(Mensagem.NADA_ENCONTRADO);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			ExibirMensagem.exibirMensagem(Mensagem.ERRO);
+		}
+	}
+	
 	public void honorariosPorCliente() {
 		honorarioBusca = daoHonorario.listarCodicaoLivre(Honorario.class,
 				"cliente_id = " + honorario.getCliente().getId().toString());

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="honorarios" pageWidth="595" pageHeight="842" whenNoDataType="BlankPage" columnWidth="555" leftMargin="0" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f83e876-b4df-4833-8d43-bc06816f7fdf">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="sicon"/>
+	<parameter name="idCliente" class="java.lang.Long"/>
+	<parameter name="pago" class="java.lang.Boolean"/>
+	<queryString language="SQL">
+		<![CDATA[select c.nome, h.competencia, h.valor, h.dataPagamento, h.valorPago from cliente c INNER join honorario h on h.cliente_id = c.id where c.id = $P{idCliente} && h.pago = $P{pago} order by h.competencia desc]]>
+	</queryString>
+	<field name="nome" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nome"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="cliente"/>
+	</field>
+	<field name="competencia" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="competencia"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<field name="dataPagamento" class="java.sql.Timestamp">
+		<property name="com.jaspersoft.studio.field.label" value="dataPagamento"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<field name="valorPago" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.label" value="valorPago"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="honorario"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<columnHeader>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="100" y="0" width="120" height="20" uuid="cd605c2c-6a77-4638-8df2-4d1aa16f4f7d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38f3b4bb-4f9b-4658-8335-aa67e84f9cbb"/>
+				</reportElement>
+				<text><![CDATA[Valor:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="220" y="0" width="185" height="20" uuid="1f061baa-e29c-4fde-b3d0-62d7131ec866">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="35a9c981-31fb-4ea4-8ed3-ef7b42e983e0"/>
+				</reportElement>
+				<text><![CDATA[Data de Pagamento:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="0" width="185" height="20" uuid="4d96e66a-5bd0-4a51-84ac-f8ca947f63d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab555b1b-a105-458f-92fc-3f0e1ef91876"/>
+				</reportElement>
+				<text><![CDATA[Valor Pago:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="b5657a02-3ee7-4ea2-9836-d982fbd2b7d6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32299b77-2255-4e4d-baa2-50246df95529"/>
+				</reportElement>
+				<text><![CDATA[Competência:]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="0" width="50" height="20" uuid="d9716833-b5c0-4d30-83a5-b47b7c55a089">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="38f3b4bb-4f9b-4658-8335-aa67e84f9cbb"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="220" y="0" width="105" height="20" uuid="85c088c9-33d5-4758-983f-c4e55ea963d3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="35a9c981-31fb-4ea4-8ed3-ef7b42e983e0"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{dataPagamento}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="0" width="60" height="20" uuid="ac1e25a4-5dde-4624-bb43-d7d41fd3228e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ab555b1b-a105-458f-92fc-3f0e1ef91876"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{valorPago}]]></textFieldExpression>
+			</textField>
+			<textField pattern="MM/yyyy">
+				<reportElement x="0" y="0" width="70" height="20" uuid="3203105a-e5ac-4fd4-ae80-02148b4eb931">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="32299b77-2255-4e4d-baa2-50246df95529"/>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{competencia}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

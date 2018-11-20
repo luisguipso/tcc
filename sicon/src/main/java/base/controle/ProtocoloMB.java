@@ -94,6 +94,8 @@ public class ProtocoloMB {
 				}
 				ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
 				criarNovoObjetoProtocolo();
+				criarNovoObjetoItem();
+				limparListaItens();
 			} else {
 				
 			}
@@ -149,7 +151,10 @@ public class ProtocoloMB {
 		listaProtocolo = daoProtocolo.listaComStatus(Protocolo.class);
 	}
 	
-	
+	public void limparListaItens() {
+		listaItensProtocolo  = new ArrayList<>();
+	}
+		
 	public void mostrarProtocolo(Protocolo t) {
 		this.protocolo = t;
 		String condicao = "protocolo_id =" + protocolo.getId().toString();

@@ -37,7 +37,7 @@
 				<reportElement x="70" y="0" width="230" height="20" uuid="36f70205-8966-4ce0-aaee-aaed8172e0f3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b8d26663-fb4a-4c17-9344-f41bfa6d80ab"/>
 				</reportElement>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
@@ -54,11 +54,14 @@
 				<reportElement x="30" y="0" width="40" height="20" uuid="79ff2465-8f10-4645-a5b5-8ee31bab7e53">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b8d26663-fb4a-4c17-9344-f41bfa6d80ab"/>
 				</reportElement>
-				<textElement>
+				<textElement verticalAlignment="Middle">
 					<font size="10"/>
 				</textElement>
 				<text><![CDATA[Cliente: ]]></text>
 			</staticText>
+			<line>
+				<reportElement x="20" y="0" width="525" height="1" uuid="efdfa0bf-bb75-4bf9-9122-1d0e119db7ce"/>
+			</line>
 		</band>
 	</detail>
 	<columnFooter>

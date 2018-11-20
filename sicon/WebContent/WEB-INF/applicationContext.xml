@@ -10,7 +10,10 @@
 	<http auto-config="true" use-expressions="true">		
 		<intercept-url pattern="/base/servidor/inicio.jsf" access="hasAnyRole('funcionario','administrador')" />
 		<form-login login-page="/login.jsf" authentication-failure-url="/login.jsf?erro=true" />
-		<intercept-url pattern="/base/cadastros/*" access="hasAnyRole('funcionario','administrador')" />
+		<intercept-url pattern="/base/cadastros/despesas.jsf" access="hasAnyRole('funcionario','administrador')" />
+		<intercept-url pattern="/base/cadastros/cliente.jsf" access="hasAnyRole('funcionario','administrador')" />
+		<intercept-url pattern="/base/cadastros/documento.jsf" access="hasAnyRole('funcionario','administrador')" />
+		<intercept-url pattern="/base/cadastros/usuario.jsf" access="hasAnyRole('administrador')" />
 		<intercept-url pattern="/base/honorarios/*" access="hasAnyRole('administrador')" />
 		<access-denied-handler error-page="/negado.jsf" />
 		

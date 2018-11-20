@@ -24,15 +24,31 @@
 
 					<!-- TITULO -->
 					<h1 class="page-header">Honorários</h1>
-
+					
 					<ol class="breadcrumb">
-						<h:form id="frmCadastrar">
+						
+						<h:form id="frmCadastrar" >
 							<p:commandButton value="Gerar Honorarios" update="frmModalSalvar"
 								actionListener="#{honorarioMB.criarNovoObjeto()}"
 								onclick="PF('dlgCadastrar').show(); PF('dlgCadastrar').content.scrollTop('0')"
 								title="Cadastrar" />
 						</h:form>
+						<h4>Relatórios</h4>
+						<h:form id="frmRelatorios" target="_blank">
+							<p:commandButton  alt="Imprimir"
+								value="Honorários Pagos" title="Imprimir"
+								ajax="false"
+								actionListener="#{honorarioMB.imprimirRelatorioTodoshonorarios(true)}">
+							</p:commandButton>
+
+							<p:commandButton  alt="Imprimir"
+								value="Honorários em Aberto" title="Imprimir"
+								ajax="false"
+								actionListener="#{honorarioMB.imprimirRelatorioTodoshonorarios(false)}">
+							</p:commandButton>
+						</h:form>
 					</ol>
+					
 				</div>
 			</div>
 			<!-- DIV INICIAL -->
@@ -74,10 +90,15 @@
 							</h:outputText>
 						</p:column>
 
+						<p:column headerText="Valor Pago" filterBy="#{list.valorPago}"
+							sortBy="#{list.valorPago}" filterMatchMode="contains">
+							<h:outputText value="#{list.valorPago}" />
+						</p:column>
+
 						<p:column headerText="Visualizar" style="width:100px">
 							<p:commandButton alt="Visualizar" icon="fa fa-eye"
 								title="Visualizar" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px" 
+								style="width:58px; margin:0 0 0 11px"
 								oncomplete="PF('dlgMostrar').show();" update="listarItens"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
@@ -87,21 +108,20 @@
 						<p:column headerText="Receber" style="width:100px">
 							<p:commandButton alt="Pagar" icon="fa fa-dollar"
 								title="Receber Honorario" styleClass="btn btn-block"
-								style="max-width:58px; margin:0 auto"
-								disabled="#{list.pago}" oncomplete="PF('dlgReceber').show();"
+								style="max-width:58px; margin:0 auto" disabled="#{list.pago}"
+								oncomplete="PF('dlgReceber').show();"
 								update=":dlgInformacao :listarHonorariosPagar"
 								actionListener="#{honorarioMB.mostrarHonorario(list)}">
 
 							</p:commandButton>
-							
+
 						</p:column>
 
-						
+
 						<p:column headerText="Imprimir" style="width:100px">
 							<p:commandButton disabled="false" alt="Imprimir"
 								icon="fa fa-print" title="Imprimir" styleClass="btn btn-block"
-								style="width:58px; margin:0 0 0 11px"
-								ajax="false"
+								style="width:58px; margin:0 0 0 11px" ajax="false"
 								actionListener="#{honorarioMB.imprimirRelatorioHonorario(list)}">
 							</p:commandButton>
 
@@ -133,7 +153,7 @@
 							<p:commandButton value="Salvar"
 								actionListener="#{honorarioMB.gerarHonorario()}"
 								styleClass="ui-priority-primary"
-								update=":dlgInformacao :frmTabela" />
+								update=":dlgInformacao :frmTabela" onclick="honorarios.jsf" />
 
 							<p:commandButton value="Cancelar"
 								onclick="PF('dlgCadastrar').hide();" alt="Cancelar" />
@@ -254,7 +274,8 @@
 								title="Receber Honorario" styleClass="btn btn-block"
 								update=":dlgReceber :frmTabela"
 								actionListener="#{honorarioMB.receberHonorario()}" oncomplete="">
-								<p:confirm header="Confirmação" message="Deseja realmente receber?" />
+								<p:confirm header="Confirmação"
+									message="Deseja realmente receber?" />
 							</p:commandButton>
 						</div>
 					</h:form>
