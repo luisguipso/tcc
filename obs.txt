@@ -1,0 +1,7 @@
+Desacoplar a criação de honorarios padrão do bean de despesas adicionais. feito!
+
+verificar honorários pagos sem desconto;
+
+
+
+perguntar se o valor da despesa será adicionada a um honorário já criado, e vetar a adição em honorários pagos.
