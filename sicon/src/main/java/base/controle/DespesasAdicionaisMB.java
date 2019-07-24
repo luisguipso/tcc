@@ -95,7 +95,7 @@ public class DespesasAdicionaisMB {
 				// preenche com todos os honorarios para o cliente
 				listaHonorario = preencheListaHonorario();
 
-				//verifica se existem honorario para o cliente, se nao exitirem um honorario serï¿½ criado com a mesma competencia da despesa adicional
+				//verifica se existem honorario para o cliente, se nao exitirem um honorario sera criado com a mesma competencia da despesa adicional
 				if (listaHonorario.isEmpty() || listaHonorario.size() == 0) {
 					System.out.println("nao existem honorarios para o cliente\n criando novo honorario...\n");
 					System.out.println(
@@ -107,20 +107,30 @@ public class DespesasAdicionaisMB {
 				System.out.println(String.valueOf("Tamanho da lista apos verificar existencia de honorarios: " + listaHonorario.size()));
 				
 				//compara a competencia dos honorarios da lista com a despesa adicional, se existir honorario nesse ponto
-				//ele estara preenchido para o cliente e competencia, se nao existir sera criado um honorario com valores padrao e dados da despesa para ser 
+				//ele estara preenchido para o cliente e competencia, se nao existir sera criado um honorario com valores padrao e
+				//dados da despesa para ser salvo
 				compararCompetencias();
 				
+				//se não existir um honorário com a mesma competencia um honorário com a competencia da despesa será criado.
 				if (existeHonorario == false) {
 					honorario = honorarioMB.criarHonorario(despesasAdicinais.getCliente(),despesasAdicinais.getCompetencia());
 				}
+				
+				//se o honoário não estiver pago (em aberto) o processo dara seguimento.
+				System.out.println(honorario.isPago());
+				if(!honorario.isPago()) {
+					// soma os valores do honorario com o valor da despesa
+					somarHonorario(honorario, despesasAdicinais.getValorTotal());
+					
+					
+					//define o honorario da despesa adicional e salva
+					despesasAdicinais.setHonorario(honorario);
+					despesasAdicionaisService.inserirAlterar(despesasAdicinais);
 
-				// soma os valores do honorario com o valor da despesa
-				somarHonorario(honorario, despesasAdicinais.getValorTotal());
-				
-				
-				//define o honorario da despesa adicional e salva
-				despesasAdicinais.setHonorario(honorario);
-				despesasAdicionaisService.inserirAlterar(despesasAdicinais);
+					ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
+				} else {
+					ExibirMensagem.exibirMensagem(Mensagem.HONORARIO_JA_PAGO);
+				}
 
 			} else {
 				despesa.setStatus(true);
@@ -128,7 +138,6 @@ public class DespesasAdicionaisMB {
 			}
 
 			criarNovoObjeto();
-			ExibirMensagem.exibirMensagem(Mensagem.SUCESSO);
 			FecharDialog.fecharDialogCadastro();
 			carregarLista();
 
@@ -206,7 +215,7 @@ public class DespesasAdicionaisMB {
 		honorario.setValor(honorario.getValor().add(valorDesp));
 		honorarioService.inserirAlterar(honorario);
 	}
-
+	
 	public void mostrarDespesaAdicional(DespesasAdicionais desp) {
 		System.out.println("implementar");
 	}

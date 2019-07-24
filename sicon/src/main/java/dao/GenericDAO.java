@@ -55,6 +55,9 @@ public class GenericDAO<T> implements Serializable {
 		}
 		return query.getResultList();
 	}
+	
+	
+	
 
 	public List<T> listarCodicaoLivre(Class classeEntidade, String condicao) {
 		Query query = null;

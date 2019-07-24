@@ -97,7 +97,7 @@ public class HonorarioMB {
 	}
 
 	public void gerarHonorario() {
-		//formata a data passada como competencia para um valor que possa serr usadop na consulta do banco de dados
+		//formata a data passada como competencia para um valor que possa ser usado na consulta do banco de dados
 		System.out.println(honorario.getCompetencia().toString());
 		SimpleDateFormat fmt = new SimpleDateFormat("yyyy-MM-dd");    
 		String dataFormatadaParaBanco = fmt.format(honorario.getCompetencia()); 
@@ -174,7 +174,6 @@ public class HonorarioMB {
 
 		if (honorario.isPago()) {
 			ExibirMensagem.exibirMensagem(Mensagem.HONORARIO_JA_PAGO);
-			System.out.println("no if");
 		} else {
 			honorario.setPago(true);
 
@@ -256,7 +255,7 @@ public class HonorarioMB {
 
 	public void mostrarHonorario(Honorario t) {
 		this.honorario = t;
-		String condicao = "honorario_id =" + honorario.getId().toString();
+		String condicao = "honorario_id =" + honorario.getId().toString();  
 		this.listaDespesasAdicionais = daoDespesasAdicionais.listar(DespesasAdicionais.class, condicao);
 	}
 
