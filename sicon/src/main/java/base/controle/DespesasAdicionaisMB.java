@@ -36,7 +36,7 @@ public class DespesasAdicionaisMB {
 	private Honorario honorario;
 	private DespesasAdicionais despesasAdicinais;
 	private BigDecimal quantidade, valor;
-
+	
 	private List<Despesa> listaDespesas;
 	private List<Honorario> listaHonorario;
 	private List<Honorario> listaHonorarioBusca;
@@ -56,6 +56,9 @@ public class DespesasAdicionaisMB {
 
 	@Inject
 	private DespesasAdicionaisService despesasAdicionaisService; // inserir no banco
+	
+	@Inject
+	private HonorarioMB honorarioMB;
 
 	@PostConstruct
 	public void inicializar() {
@@ -97,7 +100,7 @@ public class DespesasAdicionaisMB {
 					System.out.println("nao existem honorarios para o cliente\n criando novo honorario...\n");
 					System.out.println(
 							String.valueOf("Tamanho da lista antes de criar novo honorario: " + listaHonorario.size()));
-					criarHonorario();
+					honorario = honorarioMB.criarHonorario(despesasAdicinais.getCliente(),despesasAdicinais.getCompetencia());
 					listaHonorario = preencheListaHonorario();
 				}
 
@@ -108,7 +111,7 @@ public class DespesasAdicionaisMB {
 				compararCompetencias();
 				
 				if (existeHonorario == false) {
-					criarHonorario();
+					honorario = honorarioMB.criarHonorario(despesasAdicinais.getCliente(),despesasAdicinais.getCompetencia());
 				}
 
 				// soma os valores do honorario com o valor da despesa
@@ -196,16 +199,7 @@ public class DespesasAdicionaisMB {
 	}
 
 	
-	// cria honorario com valor padrao
-	public void criarHonorario() {
-		honorario = new Honorario();
-		honorario.setValor(despesasAdicinais.getCliente().getHonorario_padrao());
-		honorario.setCompetencia(despesasAdicinais.getCompetencia());
-		honorario.setVencimento(despesasAdicinais.getCompetencia());
-		honorario.setCliente(despesasAdicinais.getCliente());
-		honorarioService.inserirAlterar(honorario);
 
-	}
 
 	public void somarHonorario(Honorario hon, BigDecimal valorDesp) {
 		honorario = hon;

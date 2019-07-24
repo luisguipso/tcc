@@ -140,7 +140,7 @@ public class HonorarioMB {
 		carregarLista();
 	}
 
-	public void criarHonorario(Cliente cli, Date comp) {
+	public Honorario criarHonorario(Cliente cli, Date comp) {
 		honorario = new Honorario();
 		honorario.setValor(cli.getHonorario_padrao());
 		honorario.setCompetencia(comp);
@@ -149,6 +149,8 @@ public class HonorarioMB {
 		honorario.setStatus(true);
 		honorarioService.inserirAlterar(honorario);
 		System.out.println("honorario padrao criado, cliente:" + honorario.getCliente().getNome().toString());
+		
+		return honorario;
 	}
 
 	public void salvar() {
